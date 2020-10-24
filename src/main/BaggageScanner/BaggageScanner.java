@@ -1,6 +1,10 @@
 package main.BaggageScanner;
 
-public class BaggageScanner {
+import Employee.FederalPoliceOfficer;
+
+import java.util.ArrayList;
+
+public class BaggageScanner implements IHasButton{
     private Belt belt;
     private ManualPostControl manualPostControl;
     private OperatingStation operatingStation;
@@ -9,9 +13,12 @@ public class BaggageScanner {
     private Status status;
     private Supervision supervision;
     private Tray tray;
+    private Button powerButton;
+    private ArrayList<Track> tracks;
+    private FederalPoliceOfficer federalPoliceOfficer;
 
 
-    public BaggageScanner(Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveryor rollerConveryor, Scanner scanner, Supervision supervision, Tray tray) {
+    public BaggageScanner(ArrayList<Track> tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveryor rollerConveryor, Scanner scanner, Supervision supervision, Tray tray) {
         this.belt = belt;
         this.manualPostControl = manualPostControl;
         this.operatingStation = operatingStation;
@@ -19,6 +26,10 @@ public class BaggageScanner {
         this.scanner = scanner;
         this.supervision = supervision;
         this.tray = tray;
+        this.tracks = tracks;
+        powerButton = new Button();
+        powerButton.setShape(ButtonShape.POWER_BUTTON_SHAPE);
+
         status = Status.SHUTDOWN;
     }
 
@@ -101,5 +112,10 @@ public class BaggageScanner {
 
     public void setTray(Tray tray) {
         this.tray = tray;
+    }
+
+    @Override
+    public void handleButtonPushed(Button sender) {
+        //TODO implement function halndleButtonPushed
     }
 }

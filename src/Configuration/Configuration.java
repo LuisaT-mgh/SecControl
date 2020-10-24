@@ -1,6 +1,8 @@
 package Configuration;
 
 import Employee.ProfileType;
+import General.BoyerMoore;
+import General.ISearchAlgorithm;
 
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ public enum Configuration {
     public ProfileType[] functionalityOneTroughFour = {ProfileType.I};
     public ProfileType[] functionalityFive = {ProfileType.S};
     public ProfileType[] functionalitySix = {ProfileType.T};
+    //todo does not work public ISearchAlgorithm activeSearchAlgorithm = BoyerMoore;
 
 
 }

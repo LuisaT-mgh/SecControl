@@ -5,5 +5,6 @@ public enum Status {
     START,
     ACTIVATED,
     DEACTIVATED,
-    LOCKED;
+    LOCKED,
+    IN_USE;
 }

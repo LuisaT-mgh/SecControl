@@ -9,11 +9,11 @@ public abstract class Employee {
     protected Date birthDate;
     protected IDCard idCard;
 
-    public Employee(String name, Date birthDate, IDCard idCard) {
+    public Employee(String name, Date birthDate) {
         this.name = name;
         this.birthDate = birthDate;
-        this.idCard = idCard;
         id = UUID.randomUUID();
+        idCard = new IDCard(id, this);
     }
 
     public UUID getId() {

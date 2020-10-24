@@ -3,9 +3,10 @@ package HandBaggage;
 import java.util.ArrayList;
 
 public class Layer {
-    ArrayList<Character> symbols;
-
-    public Layer() {
-        symbols = new ArrayList<>();
+    private Character[] character;
+    private HandBaggage handBaggage;
+    public Layer()
+    {
+        character = new Character[10000];
     }
 }
