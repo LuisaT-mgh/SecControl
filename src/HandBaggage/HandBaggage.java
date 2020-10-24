@@ -13,7 +13,6 @@ public class HandBaggage {
     private TestStrip testStrip;
 
     public HandBaggage(Layer[] layers) {
-        layers = new Layer[5];
         this.layers = layers;
     }
 }
