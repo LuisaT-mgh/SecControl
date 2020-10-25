@@ -1,6 +1,13 @@
 # Exemplarische Beschreibung der Vorgehensweise mit Scrum
 
 ### Product Backlog
+
+Zu Beginn des Projektes werden die Anforderungen in User Stories festgehalten. Diese bilden den Kern des
+Product Backlogs. Jede User Story wird vom Product Owner mit einer Business Value und vom Team mit einem
+geschätzten Aufwand versehen. Aus diesen beiden Kennzahlen wird der ROI (Return on Investment) berechnet.
+
+Der Backlog wird nach dem ROI sortiert. User Stories die weiter oben stehen werden priorisiert.
+
 | # | User Story | BusinessValue (1-10) | Aufwand in Tagen | ROI |
 |-------:|------|:---------------:|:---------:|:-----:|
 | 0 | Als Flughafenbetreiber möchte ich, dass Kriminelle der Polizei übergeben und vom Flughafengelände entfernt werden. | 7 | 2 | 3.5 |
