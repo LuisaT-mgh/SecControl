@@ -17,6 +17,20 @@
 
 
 ### Sprint Backlog
+In unserer Firme umfasst ein Sprint 2 Wochen, also 10 Werktage.
+
+Für das Sprint Backlog haben sich qualifiziert:
++ User Story 1
++ User Story 2
++ User Story 3
+
 | # | Task | ROI |
 |-------:|------|:-----:|
-| 0 |  |  |
+| 0 | Planen eines Bereiches zum Untersuchen von Gepäckstücken. | 3 |
+| 1 | Recherche nach gesetzlichen Vorschriften beim Untersuchen von Gepäckstücken. | 3 |
+| 2 | Schulen von Mitarbeitern zu Handlungsvorschriften bei Gepäckuntersuchungen. | 3 |
+| 3 | Entwerfen der Ausweistypen "External" und "Staff". | 2.3 |
+| 4 | Setzen der Berechtigungen der Ausweistypen "External" und "Staff". | 2.3 |
+| 5 | Planen des Arbeitsplatzes Supervision. | 2 |
+| 6 | Anfordern eines Bundespolizisten von der Bundespolizeiinspektion. | 2 |
+| 7 | Erstellen der Position "Supervisor" mit entsprechenden Berechtigungen im System. | 2 |
