@@ -22,9 +22,11 @@ Der Backlog wird nach dem ROI sortiert. User Stories die weiter oben stehen werd
 | 9 | Als Flughafenbetreiber möchte ich, dass bei dem Fund eines verbotenen Gegenstands entsprechend der Schwere des Vergehens gehandelt wird, um Passagiere und Mitarbeiter zu schützen. | 10 | 15 | 0.67 |
 | 10 | Als Polizeibehörde möchte ich, dass Roboter zur Beseitigung von Sprengstoff bereitstehen, um meine Mitarbeiter zu schützen. | 9 | 50 | 0.18 |
 
+### Sprint
+In unserer Firma umfasst ein Sprint 2 Wochen, also 10 Werktage. Zu Beginn dessen findet ein Sprint Planning Meeting statt, im dem der Product Owner Tätigkeiten bespricht, deren Ausführung im Rahmen des Sprints wichtig sind. Aus diesen Angaben erstellt das Team den Spring Backlog, der alle abzuarbeitenden Aufgaben enthält.
 
-### Sprint Backlog
-In unserer Firme umfasst ein Sprint 2 Wochen, also 10 Werktage.
+#### Sprint Backlog
+Exemplarisch ist hier der Sprint Backlog des ersten Sprints dargestellt.
 
 Für das Sprint Backlog haben sich qualifiziert:
 + User Story 1
@@ -43,9 +45,16 @@ Für das Sprint Backlog haben sich qualifiziert:
 | 7 | Erstellen der Position "Supervisor" mit entsprechenden Berechtigungen im System. | 2 |
 
 
+Die Aufgaben des Sprint Backlogs werden in ein Kanban Board eingegliedert. Mit diesem werden die Aufgaben in die Kategorien "TODO", "InProgress" und "Done" eingeteilt. Die Mitarbeiter wählen selbstständig ihre Aufgaben aus "TODO" und verschieben sie beim Start der Bearbeitung in "InProgress". Sobald diese fertiggestellt ist, wird sie in "Done" verschoben. Am Ende eines Sprints müssen alle Aufgaben in "Done" sein.
+
 ####Kanban Board
+Hier exemplarisch das Kanban Board nach 6 Tagen:
+
 | TODO | InProgress | Done |
 |----|----------|----|
 | Setzen der Berechtigungen der Ausweistypen "External" und "Staff". | Schulen von Mitarbeitern zu Handlungsvorschriften bei Gepäckuntersuchungen. | Planen eines Bereiches zum Untersuchen von Gepäckstücken. |
 | Anfordern eines Bundespolizisten von der Bundespolizeiinspektion. | Planen des Arbeitsplatzes Supervision. | Recherche nach gesetzlichen Vorschriften beim Untersuchen von Gepäckstücken. |
 | Erstellen der Position "Supervisor" mit entsprechenden Berechtigungen im System. |  | Entwerfen der Ausweistypen "External" und "Staff". |
+
+Während des Sprints werden in sogenannten Daily Standups (kurze Meetings) aufgekommene Probleme, sowie Erfolge besprochen, sodass jedes Teammitglied zu jedem Zeitpunkt über den Stand des Projekts Bescheid weiß. 
+Der Scrum Master kümmert sich um eine ideale Arbeitsatmosphäre und stellt sicher, dass die Mitarbeiter effizient arbeiten können. Während der Scrum Master so vor allem die Interessen der Mitarbeiter vertritt, kümmert sich der Product Owner um die Interessen des Auftraggebers. 
