@@ -34,3 +34,11 @@ Für das Sprint Backlog haben sich qualifiziert:
 | 5 | Planen des Arbeitsplatzes Supervision. | 2 |
 | 6 | Anfordern eines Bundespolizisten von der Bundespolizeiinspektion. | 2 |
 | 7 | Erstellen der Position "Supervisor" mit entsprechenden Berechtigungen im System. | 2 |
+
+
+####Kanban Board
+| TODO | InProgress | Done |
+|----|----------|----|
+| Setzen der Berechtigungen der Ausweistypen "External" und "Staff". | Schulen von Mitarbeitern zu Handlungsvorschriften bei Gepäckuntersuchungen. | Planen eines Bereiches zum Untersuchen von Gepäckstücken. |
+| Anfordern eines Bundespolizisten von der Bundespolizeiinspektion. | Planen des Arbeitsplatzes Supervision. | Recherche nach gesetzlichen Vorschriften beim Untersuchen von Gepäckstücken. |
+| Erstellen der Position "Supervisor" mit entsprechenden Berechtigungen im System. |  | Entwerfen der Ausweistypen "External" und "Staff". |
