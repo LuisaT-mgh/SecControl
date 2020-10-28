@@ -1,24 +1,46 @@
 package General;
 
 import Configuration.Configuration;
+import Employee.Employee;
+import Employee.Supervisor;
+import Employee.Inspector;
+import Employee.FederalPoliceOfficer;
+import Employee.Technician;
+import FerderalPoliceOffice.FederalPoliceOffice;
+import Employee.HouseKeeping;
 import HandBaggage.HandBaggage;
 import Passenger.Passenger;
 import HandBaggage.Layer;
+import main.BaggageScanner.*;
+import main.BaggageScanner.Reader;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 public class Application {
-    public static void main(String... args) throws InterruptedException {
+
+    public static void main(String... args) throws InterruptedException, ParseException {
         Application application = new Application();
         application.startSecurityControl(application.generatePassengers());
     }
 
-    public void startSecurityControl(ArrayList<Passenger> passengers){
+    public void startSecurityControl(ArrayList<Passenger> passengers) throws ParseException {
         ArrayList<Passenger> passengerList= new ArrayList<>();
         passengerList = passengers;
-        System.out.println("Passengers have been generated");
+        System.out.println("Passengers with Baggage and hidden Items have been generated");
+        BaggageScanner baggageScanner = generateBaggageScanner(passengerList.size());
+        Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
+        FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
+        FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
+        HouseKeeping houseKeeping = new HouseKeeping("Json Clark", new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969"));
+        System.out.println("All additional Employees have been created");
+
+
+
     }
 
     public ArrayList<Passenger> generatePassengers(){
@@ -45,34 +67,37 @@ public class Application {
         }
         return passengers;
     }
-    public ArrayList<HandBaggage> generateHandBaggage(int numberOfBaggage, String hasForbiddenItem){
+    public ArrayList<HandBaggage> generateHandBaggage(int numberOfBaggage, String hasForbiddenItem) {
         ArrayList<HandBaggage> handBaggage = new ArrayList<>();
         int numberOfForbiddenBaggage = 15;
         int numberOfForbiddenLayer = 15;
         String forbiddenItem = null;
-        if(!hasForbiddenItem.contentEquals("-")){
+        if (!hasForbiddenItem.contentEquals("-")) {
             hasForbiddenItem = hasForbiddenItem.replace("[", "");
             hasForbiddenItem = hasForbiddenItem.replace("]", "");
-            String[] dataHasForbiddenItem = hasForbiddenItem.split(",");
-            numberOfForbiddenBaggage = Integer.parseInt(dataHasForbiddenItem[1]);
-            numberOfForbiddenLayer = Integer.parseInt(dataHasForbiddenItem[2]);
-            switch (dataHasForbiddenItem[0]){
-                case "K":
-                    forbiddenItem = Configuration.instance.forbiddenItems[0];
-                    break;
-                case "W":
-                    forbiddenItem = Configuration.instance.forbiddenItems[1];
-                    break;
-                case "E":
-                    forbiddenItem = Configuration.instance.forbiddenItems[2];
-                    break;
+            String[] allForbiddenItems = hasForbiddenItem.split(";");
+            for (String item : allForbiddenItems) {
+                String[] dataHasForbiddenItem = item.split(",");
+                numberOfForbiddenBaggage = Integer.parseInt(dataHasForbiddenItem[1]);
+                numberOfForbiddenLayer = Integer.parseInt(dataHasForbiddenItem[2]);
+                switch (dataHasForbiddenItem[0]) {
+                    case "K":
+                        forbiddenItem = Configuration.instance.forbiddenItems[0];
+                        break;
+                    case "W":
+                        forbiddenItem = Configuration.instance.forbiddenItems[1];
+                        break;
+                    case "E":
+                        forbiddenItem = Configuration.instance.forbiddenItems[2];
+                        break;
+                }
             }
         }
-        for(int i = 0; i<numberOfBaggage; i++){
+        for (int i = 0; i < numberOfBaggage; i++) {
             Layer[] layers = new Layer[5];
-            for(int j = 0; j<5; j++){
+            for (int j = 0; j < 5; j++) {
                 Layer layer = new Layer();
-                if(numberOfForbiddenBaggage == i && numberOfForbiddenLayer == j){
+                if (numberOfForbiddenBaggage == i && numberOfForbiddenLayer == j) {
                     layer = hideItemInLayer(layer, forbiddenItem);
                 }
                 layers[j] = layer;
@@ -93,5 +118,36 @@ public class Application {
         }
         layer.setCharacter(temporaryCharacter);
         return layer;
+    }
+
+
+    public BaggageScanner generateBaggageScanner(int numberOfPassengers) throws ParseException {
+        OperatingStation operatingStation = new OperatingStation();
+        Reader reader = new Reader();
+        operatingStation.setReader(reader);
+        RollerConveryor rollerConveryor = new RollerConveryor();
+        Belt belt = new Belt();
+        Scanner scanner = new Scanner();
+        ManualPostControl manualPostControl = new ManualPostControl();
+        Supervision supervision = new Supervision();
+        Track[] tracks = {new Track(), new Track()};
+        ArrayList<Tray> trays = new ArrayList<>();
+        for (int i = 0; i<numberOfPassengers*3; i++){
+            trays.add(new Tray());
+        }
+        BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveryor, scanner, supervision, trays);
+        System.out.println("A baggage Scanner has been created");
+        Inspector inspector01 = new Inspector("Clint Eastwood", new SimpleDateFormat("dd/MM/yyyy").parse("31/05/1930"), true);
+        Inspector inspector02 = new Inspector("Natalie Portman", new SimpleDateFormat("dd/MM/yyyy").parse("09/06/1981"), false);
+        Inspector inspector03 = new Inspector("Bruce Willis", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), true);
+        Supervisor supervisor = new Supervisor("Jodie Foster", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), false, false);
+        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), "officer");
+        baggageScanner.getRollerConveryor().setInspector(inspector01);
+        baggageScanner.getOperatingStation().setInspector(inspector02);
+        baggageScanner.getManualPostControl().setInspector(inspector03);
+        baggageScanner.getSupervision().setSupervisor(supervisor);
+        baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
+        System.out.println("Employees have been assigned to baggage scanner");
+        return baggageScanner;
     }
 }

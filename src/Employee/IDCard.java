@@ -1,21 +1,25 @@
 package Employee;
 
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 public class IDCard {
     private UUID id;
     private Date validUntil;
-    private MagnetStripe magnetStripe;
+    private String magnetStripe;
     private boolean isLocked;
     private IDCardType type;
     private Employee employee;
 
-    public IDCard(UUID id, Employee employee) {
+    public IDCard(UUID id, Employee employee, char ProfileType) throws ParseException {
         this.id = id;
         isLocked = false;
-        //TODO validuntil auf in 4 Jahren setzten?
+        validUntil = new SimpleDateFormat("dd/MM/yyyy").parse("24/03/2100");
+        //String.format("%04d", random.nextInt(10000));
+        //Todo random pin festlegen
     }
 
     public UUID getId() {
@@ -32,14 +36,6 @@ public class IDCard {
 
     public void setValidUntil(Date validUntil) {
         this.validUntil = validUntil;
-    }
-
-    public MagnetStripe getMagnetStripe() {
-        return magnetStripe;
-    }
-
-    public void setMagnetStripe(MagnetStripe magnetStripe) {
-        this.magnetStripe = magnetStripe;
     }
 
     public boolean isLocked() {

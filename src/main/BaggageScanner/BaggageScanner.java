@@ -12,20 +12,20 @@ public class BaggageScanner implements IHasButton{
     private Scanner scanner;
     private Status status;
     private Supervision supervision;
-    private Tray tray;
+    private ArrayList<Tray> trays;
     private Button powerButton;
-    private ArrayList<Track> tracks;
+    private Track[] tracks;
     private FederalPoliceOfficer federalPoliceOfficer;
 
 
-    public BaggageScanner(ArrayList<Track> tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveryor rollerConveryor, Scanner scanner, Supervision supervision, Tray tray) {
+    public BaggageScanner(Track[] tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveryor rollerConveryor, Scanner scanner, Supervision supervision, ArrayList<Tray> trays) {
         this.belt = belt;
         this.manualPostControl = manualPostControl;
         this.operatingStation = operatingStation;
         this.rollerConveryor = rollerConveryor;
         this.scanner = scanner;
         this.supervision = supervision;
-        this.tray = tray;
+        this.trays = trays;
         this.tracks = tracks;
         powerButton = new Button();
         powerButton.setShape(ButtonShape.POWER_BUTTON_SHAPE);
@@ -49,7 +49,16 @@ public class BaggageScanner implements IHasButton{
     public void maintenance(){
 
     }
-
+    public void start(){
+        status = Status.START;
+        System.out.println("Baggage Scanner was started");
+        status = Status.DEACTIVATED;
+        System.out.println("Baggage Scanner is noch in status deactivated");
+    }
+    public void deactivate(){
+        status = Status.SHUTDOWN;
+        System.out.println("Baggage Scanner was shut down");
+    }
     public Belt getBelt() {
         return belt;
     }
@@ -106,12 +115,36 @@ public class BaggageScanner implements IHasButton{
         this.supervision = supervision;
     }
 
-    public Tray getTray() {
-        return tray;
+    public ArrayList<Tray> getTrays() {
+        return trays;
     }
 
-    public void setTray(Tray tray) {
-        this.tray = tray;
+    public void setTrays(ArrayList<Tray> trays) {
+        this.trays = trays;
+    }
+
+    public Button getPowerButton() {
+        return powerButton;
+    }
+
+    public void setPowerButton(Button powerButton) {
+        this.powerButton = powerButton;
+    }
+
+    public Track[] getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Track[] tracks) {
+        this.tracks = tracks;
+    }
+
+    public FederalPoliceOfficer getFederalPoliceOfficer() {
+        return federalPoliceOfficer;
+    }
+
+    public void setFederalPoliceOfficer(FederalPoliceOfficer federalPoliceOfficer) {
+        this.federalPoliceOfficer = federalPoliceOfficer;
     }
 
     @Override
