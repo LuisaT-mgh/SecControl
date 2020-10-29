@@ -23,20 +23,31 @@ import java.util.Random;
 
 public class Application {
 
-    public static void main(String... args) throws InterruptedException, ParseException {
+    public BaggageScanner baggageScanner;
+
+    public static void main(String... args){
         Application application = new Application();
         application.startSecurityControl(application.generatePassengers());
     }
 
-    public void startSecurityControl(ArrayList<Passenger> passengers) throws ParseException {
-        ArrayList<Passenger> passengerList= new ArrayList<>();
+    public void startSecurityControl(ArrayList<Passenger> passengers){
+        ArrayList<Passenger> passengerList;
         passengerList = passengers;
         System.out.println("Passengers with Baggage and hidden Items have been generated");
-        BaggageScanner baggageScanner = generateBaggageScanner(passengerList.size());
-        Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
-        FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
-        FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
-        HouseKeeping houseKeeping = new HouseKeeping("Json Clark", new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969"));
+        if((this.baggageScanner = generateBaggageScanner(passengerList.size())) == null){
+            System.out.println("Error while generating the Baggage Scanner.");
+            return;
+        }
+        try{
+            Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
+            FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
+            FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
+            HouseKeeping houseKeeping = new HouseKeeping("Json Clark", new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error occurred while parsing a date.");
+            return;
+        }
         System.out.println("All additional Employees have been created");
 
 
@@ -60,10 +71,8 @@ public class Application {
                 passengers.add(passenger);
             }
 
-        } catch (FileNotFoundException fileNotFoundException) {
+        } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return passengers;
     }
@@ -121,7 +130,7 @@ public class Application {
     }
 
 
-    public BaggageScanner generateBaggageScanner(int numberOfPassengers) throws ParseException {
+    public BaggageScanner generateBaggageScanner(int numberOfPassengers){
         OperatingStation operatingStation = new OperatingStation();
         Reader reader = new Reader();
         operatingStation.setReader(reader);
@@ -137,17 +146,23 @@ public class Application {
         }
         BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveryor, scanner, supervision, trays);
         System.out.println("A baggage Scanner has been created");
-        Inspector inspector01 = new Inspector("Clint Eastwood", new SimpleDateFormat("dd/MM/yyyy").parse("31/05/1930"), true);
-        Inspector inspector02 = new Inspector("Natalie Portman", new SimpleDateFormat("dd/MM/yyyy").parse("09/06/1981"), false);
-        Inspector inspector03 = new Inspector("Bruce Willis", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), true);
-        Supervisor supervisor = new Supervisor("Jodie Foster", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), false, false);
-        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), "officer");
-        baggageScanner.getRollerConveryor().setInspector(inspector01);
-        baggageScanner.getOperatingStation().setInspector(inspector02);
-        baggageScanner.getManualPostControl().setInspector(inspector03);
-        baggageScanner.getSupervision().setSupervisor(supervisor);
-        baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
-        System.out.println("Employees have been assigned to baggage scanner");
-        return baggageScanner;
+        try{
+            Inspector inspector01 = new Inspector("Clint Eastwood", new SimpleDateFormat("dd/MM/yyyy").parse("31/05/1930"), true);
+            Inspector inspector02 = new Inspector("Natalie Portman", new SimpleDateFormat("dd/MM/yyyy").parse("09/06/1981"), false);
+            Inspector inspector03 = new Inspector("Bruce Willis", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), true);
+            Supervisor supervisor = new Supervisor("Jodie Foster", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), false, false);
+            FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), "officer");
+            baggageScanner.getRollerConveryor().setInspector(inspector01);
+            baggageScanner.getOperatingStation().setInspector(inspector02);
+            baggageScanner.getManualPostControl().setInspector(inspector03);
+            baggageScanner.getSupervision().setSupervisor(supervisor);
+            baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
+            System.out.println("Employees have been assigned to baggage scanner");
+            return baggageScanner;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error occurred while parsing a date.");
+            return null;
+        }
     }
 }
