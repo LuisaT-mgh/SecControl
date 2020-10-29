@@ -10,7 +10,7 @@ public class FederalPoliceOfficer extends Employee{
     private BaggageScanner baggageScanner;
     private FederalPoliceOffice federalPoliceOffice;
 
-    public FederalPoliceOfficer(String name, Date birthDate, String grade) {
+    public FederalPoliceOfficer(String name, String birthDate, String grade) {
         super(name, birthDate);
         this.grade = grade;
         idCard.setType(IDCardType.EXTERNAL);

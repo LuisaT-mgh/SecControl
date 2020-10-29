@@ -9,7 +9,7 @@ public class Supervisor extends Employee{
     private boolean isExecutive;
     private Supervision supervision;
 
-    public Supervisor(String name, Date birthDate, boolean isSenior, boolean isExecutive) {
+    public Supervisor(String name, String birthDate, boolean isSenior, boolean isExecutive) {
         super(name, birthDate);
         this.isSenior = isSenior;
         this.isExecutive = isExecutive;

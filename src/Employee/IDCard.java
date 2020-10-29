@@ -14,10 +14,15 @@ public class IDCard {
     private IDCardType type;
     private Employee employee;
 
-    public IDCard(UUID id, Employee employee, char ProfileType) throws ParseException {
+    public IDCard(UUID id, Employee employee, char ProfileType){
         this.id = id;
         isLocked = false;
-        validUntil = new SimpleDateFormat("dd/MM/yyyy").parse("24/03/2100");
+        try {
+            validUntil = new SimpleDateFormat("dd/MM/yyyy").parse("24/03/2100");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error while parsing the Date for the IDCard.");
+        }
         //String.format("%04d", random.nextInt(10000));
         //Todo random pin festlegen
     }

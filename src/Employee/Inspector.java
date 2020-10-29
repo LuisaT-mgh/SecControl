@@ -11,7 +11,7 @@ public class Inspector extends Employee{
     private RollerConveryor rollerConveryor;
     private ManualPostControl manualPostControl;
     private OperatingStation operatingStation;
-    public Inspector(String name, Date birthDate, boolean isSenior) {
+    public Inspector(String name, String birthDate, boolean isSenior) {
         super(name, birthDate);
         this.isSenior = isSenior;
         idCard.setType(IDCardType.STAFF);

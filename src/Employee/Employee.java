@@ -1,5 +1,7 @@
 package Employee;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -9,9 +11,14 @@ public abstract class Employee {
     protected Date birthDate;
     protected IDCard idCard;
 
-    public Employee(String name, Date birthDate) {
+    public Employee(String name, String birthDate) {
         this.name = name;
-        this.birthDate = birthDate;
+        try{
+            this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error with parsing the birthDate while creating the Employee.");
+        }
         id = UUID.randomUUID();
         idCard = new IDCard(id, this);
     }
