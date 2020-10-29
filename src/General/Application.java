@@ -33,9 +33,14 @@ public class Application {
         passengerList = passengers;
         System.out.println("Passengers with Baggage and hidden Items have been generated");
         BaggageScanner baggageScanner = generateBaggageScanner(passengerList.size());
-        Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
+        FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice();
         FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
         FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
+        federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer01);
+        federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer02);
+        federalPoliceOffice.getRegisteredOfficers().add(baggageScanner.getFederalPoliceOfficer());
+        System.out.println("All officers have been registered in the federal police office");
+        Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
         HouseKeeping houseKeeping = new HouseKeeping("Json Clark", new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969"));
         System.out.println("All additional Employees have been created");
 
@@ -147,6 +152,7 @@ public class Application {
         baggageScanner.getManualPostControl().setInspector(inspector03);
         baggageScanner.getSupervision().setSupervisor(supervisor);
         baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
+        scanner.setBaggageScanner(baggageScanner);
         System.out.println("Employees have been assigned to baggage scanner");
         return baggageScanner;
     }

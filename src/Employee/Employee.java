@@ -1,19 +1,22 @@
 package Employee;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
+import Employee.IDCard;
 
 public abstract class Employee {
     protected UUID id;
     protected String name;
     protected Date birthDate;
     protected IDCard idCard;
+    protected String pinThatIsRemembered;
 
-    public Employee(String name, Date birthDate) {
+    public Employee(String name, Date birthDate) throws ParseException {
         this.name = name;
         this.birthDate = birthDate;
         id = UUID.randomUUID();
-        idCard = new IDCard(id, this);
+
     }
 
     public UUID getId() {
@@ -38,6 +41,24 @@ public abstract class Employee {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public IDCard getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(IDCard idCard) {
+        this.idCard = idCard;
+    }
+
+
+
+    public String getPinThatIsRemembered() {
+        return pinThatIsRemembered;
+    }
+
+    public void setPinThatIsRemembered(String pinThatIsRemembered) {
+        this.pinThatIsRemembered = pinThatIsRemembered;
     }
 }
 

@@ -5,5 +5,5 @@ public enum ProfileType {
     O,
     I,
     S,
-    T;
+    T
 }

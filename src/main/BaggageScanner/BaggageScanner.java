@@ -1,8 +1,11 @@
 package main.BaggageScanner;
 
 import Employee.FederalPoliceOfficer;
+import Employee.IDCard;
+import Employee.ProfileType;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 
 public class BaggageScanner implements IHasButton{
     private Belt belt;
@@ -33,31 +36,73 @@ public class BaggageScanner implements IHasButton{
         status = Status.SHUTDOWN;
     }
 
-    public void moveBeltForward(){
+    public void moveBeltForward(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.I))) {
+            System.out.println("Move belt forward has been called");
+        }
+        else {
+            System.out.println("Unauthorised call of move belt forward");
+        }
     }
-    public void moveBeltBackwards(){
+    public void moveBeltBackwards(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.I))) {
+            System.out.println("MoveBeltBackwards has been called");
+        }
+        else {
+            System.out.println("Unauthorised call of moveBeltBackwards");
+        }
     }
-    public void scan(){
-
+    public void scan(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.I))) {
+            System.out.println("Scan has been called");
+        }
+        else {
+            System.out.println("Unauthorised call of scan");
+        }
     }
-    public void alarm(){
-
+    public void alarm(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.I))) {
+            System.out.println("Alarm has been called");
+        }
+        else {
+            System.out.println("Unauthorised call of alarm");
+        }
     }
-    public void report(){
-
+    public void report(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
+            System.out.println("Report has been called");
+        }
+        else {
+            System.out.println("Unauthorised call of report");
+        }
     }
-    public void maintenance(){
-
+    public void maintenance(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.T))) {
+            System.out.println("BaggageScanner is maintained");
+        }
+        else {
+            System.out.println("Unauthorised maintenance try");
+        }
     }
-    public void start(){
-        status = Status.START;
-        System.out.println("Baggage Scanner was started");
-        status = Status.DEACTIVATED;
-        System.out.println("Baggage Scanner is noch in status deactivated");
+    public void start(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
+            status = Status.START;
+            System.out.println("Baggage Scanner was started");
+            status = Status.DEACTIVATED;
+            System.out.println("Baggage Scanner is noch in status deactivated");
+        }
+        else{
+            System.out.println("Unauthorised attempt to start baggage scanner");
+        }
     }
-    public void deactivate(){
-        status = Status.SHUTDOWN;
-        System.out.println("Baggage Scanner was shut down");
+    public void deactivate(IDCard idCard){
+        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
+            status = Status.SHUTDOWN;
+            System.out.println("Baggage Scanner was shut down");
+        }
+        else{
+            System.out.println("Unauthorised attempt to shut down baggage scanner");
+        }
     }
     public Belt getBelt() {
         return belt;
