@@ -102,7 +102,17 @@ public class TestSecurity {
     @Test
     @DisplayName("4. Test permissions for BaggageScanner")
     public void testBaggageScannerPermissions(){
-        //TODO 4.Ein Mitarbeiter mit dem Profil K oder O kann sich an einem Gepäckscanner nicht anmelden.
+        //TODO Test Test 4
+        //4.Ein Mitarbeiter mit dem Profil K oder O kann sich an einem Gepäckscanner nicht anmelden.
+        OperatingStation opStation = app.baggageScanner.getOperatingStation();
+
+        //Profil K
+        HouseKeeping houseKeeping = new HouseKeeping("Bill Gates", "01/01/2000");
+        Assertions.assertFalse(opStation.getReader().activateBaggageScanner(houseKeeping.getIdCard(), houseKeeping.getPinThatIsRemembered()));
+
+        //Profil O
+        FederalPoliceOfficer officer = new FederalPoliceOfficer("Bad Guy", "11/11/2011", "officer");
+        Assertions.assertFalse(opStation.getReader().activateBaggageScanner(officer.getIdCard(), officer.getPinThatIsRemembered()));
     }
 
     @Test
