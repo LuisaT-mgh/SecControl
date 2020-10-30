@@ -14,9 +14,9 @@ import BaggageScanner.*;
 import BaggageScanner.Reader;
 
 import java.io.*;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Stack;
 
 public class Application {
     public BaggageScanner baggageScanner;
@@ -53,12 +53,15 @@ public class Application {
     }
 
     public void prepareSecurityControl() {
-        //Entsperren baggage scanner etc
         baggageScanner.getOperatingStation().getReader().activateBaggageScanner(baggageScanner.getOperatingStation().getInspector().getIdCard(), baggageScanner.getOperatingStation().getInspector().getPinThatIsRemembered());
     }
 
     public void processPassengers() {
         //TODO passagiere abarbeiten;
+        for (Passenger passenger: passengers) {
+            passenger.handOverBaggage();
+
+        }
     }
 
     private ArrayList<Passenger> generatePassengers() {
@@ -144,24 +147,24 @@ public class Application {
         Reader reader = new Reader();
         operatingStation.setReader(reader);
         operatingStation.getReader().setOperatingStation(operatingStation);
-        RollerConveryor rollerConveryor = new RollerConveryor();
+        RollerConveyor rollerConveyor = new RollerConveyor();
         Belt belt = new Belt();
         Scanner scanner = new Scanner();
         ManualPostControl manualPostControl = new ManualPostControl();
         Supervision supervision = new Supervision();
         Track[] tracks = {new Track(), new Track()};
-        ArrayList<Tray> trays = new ArrayList<>();
+        Stack<Tray> trays = new Stack<Tray>();
         for (int i = 0; i < numberOfPassengers * 3; i++) {
-            trays.add(new Tray());
+            trays.push(new Tray());
         }
-        BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveryor, scanner, supervision, trays);
+        BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveyor, scanner, supervision, trays);
         System.out.println("A baggage Scanner has been created");
         Inspector inspector01 = new Inspector("Clint Eastwood", "31/05/1930", true);
         Inspector inspector02 = new Inspector("Natalie Portman", "09/06/1981", false);
         Inspector inspector03 = new Inspector("Bruce Willis", "19/03/1955", true);
         Supervisor supervisor = new Supervisor("Jodie Foster", "19/03/1955", false, false);
         FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", "19/03/1955", "officer");
-        baggageScanner.getRollerConveryor().setInspector(inspector01);
+        baggageScanner.getRollerConveyor().setInspector(inspector01);
         baggageScanner.getOperatingStation().setInspector(inspector02);
         baggageScanner.getManualPostControl().setInspector(inspector03);
         baggageScanner.getSupervision().setSupervisor(supervisor);

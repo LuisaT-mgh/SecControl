@@ -4,27 +4,27 @@ import Employee.FederalPoliceOfficer;
 import Employee.IDCard;
 import Employee.ProfileType;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class BaggageScanner implements IHasButton{
     private Belt belt;
     private ManualPostControl manualPostControl;
     private OperatingStation operatingStation;
-    private RollerConveryor rollerConveryor;
+    private RollerConveyor rollerConveyor;
     private Scanner scanner;
     private Status status;
     private Supervision supervision;
-    private ArrayList<Tray> trays;
+    private Stack<Tray> trays;
     private Button powerButton;
     private Track[] tracks;
     private FederalPoliceOfficer federalPoliceOfficer;
 
 
-    public BaggageScanner(Track[] tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveryor rollerConveryor, Scanner scanner, Supervision supervision, ArrayList<Tray> trays) {
+    public BaggageScanner(Track[] tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveyor rollerConveyor, Scanner scanner, Supervision supervision, Stack<Tray> trays) {
         this.belt = belt;
         this.manualPostControl = manualPostControl;
         this.operatingStation = operatingStation;
-        this.rollerConveryor = rollerConveryor;
+        this.rollerConveyor = rollerConveyor;
         this.scanner = scanner;
         this.supervision = supervision;
         this.trays = trays;
@@ -127,12 +127,12 @@ public class BaggageScanner implements IHasButton{
         this.operatingStation = operatingStation;
     }
 
-    public RollerConveryor getRollerConveryor() {
-        return rollerConveryor;
+    public RollerConveyor getRollerConveyor() {
+        return rollerConveyor;
     }
 
-    public void setRollerConveryor(RollerConveryor rollerConveryor) {
-        this.rollerConveryor = rollerConveryor;
+    public void setRollerConveyor(RollerConveyor rollerConveyor) {
+        this.rollerConveyor = rollerConveyor;
     }
 
     public Scanner getScanner() {
@@ -159,11 +159,10 @@ public class BaggageScanner implements IHasButton{
         this.supervision = supervision;
     }
 
-    public ArrayList<Tray> getTrays() {
+    public Stack<Tray> getTrays() {
         return trays;
     }
-
-    public void setTrays(ArrayList<Tray> trays) {
+    public void setTrays(Stack<Tray> trays) {
         this.trays = trays;
     }
 

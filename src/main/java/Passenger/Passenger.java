@@ -1,6 +1,8 @@
 package Passenger;
 
+import BaggageScanner.BaggageScanner;
 import HandBaggage.HandBaggage;
+import BaggageScanner.Tray;
 
 import java.util.ArrayList;
 
@@ -8,6 +10,7 @@ public class Passenger {
     private ArrayList<HandBaggage> handBaggage;
     private String fistName;
     private String lastName;
+    private BaggageScanner baggageScanner;
 
     public Passenger(String fistName, String lastName) {
         this.fistName = fistName;
@@ -15,8 +18,11 @@ public class Passenger {
     }
 
     public void handOverBaggage(){
-        handBaggage = new ArrayList<HandBaggage>();
-        //TODO implement function
+        for ( HandBaggage handBaggagePart: handBaggage) {
+            Tray tray = baggageScanner.getTrays().pop();
+            tray.setHandBaggage(handBaggagePart);
+            baggageScanner.getRollerConveyor().getTrays().add(tray);
+        }
     }
 
     public ArrayList<HandBaggage> getHandBaggage() {
@@ -41,5 +47,13 @@ public class Passenger {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public BaggageScanner getBaggageScanner() {
+        return baggageScanner;
+    }
+
+    public void setBaggageScanner(BaggageScanner baggageScanner) {
+        this.baggageScanner = baggageScanner;
     }
 }
