@@ -24,9 +24,13 @@ test {
 sourceSets {
     main {
         java {
-            srcDirs 'src'
+            srcDirs 'main'
         }
     }
 
-
+    test {
+        java {
+            srcDir 'test'
+        }
+    }
 }
