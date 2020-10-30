@@ -1,4 +1,4 @@
-import main.General.Application;
+import General.Application;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
