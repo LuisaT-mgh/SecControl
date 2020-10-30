@@ -1,7 +1,11 @@
+import Employee.*;
 import General.Application;
 import org.junit.jupiter.api.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,8 +15,8 @@ public class TestSecurity {
 
     @BeforeEach
     public void setUp(){
-        //TODO create the classes to test.
         app = new Application();
+        //TODO actually create the security control.
     }
 
     @Test
@@ -24,7 +28,52 @@ public class TestSecurity {
     @Test
     @DisplayName("2. Check workplaces")
     public void testAssignmentOfEmployees(){
-        //TODO 2.Die Positionen an dem Gepäckscanner werden korrekt mit Mitarbeitern besetzt.
+        //2.Die Positionen an dem Gepäckscanner werden korrekt mit Mitarbeitern besetzt.
+        //TODO Maybe check the new specs again.
+
+        //Create Dates
+        Date conveyorDate = null, operatorDate = null, postControlDate = null, supervisorDate = null, policeDate = null;
+        try{
+            conveyorDate = new SimpleDateFormat("dd/MM/yyyy").parse("31/05/1930");
+            operatorDate = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/1981");
+            postControlDate = new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955");
+            supervisorDate = new SimpleDateFormat("dd/MM/yyyy").parse("19/11/1962");
+            policeDate = new SimpleDateFormat("dd/MM/yyyy").parse("31/07/1962");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error while creating the BirthDates to check against.");
+        }
+
+        //Inspektor Rollenbahn
+        Employee current = app.baggageScanner.getRollerConveryor().getInspector();
+        Assertions.assertEquals("Clint Eastwood", current.getName());
+        Assertions.assertEquals(conveyorDate, current.getBirthDate());
+        Assertions.assertEquals(Inspector.class, current.getClass());
+
+        //Inspektorin Bedienplatz
+        current = app.baggageScanner.getOperatingStation().getInspector();
+        Assertions.assertEquals("Natalie Portman", current.getName());
+        Assertions.assertEquals(operatorDate, current.getBirthDate());
+        Assertions.assertEquals(Inspector.class, current.getClass());
+
+        //Inspektor Nachkontrolle
+        current = app.baggageScanner.getManualPostControl().getInspector();
+        Assertions.assertEquals("Bruce Willis", current.getName());
+        Assertions.assertEquals(postControlDate, current.getBirthDate());
+        Assertions.assertEquals(Inspector.class, current.getClass());
+
+        //Supervisor am Arbeitsplatz SV
+        current = app.baggageScanner.getSupervision().getSupervisor();
+        Assertions.assertEquals("Jodie Foster", current.getName());
+        Assertions.assertEquals(supervisorDate, current.getBirthDate());
+        Assertions.assertEquals(Supervisor.class, current.getClass());
+
+        //Bundespolizist
+        current = app.baggageScanner.getFederalPoliceOfficer();
+        Assertions.assertEquals("Wesley Snipes", current.getName());
+        Assertions.assertEquals(policeDate, current.getBirthDate());
+        Assertions.assertEquals(FederalPoliceOfficer.class, current.getClass());
+
     }
 
     @Test
