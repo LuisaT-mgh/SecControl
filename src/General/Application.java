@@ -37,14 +37,14 @@ public class Application {
             return;
         }
         FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice();
-        FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
-        FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
+        FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", "01/01/1969", "officer");
+        FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", "01/01/1969", "officer");
         federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer01);
         federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer02);
         federalPoliceOffice.getRegisteredOfficers().add(baggageScanner.getFederalPoliceOfficer());
         System.out.println("All officers have been registered in the federal police office");
-        Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
-        HouseKeeping houseKeeping = new HouseKeeping("Json Clark", new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969"));
+        Technician technician = new Technician("Jasom Stratham", "19/03/1955");
+        HouseKeeping houseKeeping = new HouseKeeping("Json Clark", "17/07/1969");
         System.out.println("All additional Employees have been created");
 
 
@@ -144,11 +144,11 @@ public class Application {
         }
         BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveryor, scanner, supervision, trays);
         System.out.println("A baggage Scanner has been created");
-        Inspector inspector01 = new Inspector("Clint Eastwood", new SimpleDateFormat("dd/MM/yyyy").parse("31/05/1930"), true);
-        Inspector inspector02 = new Inspector("Natalie Portman", new SimpleDateFormat("dd/MM/yyyy").parse("09/06/1981"), false);
-        Inspector inspector03 = new Inspector("Bruce Willis", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), true);
-        Supervisor supervisor = new Supervisor("Jodie Foster", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), false, false);
-        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"), "officer");
+        Inspector inspector01 = new Inspector("Clint Eastwood", "31/05/1930", true);
+        Inspector inspector02 = new Inspector("Natalie Portman", "09/06/1981", false);
+        Inspector inspector03 = new Inspector("Bruce Willis", "19/03/1955", true);
+        Supervisor supervisor = new Supervisor("Jodie Foster", "19/03/1955", false, false);
+        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes","19/03/1955", "officer");
         baggageScanner.getRollerConveryor().setInspector(inspector01);
         baggageScanner.getOperatingStation().setInspector(inspector02);
         baggageScanner.getManualPostControl().setInspector(inspector03);

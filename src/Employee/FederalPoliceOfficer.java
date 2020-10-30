@@ -11,7 +11,7 @@ public class FederalPoliceOfficer extends Employee{
     private BaggageScanner baggageScanner;
     private FederalPoliceOffice federalPoliceOffice;
 
-    public FederalPoliceOfficer(String name, Date birthDate, String grade) throws ParseException {
+    public FederalPoliceOfficer(String name, String birthDate, String grade) throws ParseException {
         super(name, birthDate);
         this.grade = grade;
         idCard = new IDCard(id, this, ProfileType.O);

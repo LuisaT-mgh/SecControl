@@ -13,10 +13,10 @@ public abstract class Employee {
     protected IDCard idCard;
     protected String pinThatIsRemembered;
 
-    public Employee(String name, Date birthDate) throws ParseException {
+    public Employee(String name, String birthDate) throws ParseException {
         this.name = name;
         try{
-            this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(String.valueOf(birthDate));
+            this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
         } catch (ParseException e) {
             e.printStackTrace();
             System.out.println("Error with parsing the birthDate while creating the Employee.");
