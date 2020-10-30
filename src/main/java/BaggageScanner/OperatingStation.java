@@ -1,5 +1,6 @@
 package BaggageScanner;
 
+import Employee.IDCard;
 import Employee.Inspector;
 
 public class OperatingStation implements IHasButton {
@@ -10,17 +11,29 @@ public class OperatingStation implements IHasButton {
 
     public OperatingStation() {
         buttons = new Button[3];
-        buttons[0] = new Button();
-        buttons[1] = new Button();
-        buttons[2] = new Button();
+        buttons[0] = new Button(this);
+        buttons[1] = new Button(this);
+        buttons[2] = new Button(this);
         buttons[0].setShape(ButtonShape.ARROW_RIGHT);
         buttons[1].setShape(ButtonShape.ARROW_LEFT);
         buttons[2].setShape(ButtonShape.RECTANGLE);
     }
 
     @Override
-    public void handleButtonPushed(Button sender) {
-        //TODO write function handleButtonPushed
+    public void handleButtonPushed(Button sender, IDCard idCard) {
+        if(idCard.getId().equals(inspector.getId())) {
+            switch (sender.getShape()) {
+                case RECTANGLE:
+                    baggageScanner.scan(inspector.getIdCard());
+                case ARROW_LEFT:
+                    baggageScanner.moveBeltForward(inspector.getIdCard());
+                case ARROW_RIGHT:
+                    baggageScanner.moveBeltBackwards(inspector.getIdCard());
+            }
+        }
+        else{
+            System.out.println("Unauthorised handling of baggage scanner");
+        }
     }
 
     public Inspector getInspector() {

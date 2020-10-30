@@ -60,7 +60,7 @@ public class Application {
         //TODO passagiere abarbeiten;
         for (Passenger passenger: passengers) {
             passenger.handOverBaggage();
-
+            baggageScanner.getRollerConveyor().getInspector().pushTrays();
         }
     }
 

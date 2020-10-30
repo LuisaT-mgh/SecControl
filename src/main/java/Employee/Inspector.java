@@ -28,4 +28,8 @@ public class Inspector extends Employee{
             System.out.println("No roller conveyor found in inspector");
         }
     }
+
+    public void scanBaggage(){
+
+    }
 }

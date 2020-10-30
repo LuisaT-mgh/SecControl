@@ -1,13 +1,17 @@
 package BaggageScanner;
 
+import Employee.IDCard;
+
 public class Button {
-
-    public Button() {
-
-    }
+    private IHasButton parent;
     private ButtonShape shape;
-    public void pushButton(){
-        //TODO push button
+
+    public Button(IHasButton parent) {
+        this.parent = parent;
+    }
+
+    public void pushButton(IDCard card){
+        parent.handleButtonPushed(this, card);
     }
 
     public ButtonShape getShape() {
