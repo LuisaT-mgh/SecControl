@@ -19,20 +19,20 @@ public class Reader {
      * @param pinToActivate The PIN entered.
      * @return Boolean if the action was successful.
      */
-    public void activateBaggageScanner(IDCard card, String pinToActivate){
+    public boolean activateBaggageScanner(IDCard card, String pinToActivate){
         if(operatingStation.getBaggageScanner().getStatus() != Status.LOCKED) {
             if (!validateAuthorisationInspector(card)) {
                 System.out.println("Unauthorized access to baggage scanner request");
-                return;
+                return false;
             }
             if (denialCounter == 2) {
                 operatingStation.getBaggageScanner().setStatus(Status.LOCKED);
-                return;
+                return false;
             } else {
                 if (validatePin(card, pinToActivate)) {
                     operatingStation.getBaggageScanner().setStatus(Status.ACTIVATED);
                     System.out.println("Pin entered accepted, baggage scanner activated");
-                    return;
+                    return true;
                 } else {
                     if (lastUsedCard == null || !(lastUsedCard.getId().equals(card.getId()))) {
                         denialCounter = 0;
@@ -46,7 +46,7 @@ public class Reader {
         else{
             System.out.println("Baggage Scanner is locked");
         }
-        return;
+        return false;
     }
 
     /** Try to unlock a locked BaggageScanner.
