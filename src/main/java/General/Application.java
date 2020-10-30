@@ -20,16 +20,23 @@ import java.util.Random;
 
 public class Application {
     public BaggageScanner baggageScanner;
+    public Technician technician;
+    public HouseKeeping houseKeeping;
+    public ArrayList<FederalPoliceOfficer> federalPoliceOfficers = new ArrayList<>();
+    public ArrayList<Passenger> passengers;
+    public FederalPoliceOffice federalPoliceOffice;
+
     public static void main(String... args) throws InterruptedException, ParseException {
         Application application = new Application();
-        application.startSecurityControl(application.generatePassengers());
+        application.generateSecurityControl();
+        application.prepareSecurityControl();
+        application.processPassengers();
     }
 
-    public void startSecurityControl(ArrayList<Passenger> passengers) throws ParseException {
-        ArrayList<Passenger> passengerList= new ArrayList<>();
-        passengerList = passengers;
+    public void generateSecurityControl() throws ParseException {
+        passengers = generatePassengers();
         System.out.println("Passengers with Baggage and hidden Items have been generated");
-        if((this.baggageScanner = generateBaggageScanner(passengerList.size())) == null){
+        if((this.baggageScanner = generateBaggageScanner(passengers.size())) == null){
             System.out.println("Error while generating the Baggage Scanner.");
             return;
         }
@@ -40,11 +47,18 @@ public class Application {
         federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer02);
         federalPoliceOffice.getRegisteredOfficers().add(baggageScanner.getFederalPoliceOfficer());
         System.out.println("All officers have been registered in the federal police office");
-        Technician technician = new Technician("Jasom Stratham", "19/03/1955");
-        HouseKeeping houseKeeping = new HouseKeeping("Json Clark", "17/07/1969");
+        technician = new Technician("Jasom Stratham", "19/03/1955");
+        houseKeeping = new HouseKeeping("Json Clark", "17/07/1969");
         System.out.println("All additional Employees have been created");
+    }
 
+    public void prepareSecurityControl(){
+        //Entsperren baggage scanner etc
+        baggageScanner.getOperatingStation().getReader().activateBaggageScanner(baggageScanner.getOperatingStation().getInspector().getIdCard(), baggageScanner.getOperatingStation().getInspector().getPinThatIsRemembered());
+    }
 
+    public void processPassengers(){
+        //passagiere abarbeiten;
     }
 
     public ArrayList<Passenger> generatePassengers(){
@@ -151,6 +165,7 @@ public class Application {
         baggageScanner.getManualPostControl().setInspector(inspector03);
         baggageScanner.getSupervision().setSupervisor(supervisor);
         baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
+        operatingStation.setBaggageScanner(baggageScanner);
         System.out.println("Employees have been assigned to baggage scanner");
         return baggageScanner;
     }

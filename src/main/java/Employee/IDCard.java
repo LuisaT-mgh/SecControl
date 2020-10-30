@@ -1,10 +1,14 @@
 package Employee;
 
+import Configuration.Configuration;
+import General.AES;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class IDCard {
     private UUID id;
@@ -27,8 +31,7 @@ public class IDCard {
         Random random = new Random();
         String pin = String.format("%04d", random.nextInt(10000));
         employee.setPinThatIsRemembered(pin);
-        magnetStripe = (String.valueOf(profileType) + pin);
-        //Todo random pin festlegen
+        magnetStripe = (String.valueOf(profileType) + AES.encrypt(pin, Configuration.instance.key));
     }
 
     public UUID getId() {
