@@ -16,7 +16,7 @@ public class TestSecurity {
     @BeforeEach
     public void setUp(){
         app = new Application();
-        //TODO actually create the security control.
+        app.generateSecurityControl();
     }
 
     @Test
@@ -46,30 +46,35 @@ public class TestSecurity {
 
         //Inspektor Rollenbahn
         Employee current = app.baggageScanner.getRollerConveryor().getInspector();
+        Assertions.assertNotNull(current);
         Assertions.assertEquals("Clint Eastwood", current.getName());
         Assertions.assertEquals(conveyorDate, current.getBirthDate());
         Assertions.assertEquals(Inspector.class, current.getClass());
 
         //Inspektorin Bedienplatz
         current = app.baggageScanner.getOperatingStation().getInspector();
+        Assertions.assertNotNull(current);
         Assertions.assertEquals("Natalie Portman", current.getName());
         Assertions.assertEquals(operatorDate, current.getBirthDate());
         Assertions.assertEquals(Inspector.class, current.getClass());
 
         //Inspektor Nachkontrolle
         current = app.baggageScanner.getManualPostControl().getInspector();
+        Assertions.assertNotNull(current);
         Assertions.assertEquals("Bruce Willis", current.getName());
         Assertions.assertEquals(postControlDate, current.getBirthDate());
         Assertions.assertEquals(Inspector.class, current.getClass());
 
         //Supervisor am Arbeitsplatz SV
         current = app.baggageScanner.getSupervision().getSupervisor();
+        Assertions.assertNotNull(current);
         Assertions.assertEquals("Jodie Foster", current.getName());
         Assertions.assertEquals(supervisorDate, current.getBirthDate());
         Assertions.assertEquals(Supervisor.class, current.getClass());
 
         //Bundespolizist
         current = app.baggageScanner.getFederalPoliceOfficer();
+        Assertions.assertNotNull(current);
         Assertions.assertEquals("Wesley Snipes", current.getName());
         Assertions.assertEquals(policeDate, current.getBirthDate());
         Assertions.assertEquals(FederalPoliceOfficer.class, current.getClass());
