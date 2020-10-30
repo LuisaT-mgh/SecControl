@@ -26,14 +26,14 @@ public class Application {
     public ArrayList<Passenger> passengers;
     public FederalPoliceOffice federalPoliceOffice;
 
-    public static void main(String... args){
+    public static void main(String... args) {
         Application application = new Application();
         application.generateSecurityControl();
         application.prepareSecurityControl();
         application.processPassengers();
     }
 
-    public void generateSecurityControl(){
+    public void generateSecurityControl() {
         passengers = generatePassengers();
         System.out.println("Passengers with Baggage and hidden Items have been generated");
 
@@ -52,16 +52,16 @@ public class Application {
         System.out.println("All additional Employees have been created");
     }
 
-    public void prepareSecurityControl(){
+    public void prepareSecurityControl() {
         //Entsperren baggage scanner etc
         baggageScanner.getOperatingStation().getReader().activateBaggageScanner(baggageScanner.getOperatingStation().getInspector().getIdCard(), baggageScanner.getOperatingStation().getInspector().getPinThatIsRemembered());
     }
 
-    public void processPassengers(){
+    public void processPassengers() {
         //TODO passagiere abarbeiten;
     }
 
-    private ArrayList<Passenger> generatePassengers(){
+    private ArrayList<Passenger> generatePassengers() {
         ArrayList<Passenger> passengers = new ArrayList<>();
         try {
             String line;
@@ -126,11 +126,11 @@ public class Application {
         return handBaggage;
     }
 
-    private Layer hideItemInLayer(Layer layer, String item){
+    private Layer hideItemInLayer(Layer layer, String item) {
         Random rand = new Random();
-        int letterNumber = rand.nextInt(9999-item.length());
+        int letterNumber = rand.nextInt(9999 - item.length());
         Character[] temporaryCharacter = layer.getCharacter();
-        for (int i = 0; i<item.length();i++){
+        for (int i = 0; i < item.length(); i++) {
             temporaryCharacter[letterNumber] = item.charAt(i);
             letterNumber++;
         }
@@ -139,10 +139,11 @@ public class Application {
     }
 
 
-    public BaggageScanner generateBaggageScanner(int numberOfPassengers){
+    public BaggageScanner generateBaggageScanner(int numberOfPassengers) {
         OperatingStation operatingStation = new OperatingStation();
         Reader reader = new Reader();
         operatingStation.setReader(reader);
+        operatingStation.getReader().setOperatingStation(operatingStation);
         RollerConveryor rollerConveryor = new RollerConveryor();
         Belt belt = new Belt();
         Scanner scanner = new Scanner();
@@ -150,7 +151,7 @@ public class Application {
         Supervision supervision = new Supervision();
         Track[] tracks = {new Track(), new Track()};
         ArrayList<Tray> trays = new ArrayList<>();
-        for (int i = 0; i<numberOfPassengers*3; i++){
+        for (int i = 0; i < numberOfPassengers * 3; i++) {
             trays.add(new Tray());
         }
         BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveryor, scanner, supervision, trays);
@@ -159,7 +160,7 @@ public class Application {
         Inspector inspector02 = new Inspector("Natalie Portman", "09/06/1981", false);
         Inspector inspector03 = new Inspector("Bruce Willis", "19/03/1955", true);
         Supervisor supervisor = new Supervisor("Jodie Foster", "19/03/1955", false, false);
-        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes","19/03/1955", "officer");
+        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", "19/03/1955", "officer");
         baggageScanner.getRollerConveryor().setInspector(inspector01);
         baggageScanner.getOperatingStation().setInspector(inspector02);
         baggageScanner.getManualPostControl().setInspector(inspector03);
