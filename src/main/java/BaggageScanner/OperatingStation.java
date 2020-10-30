@@ -1,6 +1,6 @@
 package BaggageScanner;
 
-import main.Employee.Inspector;
+import Employee.Inspector;
 
 public class OperatingStation implements IHasButton {
     private Reader reader;

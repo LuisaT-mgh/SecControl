@@ -1,6 +1,6 @@
 package Passenger;
 
-import main.HandBaggage.HandBaggage;
+import HandBaggage.HandBaggage;
 
 import java.util.ArrayList;
 

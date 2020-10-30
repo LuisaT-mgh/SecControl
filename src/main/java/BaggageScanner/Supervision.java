@@ -1,6 +1,6 @@
 package BaggageScanner;
 
-import main.Employee.Supervisor;
+import Employee.Supervisor;
 
 public class Supervision {
     private Supervisor supervisor;

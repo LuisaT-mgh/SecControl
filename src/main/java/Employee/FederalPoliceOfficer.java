@@ -1,7 +1,7 @@
 package Employee;
 
-import main.FerderalPoliceOffice.FederalPoliceOffice;
-import main.BaggageScanner.BaggageScanner;
+import FerderalPoliceOffice.FederalPoliceOffice;
+import BaggageScanner.BaggageScanner;
 
 import java.text.ParseException;
 

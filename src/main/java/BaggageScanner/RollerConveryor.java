@@ -1,6 +1,6 @@
 package BaggageScanner;
 
-import main.Employee.Inspector;
+import Employee.Inspector;
 
 public class RollerConveryor {
     private Inspector inspector;

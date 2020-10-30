@@ -1,6 +1,6 @@
 package BaggageScanner;
 
-import main.HandBaggage.HandBaggage;
+import HandBaggage.HandBaggage;
 
 public class TestStrip {
     private Character[][] surface;

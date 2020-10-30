@@ -1,6 +1,6 @@
 package FerderalPoliceOffice;
 
-import main.Employee.FederalPoliceOfficer;
+import Employee.FederalPoliceOfficer;
 
 public class Remote {
     private FederalPoliceOfficer federalPoliceOfficer;

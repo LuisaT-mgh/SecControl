@@ -1,6 +1,6 @@
 package FerderalPoliceOffice;
 
-import main.Employee.FederalPoliceOfficer;
+import Employee.FederalPoliceOfficer;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
 package HandBaggage;
 
-import main.Passenger.Passenger;
-import main.BaggageScanner.TestStrip;
-import main.BaggageScanner.Tray;
+import Passenger.Passenger;
+import BaggageScanner.TestStrip;
+import BaggageScanner.Tray;
 
 public class HandBaggage {
     private Layer[] layers;

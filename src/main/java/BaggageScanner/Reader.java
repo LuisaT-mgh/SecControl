@@ -1,6 +1,6 @@
 package BaggageScanner;
 
-import main.Employee.IDCard;
+import Employee.IDCard;
 
 public class Reader {
     private OperatingStation operatingStation;

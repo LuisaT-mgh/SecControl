@@ -1,6 +1,6 @@
 package Configuration;
 
-import main.Employee.ProfileType;
+import Employee.ProfileType;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

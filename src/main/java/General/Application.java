@@ -1,17 +1,17 @@
 package General;
 
-import main.Configuration.Configuration;
-import main.Employee.Supervisor;
-import main.Employee.Inspector;
-import main.Employee.FederalPoliceOfficer;
-import main.Employee.Technician;
-import main.FerderalPoliceOffice.FederalPoliceOffice;
-import main.Employee.HouseKeeping;
-import main.HandBaggage.HandBaggage;
-import main.Passenger.Passenger;
-import main.HandBaggage.Layer;
-import main.BaggageScanner.*;
-import main.BaggageScanner.Reader;
+import Configuration.Configuration;
+import Employee.Supervisor;
+import Employee.Inspector;
+import Employee.FederalPoliceOfficer;
+import Employee.Technician;
+import FerderalPoliceOffice.FederalPoliceOffice;
+import Employee.HouseKeeping;
+import HandBaggage.HandBaggage;
+import Passenger.Passenger;
+import HandBaggage.Layer;
+import BaggageScanner.*;
+import BaggageScanner.Reader;
 
 import java.io.*;
 import java.text.ParseException;

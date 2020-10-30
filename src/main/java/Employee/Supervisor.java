@@ -1,6 +1,6 @@
 package Employee;
 
-import main.BaggageScanner.Supervision;
+import BaggageScanner.Supervision;
 
 import java.text.ParseException;
 

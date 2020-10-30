@@ -1,8 +1,8 @@
 package BaggageScanner;
 
-import main.Employee.FederalPoliceOfficer;
-import main.Employee.IDCard;
-import main.Employee.ProfileType;
+import Employee.FederalPoliceOfficer;
+import Employee.IDCard;
+import Employee.ProfileType;
 
 import java.util.ArrayList;
 

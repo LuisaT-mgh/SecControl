@@ -1,8 +1,8 @@
 package Employee;
 
-import main.BaggageScanner.ManualPostControl;
-import main.BaggageScanner.OperatingStation;
-import main.BaggageScanner.RollerConveryor;
+import BaggageScanner.ManualPostControl;
+import BaggageScanner.OperatingStation;
+import BaggageScanner.RollerConveryor;
 
 import java.text.ParseException;
 
