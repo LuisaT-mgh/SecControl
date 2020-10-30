@@ -14,7 +14,12 @@ public abstract class Employee {
 
     public Employee(String name, Date birthDate) throws ParseException {
         this.name = name;
-        this.birthDate = birthDate;
+        try{
+            this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error with parsing the birthDate while creating the Employee.");
+        }
         id = UUID.randomUUID();
 
     }

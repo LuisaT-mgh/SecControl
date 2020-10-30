@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class Application {
-
+    public BaggageScanner baggageScanner;
     public static void main(String... args) throws InterruptedException, ParseException {
         Application application = new Application();
         application.startSecurityControl(application.generatePassengers());
@@ -32,7 +32,10 @@ public class Application {
         ArrayList<Passenger> passengerList= new ArrayList<>();
         passengerList = passengers;
         System.out.println("Passengers with Baggage and hidden Items have been generated");
-        BaggageScanner baggageScanner = generateBaggageScanner(passengerList.size());
+        if((this.baggageScanner = generateBaggageScanner(passengerList.size())) == null){
+            System.out.println("Error while generating the Baggage Scanner.");
+            return;
+        }
         FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice();
         FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
         FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969"), "officer");
@@ -43,7 +46,6 @@ public class Application {
         Technician technician = new Technician("Jasom Stratham", new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955"));
         HouseKeeping houseKeeping = new HouseKeeping("Json Clark", new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969"));
         System.out.println("All additional Employees have been created");
-
 
 
     }
@@ -152,7 +154,6 @@ public class Application {
         baggageScanner.getManualPostControl().setInspector(inspector03);
         baggageScanner.getSupervision().setSupervisor(supervisor);
         baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
-        scanner.setBaggageScanner(baggageScanner);
         System.out.println("Employees have been assigned to baggage scanner");
         return baggageScanner;
     }

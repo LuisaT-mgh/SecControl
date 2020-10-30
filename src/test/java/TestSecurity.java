@@ -1,3 +1,4 @@
+import General.Application;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -6,9 +7,12 @@ import java.util.stream.Stream;
 
 public class TestSecurity {
 
+    Application app;
+
     @BeforeEach
     public void setUp(){
         //TODO create the classes to test.
+        app = new Application();
     }
 
     @Test
