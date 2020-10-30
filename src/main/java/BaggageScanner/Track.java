@@ -9,4 +9,20 @@ public class Track {
     public Track() {
         trays = new ArrayList<>();
     }
+
+    public int getTrackNumber() {
+        return trackNumber;
+    }
+
+    public void setTrackNumber(int trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public ArrayList<Tray> getTrays() {
+        return trays;
+    }
+
+    public void setTrays(ArrayList<Tray> trays) {
+        this.trays = trays;
+    }
 }
