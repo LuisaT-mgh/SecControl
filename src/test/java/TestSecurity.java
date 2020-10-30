@@ -1,4 +1,4 @@
-import BaggageScanner.OperatingStation;
+import BaggageScanner.*;
 import Employee.*;
 import General.Application;
 import org.junit.jupiter.api.*;
@@ -124,7 +124,32 @@ public class TestSecurity {
     @Test
     @DisplayName("6. Only Supervisor can unlock")
     public void testSupervisorUnlock(){
-        //TODO 6.Nur ein Supervisor kann einen Gepäckscanner im Status locked entsperren.
+        //TODO Test Test 6
+        //6.Nur ein Supervisor kann einen Gepäckscanner im Status locked entsperren.
+        FederalPoliceOfficer officer = new FederalPoliceOfficer("Bad Guy", "11/11/2011", "officer");
+        HouseKeeping houseKeeping = new HouseKeeping("Bill Gates", "01/01/2000");
+        Inspector inspector = new Inspector("Inspektor Gadget", "11/11/2011", true);
+        Technician technician = new Technician("Harald Herbert", "12/12/2012");
+        Supervisor supervisor = new Supervisor("Max Mustermann", "01/02/2003", true, false);
+
+        //Lock the BaggageScanner
+        BaggageScanner baggageScanner = app.baggageScanner;
+        baggageScanner.setStatus(Status.LOCKED);
+        Assertions.assertEquals(Status.LOCKED, baggageScanner.getStatus());
+
+        //Test unauthorised Employees
+        Assertions.assertFalse(baggageScanner.getOperatingStation().getReader().unlockBaggageScanner(officer.getIdCard(), officer.getPinThatIsRemembered()));
+        Assertions.assertEquals(Status.LOCKED, baggageScanner.getStatus());
+        Assertions.assertFalse(baggageScanner.getOperatingStation().getReader().unlockBaggageScanner(houseKeeping.getIdCard(), houseKeeping.getPinThatIsRemembered()));
+        Assertions.assertEquals(Status.LOCKED, baggageScanner.getStatus());
+        Assertions.assertFalse(baggageScanner.getOperatingStation().getReader().unlockBaggageScanner(inspector.getIdCard(), inspector.getPinThatIsRemembered()));
+        Assertions.assertEquals(Status.LOCKED, baggageScanner.getStatus());
+        Assertions.assertFalse(baggageScanner.getOperatingStation().getReader().unlockBaggageScanner(technician.getIdCard(), technician.getPinThatIsRemembered()));
+        Assertions.assertEquals(Status.LOCKED, baggageScanner.getStatus());
+
+        //Test authorized Employee
+        Assertions.assertTrue(baggageScanner.getOperatingStation().getReader().unlockBaggageScanner(supervisor.getIdCard(), supervisor.getPinThatIsRemembered()));
+        Assertions.assertNotEquals(Status.LOCKED, baggageScanner.getStatus());
     }
 
     @TestFactory
