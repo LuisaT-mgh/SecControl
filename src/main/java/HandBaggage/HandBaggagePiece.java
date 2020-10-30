@@ -1,9 +1,9 @@
 package HandBaggage;
 
 public class HandBaggagePiece {
-    private Character[] remains;
+    private char[] remains;
 
-    public HandBaggagePiece() {
-        remains = new Character[50];
+    public HandBaggagePiece(char[] remains) {
+        this.remains = remains;
     }
 }
