@@ -36,10 +36,9 @@ public class Application {
     public void generateSecurityControl(){
         passengers = generatePassengers();
         System.out.println("Passengers with Baggage and hidden Items have been generated");
-        if((this.baggageScanner = generateBaggageScanner(passengers.size())) == null){
-            System.out.println("Error while generating the Baggage Scanner.");
-            return;
-        }
+
+        this.baggageScanner = generateBaggageScanner(passengers.size());
+
         FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice();
         FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", "01/01/1969", "officer");
         FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", "01/01/1969", "officer");
@@ -47,6 +46,7 @@ public class Application {
         federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer02);
         federalPoliceOffice.getRegisteredOfficers().add(baggageScanner.getFederalPoliceOfficer());
         System.out.println("All officers have been registered in the federal police office");
+
         technician = new Technician("Jasom Stratham", "19/03/1955");
         houseKeeping = new HouseKeeping("Json Clark", "17/07/1969");
         System.out.println("All additional Employees have been created");
@@ -58,10 +58,10 @@ public class Application {
     }
 
     public void processPassengers(){
-        //passagiere abarbeiten;
+        //TODO passagiere abarbeiten;
     }
 
-    public ArrayList<Passenger> generatePassengers(){
+    private ArrayList<Passenger> generatePassengers(){
         ArrayList<Passenger> passengers = new ArrayList<>();
         try {
             String line;
@@ -73,19 +73,19 @@ public class Application {
                 String lastName = combinedName[1];
                 int numberOfHandBaggage = Integer.parseInt(passengerData[1]);
                 String hasForbiddenItem = passengerData[2];
+
                 Passenger passenger = new Passenger(firstName, lastName);
                 passenger.setHandBaggage(generateHandBaggage(numberOfHandBaggage, hasForbiddenItem));
                 passengers.add(passenger);
             }
 
-        } catch (FileNotFoundException fileNotFoundException) {
+        } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return passengers;
     }
-    public ArrayList<HandBaggage> generateHandBaggage(int numberOfBaggage, String hasForbiddenItem) {
+
+    private ArrayList<HandBaggage> generateHandBaggage(int numberOfBaggage, String hasForbiddenItem) {
         ArrayList<HandBaggage> handBaggage = new ArrayList<>();
         int numberOfForbiddenBaggage = 15;
         int numberOfForbiddenLayer = 15;
@@ -126,7 +126,7 @@ public class Application {
         return handBaggage;
     }
 
-    public Layer hideItemInLayer(Layer layer, String item){
+    private Layer hideItemInLayer(Layer layer, String item){
         Random rand = new Random();
         int letterNumber = rand.nextInt(9999-item.length());
         Character[] temporaryCharacter = layer.getCharacter();
