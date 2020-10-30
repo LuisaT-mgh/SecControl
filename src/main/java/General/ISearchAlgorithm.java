@@ -1,5 +1,5 @@
 package General;
 
 public interface ISearchAlgorithm {
-    public boolean findPattern(String toSearchString, String pattern);
+    public int search(char[] toSearchString, char[] pattern);
 }

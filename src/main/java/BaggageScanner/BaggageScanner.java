@@ -5,6 +5,8 @@ import Employee.FederalPoliceOfficer;
 import Employee.IDCard;
 import Employee.ProfileType;
 import General.BoyerMoore;
+import General.ISearchAlgorithm;
+import General.KnuthMorrisPratt;
 import HandBaggage.Layer;
 
 import java.lang.reflect.Array;
@@ -62,31 +64,33 @@ public class BaggageScanner implements IHasButton{
         status = Status.IN_USE;
         if(validateAuthorisationInspector(idCard)) {
             Tray tray = belt.getTrays().poll();
-            if(Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")){
-                for(Layer layer : tray.getHandBaggage().getLayers()) {
-                    for (String item : Configuration.instance.forbiddenItems) {
-                        BoyerMoore boyerMoore = new BoyerMoore();
-                        int position = boyerMoore.search(layer.getCharacter(), item.toCharArray());
-                        if(position == -1){
-                            break;
-                        }
-                        else{
-                            Record record = new Record(item, position);
-                            records.add(record);
-                        }
+            ISearchAlgorithm iSearchAlgorithm = null;
+            if(Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")) {
+                iSearchAlgorithm = new BoyerMoore();
+            }
+            else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTMORRISPRATT")) {
+                iSearchAlgorithm = new KnuthMorrisPratt();
+            }
+            for(Layer layer : tray.getHandBaggage().getLayers()) {
+                for (String item : Configuration.instance.forbiddenItems) {
+                    int position = iSearchAlgorithm.search(layer.getCharacter(), item.toCharArray());
+                    if(position == -1){
+                        break;
+                    }
+                    else{
+                        Record record = new Record(item, position);
+                        records.add(record);
                     }
                 }
-                Record record = new Record("no", -1);
             }
-            else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTMORRISPRATT")){
-
-            }
+            Record record = new Record("no", -1);
             System.out.println("Scan has been called");
         }
         else {
             System.out.println("Unauthorised call of scan");
         }
         status = Status.ACTIVATED;
+        return null;
     }
     public void alarm(IDCard idCard){
         if(validateAuthorisationInspector(idCard)) {
