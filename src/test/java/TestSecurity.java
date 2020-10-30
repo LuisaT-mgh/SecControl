@@ -46,7 +46,7 @@ public class TestSecurity {
         }
 
         //Inspektor Rollenbahn
-        Employee current = app.baggageScanner.getRollerConveryor().getInspector();
+        Employee current = app.baggageScanner.getRollerConveyor().getInspector();
         Assertions.assertNotNull(current);
         Assertions.assertEquals("Clint Eastwood", current.getName());
         Assertions.assertEquals(conveyorDate, current.getBirthDate());
