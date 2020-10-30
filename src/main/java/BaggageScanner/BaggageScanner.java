@@ -80,11 +80,13 @@ public class BaggageScanner implements IHasButton{
                     else{
                         Record record = new Record(item, position);
                         records.add(record);
+                        return item;
                     }
                 }
             }
             Record record = new Record("no", -1);
-            System.out.println("Scan has been called");
+            tracks[1].getTrays().add(tray);
+            System.out.println("No forbidden Item has been found");
         }
         else {
             System.out.println("Unauthorised call of scan");
