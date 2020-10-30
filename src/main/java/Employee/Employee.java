@@ -12,7 +12,7 @@ public abstract class Employee {
     protected IDCard idCard;
     protected String pinThatIsRemembered;
 
-    public Employee(String name, String birthDate) throws ParseException {
+    public Employee(String name, String birthDate){
         this.name = name;
         try{
             this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);

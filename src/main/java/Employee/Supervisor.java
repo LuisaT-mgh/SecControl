@@ -9,7 +9,7 @@ public class Supervisor extends Employee{
     private boolean isExecutive;
     private Supervision supervision;
 
-    public Supervisor(String name, String birthDate, boolean isSenior, boolean isExecutive) throws ParseException {
+    public Supervisor(String name, String birthDate, boolean isSenior, boolean isExecutive){
         super(name, birthDate);
         this.isSenior = isSenior;
         this.isExecutive = isExecutive;

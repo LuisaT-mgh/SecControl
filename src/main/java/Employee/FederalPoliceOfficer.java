@@ -3,14 +3,12 @@ package Employee;
 import FerderalPoliceOffice.FederalPoliceOffice;
 import BaggageScanner.BaggageScanner;
 
-import java.text.ParseException;
-
 public class FederalPoliceOfficer extends Employee{
     private String grade;
     private BaggageScanner baggageScanner;
     private FederalPoliceOffice federalPoliceOffice;
 
-    public FederalPoliceOfficer(String name, String birthDate, String grade) throws ParseException {
+    public FederalPoliceOfficer(String name, String birthDate, String grade){
         super(name, birthDate);
         this.grade = grade;
         idCard = new IDCard(id, this, ProfileType.O);

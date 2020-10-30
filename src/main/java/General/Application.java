@@ -26,14 +26,14 @@ public class Application {
     public ArrayList<Passenger> passengers;
     public FederalPoliceOffice federalPoliceOffice;
 
-    public static void main(String... args) throws InterruptedException, ParseException {
+    public static void main(String... args){
         Application application = new Application();
         application.generateSecurityControl();
         application.prepareSecurityControl();
         application.processPassengers();
     }
 
-    public void generateSecurityControl() throws ParseException {
+    public void generateSecurityControl(){
         passengers = generatePassengers();
         System.out.println("Passengers with Baggage and hidden Items have been generated");
         if((this.baggageScanner = generateBaggageScanner(passengers.size())) == null){
@@ -139,7 +139,7 @@ public class Application {
     }
 
 
-    public BaggageScanner generateBaggageScanner(int numberOfPassengers) throws ParseException {
+    public BaggageScanner generateBaggageScanner(int numberOfPassengers){
         OperatingStation operatingStation = new OperatingStation();
         Reader reader = new Reader();
         operatingStation.setReader(reader);

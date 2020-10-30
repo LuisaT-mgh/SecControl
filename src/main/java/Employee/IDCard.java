@@ -18,7 +18,7 @@ public class IDCard {
     private IDCardType type;
     private Employee employee;
 
-    public IDCard(UUID id, Employee employee, ProfileType profileType) throws ParseException {
+    public IDCard(UUID id, Employee employee, ProfileType profileType){
         this.id = id;
         isLocked = false;
         try {
