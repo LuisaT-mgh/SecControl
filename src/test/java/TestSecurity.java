@@ -1,3 +1,4 @@
+import BaggageScanner.OperatingStation;
 import Employee.*;
 import General.Application;
 import org.junit.jupiter.api.*;
@@ -84,7 +85,18 @@ public class TestSecurity {
     @Test
     @DisplayName("3. Test locking IDCard after 3 wrong inputs")
     public void testLockingIDCard(){
-        //TODO 3.Nach dreimaliger Falschangabe der PIN wird der Ausweis für die weitere Nutzung gesperrt.
+        //TODO Test this
+        //3.Nach dreimaliger Falschangabe der PIN wird der Ausweis für die weitere Nutzung gesperrt.
+        OperatingStation opStation = app.baggageScanner.getOperatingStation();
+        Assertions.assertFalse(opStation.getInspector().getIdCard().isLocked());
+
+        //Pins are always between 0 and 10000, so 10001 is always wrong.
+        Assertions.assertFalse(opStation.getReader().activateBaggageScanner(opStation.getInspector().getIdCard(), "10001"));
+        Assertions.assertFalse(opStation.getInspector().getIdCard().isLocked());
+        Assertions.assertFalse(opStation.getReader().activateBaggageScanner(opStation.getInspector().getIdCard(), "10001"));
+        Assertions.assertFalse(opStation.getInspector().getIdCard().isLocked());
+        Assertions.assertFalse(opStation.getReader().activateBaggageScanner(opStation.getInspector().getIdCard(), "10001"));
+        Assertions.assertTrue(opStation.getInspector().getIdCard().isLocked());
     }
 
     @Test
