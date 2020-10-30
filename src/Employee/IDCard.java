@@ -48,6 +48,14 @@ public class IDCard {
         this.validUntil = validUntil;
     }
 
+    public String getMagnetStripe() {
+        return magnetStripe;
+    }
+
+    public void setMagnetStripe(String magnetStripe) {
+        this.magnetStripe = magnetStripe;
+    }
+
     public boolean isLocked() {
         return isLocked;
     }
