@@ -19,4 +19,12 @@ public class Supervisor extends Employee{
     public void unlockBaggageScanner(){
         supervision.getBaggageScanner().getOperatingStation().getReader().unlockBaggageScanner(idCard, pinThatIsRemembered);
     }
+
+    public Supervision getSupervision() {
+        return supervision;
+    }
+
+    public void setSupervision(Supervision supervision) {
+        this.supervision = supervision;
+    }
 }

@@ -1,14 +1,12 @@
 package Employee;
 
-import BaggageScanner.ManualPostControl;
-import BaggageScanner.OperatingStation;
-import BaggageScanner.RollerConveyor;
-import BaggageScanner.Tray;
+import BaggageScanner.*;
 import HandBaggage.HandBaggage;
 import HandBaggage.Layer;
 import Passenger.Passenger;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Inspector extends Employee{
     private boolean isSenior;
@@ -24,10 +22,11 @@ public class Inspector extends Employee{
     }
     public void pushTrays(){
         if( rollerConveyor != null) {
-            while (rollerConveyor.getBaggageScanner().getRollerConveyor().getTrays().size() != 0) {
-                Tray tray = rollerConveyor.getBaggageScanner().getRollerConveyor().getTrays().remove();
+            while (rollerConveyor.getTrays().size() != 0) {
+                Tray tray = rollerConveyor.getTrays().remove();
                 rollerConveyor.getBaggageScanner().getBelt().getTrays().add(tray);
             }
+            System.out.println("Tray have been pushed on belt by inspector");
         }
         else{
             System.out.println("No roller conveyor found in inspector");
@@ -36,6 +35,7 @@ public class Inspector extends Employee{
 
     public void pushButtonRight(){
         if( operatingStation != null) {
+            System.out.println("Button right pushed");
             operatingStation.handleButtonPushed(operatingStation.getButtonRight(), idCard);
         }
         else{
@@ -45,6 +45,7 @@ public class Inspector extends Employee{
 
     public void pushButtonRectangle(){
         if( operatingStation != null) {
+            System.out.println("Button rectangle pushed");
             operatingStation.handleButtonPushed(operatingStation.getButtonRectangle(), idCard);
         }
         else{
@@ -54,6 +55,7 @@ public class Inspector extends Employee{
 
     public void pushButtonLeft(){
         if( operatingStation != null) {
+            System.out.println("Button left pushed");
             operatingStation.handleButtonPushed(operatingStation.getButtonLeft(), idCard);
         }
         else{
@@ -62,25 +64,29 @@ public class Inspector extends Employee{
     }
     public void informManualPostControl(String itemFound, Tray tray){
         if(operatingStation != null){
+            operatingStation.getBaggageScanner().getManualPostControl().setTrayWithBaggageInManualPostControl(tray);
             switch (itemFound){
                 case "kn!fe":
+                    System.out.println("kn!fe found");
                     operatingStation.getBaggageScanner().getManualPostControl().getInspector().initiateManualPostControlKnife();
                     break;
                 case "exl|os!ve":
+                    System.out.println("exl|os!ve");
                     operatingStation.getBaggageScanner().alarm(idCard, "exl|os!ve");
                     break;
                 case "glock|7":
+                    System.out.println("glock|7");
                     operatingStation.getBaggageScanner().alarm(idCard, "glock|7");
                     break;
             }
-            operatingStation.getBaggageScanner().getManualPostControl().setTrayWithBaggageInManualPostControl(tray);
         }
     }
     public void initiateManualPostControlKnife(){
         if(manualPostControl != null){
             for(Layer layer: manualPostControl.getTrayWithBaggageInManualPostControl().getHandBaggage().getLayers()){
-                if(layer.getCharacter().toString().contains("kn!fe")) {
-                    manualPostControl.setPassengerManualPostControl(operatingStation.getBaggageScanner().getCurrentPassenger());
+                String charactersOfLayer = new String(layer.getCharacter());
+                if(charactersOfLayer.contains("kn!fe")) {
+                    manualPostControl.setPassengerManualPostControl(manualPostControl.getBaggageScanner().getCurrentPassenger());
                     System.out.println("Passenger is present for manual post control");
                     String content = layer.getCharacter().toString().replace("kn!fe", "00000");
                     layer.setCharacter(content.toCharArray());
@@ -95,9 +101,9 @@ public class Inspector extends Employee{
     }
     public void recheckBag(){
         if(operatingStation != null){
+            System.out.println("Baggage will be rechecked");
             operatingStation.handleButtonPushed(operatingStation.getButtonLeft(), idCard);
             operatingStation.handleButtonPushed(operatingStation.getButtonRectangle(), idCard);
-            System.out.println("Baggage will be rechecked");
         }
     }
 
@@ -113,8 +119,30 @@ public class Inspector extends Employee{
                 layer.getCharacter().toString().replace("glock|7", "00000");
             }
         }
-        System.out.println("Fall forbidden items have been removed");
+        System.out.println("All forbidden items have been removed");
         handBaggageToHandOver.add(tray.getHandBaggage());
+    }
+
+    public boolean swipe(){
+        if(manualPostControl != null) {
+            TestStrip testStrip = new TestStrip();
+            System.out.println("Inspector swipes test strip over suspicious baggage");
+            TestStrip usedTeststrip = useTeststrip(testStrip);
+            return manualPostControl.getBaggageScanner().getManualPostControl().getExplosiveTraceDetector().checkTestStrip(usedTeststrip);
+        }
+        return false;
+    }
+
+    public TestStrip useTeststrip(TestStrip testStrip){
+        Random random = new Random();
+        System.out.println("Test strip is applied");
+        String positiveOutcome = "exp";
+        int row = random.nextInt(30);
+        int column = random.nextInt(10-3);
+        for(int i = 0; i<3; i++){
+            testStrip.getSurface()[row][column+i] = positiveOutcome.charAt(i);
+        }
+        return testStrip;
     }
 
 
@@ -129,5 +157,29 @@ public class Inspector extends Employee{
     public void handOverBaggage(FederalPoliceOfficer federalPoliceOfficer){
         federalPoliceOfficer.setConfiscatedBaggage(handBaggageToHandOver);
         handBaggageToHandOver = null;
+    }
+
+    public RollerConveyor getRollerConveyor() {
+        return rollerConveyor;
+    }
+
+    public void setRollerConveyor(RollerConveyor rollerConveyor) {
+        this.rollerConveyor = rollerConveyor;
+    }
+
+    public ManualPostControl getManualPostControl() {
+        return manualPostControl;
+    }
+
+    public void setManualPostControl(ManualPostControl manualPostControl) {
+        this.manualPostControl = manualPostControl;
+    }
+
+    public OperatingStation getOperatingStation() {
+        return operatingStation;
+    }
+
+    public void setOperatingStation(OperatingStation operatingStation) {
+        this.operatingStation = operatingStation;
     }
 }

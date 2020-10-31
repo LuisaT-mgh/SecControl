@@ -23,18 +23,16 @@ public class OperatingStation implements IHasButton {
 
     @Override
     public void handleButtonPushed(Button sender, IDCard idCard) {
-        if(idCard.getId().equals(inspector.getId())) {
-            switch (sender.getShape()) {
-                case RECTANGLE:
-                    baggageScanner.scan(inspector.getIdCard());
-                case ARROW_LEFT:
-                    baggageScanner.moveBeltForward(inspector.getIdCard());
-                case ARROW_RIGHT:
-                    baggageScanner.moveBeltBackwards(inspector.getIdCard());
-            }
-        }
-        else{
-            System.out.println("Unauthorised handling of baggage scanner");
+        switch (sender.getShape()) {
+            case RECTANGLE:
+                baggageScanner.scan(inspector.getIdCard());
+                break;
+            case ARROW_LEFT:
+                baggageScanner.moveBeltBackwards(inspector.getIdCard());
+                break;
+            case ARROW_RIGHT:
+                baggageScanner.moveBeltForward(inspector.getIdCard());
+                break;
         }
     }
 
@@ -84,5 +82,6 @@ public class OperatingStation implements IHasButton {
     }
 
     public void setBaggageScanner(BaggageScanner baggageScanner) {
+        this.baggageScanner = baggageScanner;
     }
 }

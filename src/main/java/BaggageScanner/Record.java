@@ -20,6 +20,7 @@ public class Record {
             this.result = "clean";
         }
         else{
+            System.out.println("prohibited item "+hiddenItem+" detected at position "+String.valueOf(position));
             this.result = "prohibited item "+hiddenItem+" detected at position "+String.valueOf(position);
         }
     }

@@ -26,6 +26,7 @@ public class Reader {
                 return false;
             }
             if (denialCounter == 2) {
+                System.out.println("Pin was entered wrong 3 times, baggage scanner locked");
                 operatingStation.getBaggageScanner().setStatus(Status.LOCKED);
                 return false;
             } else {

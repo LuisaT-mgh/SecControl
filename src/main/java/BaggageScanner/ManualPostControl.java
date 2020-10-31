@@ -16,6 +16,7 @@ public class ManualPostControl {
     private ArrayList<HandBaggage> confiscatedHandBaggage = new ArrayList<>();
     private BaggageScanner baggageScanner;
     private boolean hasToBeConfiscated = false;
+    private ExplosiveTraceDetector explosiveTraceDetector;
 
     public Inspector getInspector() {
         return inspector;
@@ -72,5 +73,13 @@ public class ManualPostControl {
 
     public void setHasToBeConfiscated(boolean hasToBeConfiscated) {
         this.hasToBeConfiscated = hasToBeConfiscated;
+    }
+
+    public ExplosiveTraceDetector getExplosiveTraceDetector() {
+        return explosiveTraceDetector;
+    }
+
+    public void setExplosiveTraceDetector(ExplosiveTraceDetector explosiveTraceDetector) {
+        this.explosiveTraceDetector = explosiveTraceDetector;
     }
 }

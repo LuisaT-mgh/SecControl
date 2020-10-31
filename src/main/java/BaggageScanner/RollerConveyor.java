@@ -2,12 +2,17 @@ package BaggageScanner;
 
 import Employee.Inspector;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class RollerConveyor {
     private Inspector inspector;
     private Queue<Tray> trays;
     private BaggageScanner baggageScanner;
+
+    public RollerConveyor() {
+        trays = new LinkedList<Tray>();
+    }
 
     public Inspector getInspector() {
         return inspector;

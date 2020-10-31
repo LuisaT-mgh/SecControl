@@ -21,9 +21,7 @@ public class Scanner {
             for (Layer layer : tray.getHandBaggage().getLayers()) {
                 for (String item : Configuration.instance.forbiddenItems) {
                     int position = iSearchAlgorithm.search(layer.getCharacter(), item.toCharArray());
-                    if (position == -1) {
-                        break;
-                    } else {
+                    if (position != -1) {
                         Record record = new Record(item, position);
                         baggageScanner.getRecords().add(record);
                         baggageScanner.getOperatingStation().getInspector().informManualPostControl(item, tray);

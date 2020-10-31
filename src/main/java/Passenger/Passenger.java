@@ -23,6 +23,7 @@ public class Passenger {
             tray.setHandBaggage(handBaggagePart);
             baggageScanner.getRollerConveyor().getTrays().add(tray);
         }
+        System.out.println("Hand baggage put on tray and on roller conveyor by passanger");
     }
 
     public ArrayList<HandBaggage> getHandBaggage() {

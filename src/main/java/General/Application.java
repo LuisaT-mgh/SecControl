@@ -7,6 +7,7 @@ import Employee.FederalPoliceOfficer;
 import Employee.Technician;
 import FerderalPoliceOffice.FederalPoliceOffice;
 import Employee.HouseKeeping;
+import FerderalPoliceOffice.Remote;
 import HandBaggage.HandBaggage;
 import Passenger.Passenger;
 import HandBaggage.Layer;
@@ -39,7 +40,7 @@ public class Application {
 
         this.baggageScanner = generateBaggageScanner(passengers.size());
 
-        FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice();
+        federalPoliceOffice = new FederalPoliceOffice();
         FederalPoliceOfficer federalPoliceOfficer01 = new FederalPoliceOfficer("Toto", "01/01/1969", "officer");
         FederalPoliceOfficer federalPoliceOfficer02 = new FederalPoliceOfficer("Harry", "01/01/1969", "officer");
         federalPoliceOffice.getRegisteredOfficers().add(federalPoliceOfficer01);
@@ -58,34 +59,44 @@ public class Application {
 
     public void processPassengers() {
         //TODO passagiere abarbeiten;
-        for (Passenger passenger: passengers) {
+        for (Passenger passenger : passengers) {
             passenger.setBaggageScanner(baggageScanner);
             baggageScanner.setCurrentPassenger(passenger);
             passenger.handOverBaggage();
             baggageScanner.getRollerConveyor().getInspector().pushTrays();
             baggageScanner.getOperatingStation().getInspector().pushButtonRight();
             baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
-            if(baggageScanner.getStatus() == Status.LOCKED){
-                baggageScanner.getFederalPoliceOfficer().arrestPassenger();
+            if (baggageScanner.getStatus() == Status.LOCKED) {
                 federalPoliceOfficers.addAll(federalPoliceOffice.getRegisteredOfficers());
-                Random random = new Random();
-                federalPoliceOffice.getRobots()[random.nextInt(2)].getRemote().setFederalPoliceOfficer(federalPoliceOfficers.get(0));
-                if(baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")){
+                System.out.println("Additional police officers called");
+                if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")) {
                     federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
+                    System.out.println("weapon has been handed to officer 3");
                     baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
                     baggageScanner.getOperatingStation().getInspector().pushButtonRight();
                     baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+                    System.out.println("Remaining baggage of passenger has been scanned");
                     baggageScanner.getManualPostControl().setHasToBeConfiscated(false);
-                    if(baggageScanner.getManualPostControl().getInspector().getHandBaggageToHandOver() != null){
+                    if (baggageScanner.getManualPostControl().getInspector().getHandBaggageToHandOver() != null) {
                         baggageScanner.getManualPostControl().getInspector().handOverBaggage(federalPoliceOfficers.get(1));
+                        System.out.println("Remaining baggage of passenger has been handed to officer 3");
                     }
+                    baggageScanner.getFederalPoliceOfficer().arrestPassenger();
                     federalPoliceOfficers = null;
                     System.out.println("Police officers have left airport with passenger");
-                }
-                else if(baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("exl|os!ve")){
-
+                } else if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("exl|os!ve")) {
+                    Random random = new Random();
+                    int randomChoice = random.nextInt(2);
+                    federalPoliceOffice.getRobots()[randomChoice].getRemote().setFederalPoliceOfficer(federalPoliceOfficers.get(0));
+                    federalPoliceOfficers.get(0).setRemote(federalPoliceOffice.getRobots()[randomChoice].getRemote());
+                    System.out.println("Robot has been called");
+                    if (baggageScanner.getManualPostControl().getInspector().swipe()) {
+                        federalPoliceOfficers.get(0).getRemote().destroyHandBaggage(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
+                        baggageScanner.getManualPostControl().setTrayWithBaggageInManualPostControl(null);
+                    }
                 }
                 baggageScanner.getSupervision().getSupervisor().unlockBaggageScanner();
+                System.out.println("Return to normal procedure");
             }
         }
     }
@@ -97,8 +108,7 @@ public class Application {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(Configuration.instance.passengerDataPath)));
             while ((line = bufferedReader.readLine()) != null) {
                 String[] generalData = line.split("\\[");
-                if(generalData.length >=2){
-                    generalData[1].replace("]", "");
+                if (generalData.length >= 2) {
                     String[] hiddenItems = generalData[1].split(";");
                 }
                 String passengerData[] = generalData[0].split(";");
@@ -106,16 +116,14 @@ public class Application {
                 String firstName = combinedName[0];
                 String lastName = combinedName[1];
                 int numberOfHandBaggage = Integer.parseInt(passengerData[1]);
-                String[] hiddenItems = null;
-                if(generalData.length >=2){
-                    generalData[1].replace("]", "");
+                String[] hiddenItems;
+                if (generalData.length >= 2) {
                     hiddenItems = generalData[1].split(";");
-                }
-                else{
-                    hiddenItems[0] = passengerData[2];
+                } else {
+                    hiddenItems = new String[]{passengerData[2]};
                 }
                 Passenger passenger = new Passenger(firstName, lastName);
-                passenger.setHandBaggage(generateHandBaggage(numberOfHandBaggage,hiddenItems));
+                passenger.setHandBaggage(generateHandBaggage(numberOfHandBaggage, hiddenItems));
                 passengers.add(passenger);
             }
 
@@ -131,7 +139,8 @@ public class Application {
         ArrayList<Integer> numberOfForbiddenLayer = new ArrayList<>();
         ArrayList<String> forbiddenItems = new ArrayList<>();
         if (!hiddenItems[0].contentEquals("-")) {
-            for(String hiddenItem: hiddenItems) {
+            for (String hiddenItem : hiddenItems) {
+                hiddenItem = hiddenItem.replace("]", "");
                 String[] dataHasForbiddenItem = hiddenItem.split(",");
                 numberOfForbiddenBaggage.add(Integer.parseInt(dataHasForbiddenItem[1]));
                 numberOfForbiddenLayer.add(Integer.parseInt(dataHasForbiddenItem[2]));
@@ -152,10 +161,10 @@ public class Application {
             Layer[] layers = new Layer[5];
             for (int j = 0; j < 5; j++) {
                 Layer layer = new Layer();
-                for(int counterNumberBaggage = 0; counterNumberBaggage< numberOfForbiddenBaggage.size(); counterNumberBaggage++){
-                    for(int counterNumberLayer = 0; counterNumberLayer<numberOfForbiddenLayer.size(); counterNumberLayer++){
-                        if(counterNumberBaggage == counterNumberLayer){
-                            layer = hideItemInLayer(layer, forbiddenItems.get(counterNumberBaggage));
+                for (int determineCounter = 0; determineCounter < numberOfForbiddenBaggage.size(); determineCounter++) {
+                    if (numberOfForbiddenBaggage.get(determineCounter) == (i + 1)) {
+                        if (numberOfForbiddenLayer.get(determineCounter).equals(j + 1)) {
+                            layer = hideItemInLayer(layer, forbiddenItems.get(determineCounter));
                         }
                     }
                 }
@@ -169,7 +178,9 @@ public class Application {
 
     private Layer hideItemInLayer(Layer layer, String item) {
         Random rand = new Random();
-        int letterNumber = rand.nextInt(9999 - item.length());
+        //int letterNumber = rand.nextInt(9999 - item.length());
+        //todo uncomment
+        int letterNumber = 4;
         char[] temporaryCharacter = layer.getCharacter();
         for (int i = 0; i < item.length(); i++) {
             temporaryCharacter[letterNumber] = item.charAt(i);
@@ -184,7 +195,7 @@ public class Application {
         OperatingStation operatingStation = new OperatingStation();
         Reader reader = new Reader();
         operatingStation.setReader(reader);
-        operatingStation.getReader().setOperatingStation(operatingStation);
+        reader.setOperatingStation(operatingStation);
         RollerConveyor rollerConveyor = new RollerConveyor();
         Belt belt = new Belt();
         Scanner scanner = new Scanner();
@@ -198,9 +209,13 @@ public class Application {
         BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveyor, scanner, supervision, trays);
         System.out.println("A baggage Scanner has been created");
         Inspector inspector01 = new Inspector("Clint Eastwood", "31/05/1930", true);
+        inspector01.setRollerConveyor(rollerConveyor);
         Inspector inspector02 = new Inspector("Natalie Portman", "09/06/1981", false);
+        inspector02.setOperatingStation(operatingStation);
         Inspector inspector03 = new Inspector("Bruce Willis", "19/03/1955", true);
+        inspector03.setManualPostControl(manualPostControl);
         Supervisor supervisor = new Supervisor("Jodie Foster", "19/03/1955", false, false);
+        supervisor.setSupervision(supervision);
         FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", "19/03/1955", "officer");
         baggageScanner.getRollerConveyor().setInspector(inspector01);
         baggageScanner.getOperatingStation().setInspector(inspector02);
@@ -210,6 +225,10 @@ public class Application {
         operatingStation.setBaggageScanner(baggageScanner);
         manualPostControl.setBaggageScanner(baggageScanner);
         supervision.setBaggageScanner(baggageScanner);
+        rollerConveyor.setBaggageScanner(baggageScanner);
+        scanner.setBaggageScanner(baggageScanner);
+        federalPoliceOfficer.setBaggageScanner(baggageScanner);
+        manualPostControl.setExplosiveTraceDetector(new ExplosiveTraceDetector());
         System.out.println("Employees have been assigned to baggage scanner");
         return baggageScanner;
     }

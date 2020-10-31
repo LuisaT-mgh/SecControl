@@ -32,6 +32,7 @@ public class Robot {
         }
 
         List<HandBaggagePiece> handBaggagePieces = pieces.stream().map( (item) -> new HandBaggagePiece(item)).collect(Collectors.toList());
+        System.out.println("Hand baggage destroyed");
     }
 
     public FederalPoliceOffice getFederalPoliceOffice() {

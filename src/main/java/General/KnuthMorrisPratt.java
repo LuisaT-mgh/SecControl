@@ -3,8 +3,7 @@ package General;
 public class KnuthMorrisPratt implements ISearchAlgorithm{
 
     @Override
-    public boolean findPattern(String toSearchString, String pattern) {
-        return false;
-        //todo implement function
+    public int search(char[] toSearchString, char[] pattern) {
+        return 0;
     }
 }

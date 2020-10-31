@@ -1,10 +1,15 @@
 package FerderalPoliceOffice;
 
 import Employee.FederalPoliceOfficer;
+import HandBaggage.HandBaggage;
 
 public class Remote {
     private FederalPoliceOfficer federalPoliceOfficer;
     private Robot robot;
+
+    public void destroyHandBaggage(HandBaggage handBaggage){
+        robot.destroyHandBaggage(handBaggage);
+    }
 
     public FederalPoliceOfficer getFederalPoliceOfficer() {
         return federalPoliceOfficer;
