@@ -11,7 +11,6 @@ public class OperatingStation implements IHasButton {
     private Button buttonLeft;
     private Button buttonRectangle;
     private Inspector inspector;
-    private Passenger passengerManualPostControl;
 
     public OperatingStation() {
         buttonRight = new Button(this);
@@ -85,13 +84,5 @@ public class OperatingStation implements IHasButton {
     }
 
     public void setBaggageScanner(BaggageScanner baggageScanner) {
-    }
-
-    public Passenger getPassengerManualPostControl() {
-        return passengerManualPostControl;
-    }
-
-    public void setPassengerManualPostControl(Passenger passengerManualPostControl) {
-        this.passengerManualPostControl = passengerManualPostControl;
     }
 }

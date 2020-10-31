@@ -16,4 +16,7 @@ public class Supervisor extends Employee{
         idCard = new IDCard(id, this, ProfileType.S);
         idCard.setType(IDCardType.STAFF);
     }
+    public void unlockBaggageScanner(){
+        supervision.getBaggageScanner().getOperatingStation().getReader().unlockBaggageScanner(idCard, pinThatIsRemembered);
+    }
 }

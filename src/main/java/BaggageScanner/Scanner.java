@@ -17,19 +17,23 @@ public class Scanner {
         else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTMORRISPRATT")) {
             iSearchAlgorithm = new KnuthMorrisPratt();
         }
-        for(Layer layer : tray.getHandBaggage().getLayers()) {
-            for (String item : Configuration.instance.forbiddenItems) {
-                int position = iSearchAlgorithm.search(layer.getCharacter(), item.toCharArray());
-                if(position == -1){
-                    break;
-                }
-                else{
-                    Record record = new Record(item, position);
-                    baggageScanner.getRecords().add(record);
-                    baggageScanner.getOperatingStation().getInspector().informManualPostControl(item, tray);
-                    return item;
+        if(!baggageScanner.getManualPostControl().isHasToBeConfiscated()) {
+            for (Layer layer : tray.getHandBaggage().getLayers()) {
+                for (String item : Configuration.instance.forbiddenItems) {
+                    int position = iSearchAlgorithm.search(layer.getCharacter(), item.toCharArray());
+                    if (position == -1) {
+                        break;
+                    } else {
+                        Record record = new Record(item, position);
+                        baggageScanner.getRecords().add(record);
+                        baggageScanner.getOperatingStation().getInspector().informManualPostControl(item, tray);
+                        return item;
+                    }
                 }
             }
+        }
+        else{
+            baggageScanner.getManualPostControl().getInspector().removeForbidden(tray);
         }
         Record record = new Record("no", -1);
         baggageScanner.getTracks()[1].getTrays().add(tray);

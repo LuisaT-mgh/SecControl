@@ -105,7 +105,7 @@ public class BaggageScanner implements IHasButton{
             status = Status.START;
             System.out.println("Baggage Scanner was started");
             status = Status.DEACTIVATED;
-            System.out.println("Baggage Scanner is noch in status deactivated");
+            System.out.println("Baggage Scanner is still in status deactivated");
         }
         else{
             System.out.println("Unauthorised attempt to start baggage scanner");

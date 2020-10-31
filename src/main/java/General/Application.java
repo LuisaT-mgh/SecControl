@@ -70,6 +70,22 @@ public class Application {
                 federalPoliceOfficers.addAll(federalPoliceOffice.getRegisteredOfficers());
                 Random random = new Random();
                 federalPoliceOffice.getRobots()[random.nextInt(2)].getRemote().setFederalPoliceOfficer(federalPoliceOfficers.get(0));
+                if(baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")){
+                    federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
+                    baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
+                    baggageScanner.getOperatingStation().getInspector().pushButtonRight();
+                    baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+                    baggageScanner.getManualPostControl().setHasToBeConfiscated(false);
+                    if(baggageScanner.getManualPostControl().getInspector().getHandBaggageToHandOver() != null){
+                        baggageScanner.getManualPostControl().getInspector().handOverBaggage(federalPoliceOfficers.get(1));
+                    }
+                    federalPoliceOfficers = null;
+                    System.out.println("Police officers have left airport with passenger");
+                }
+                else if(baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("exl|os!ve")){
+
+                }
+                baggageScanner.getSupervision().getSupervisor().unlockBaggageScanner();
             }
         }
     }
@@ -192,6 +208,8 @@ public class Application {
         baggageScanner.getSupervision().setSupervisor(supervisor);
         baggageScanner.setFederalPoliceOfficer(federalPoliceOfficer);
         operatingStation.setBaggageScanner(baggageScanner);
+        manualPostControl.setBaggageScanner(baggageScanner);
+        supervision.setBaggageScanner(baggageScanner);
         System.out.println("Employees have been assigned to baggage scanner");
         return baggageScanner;
     }
