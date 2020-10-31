@@ -32,4 +32,5 @@ public class FederalPoliceOffice {
     public void setRobots(Robot[] robots) {
         this.robots = robots;
     }
+
 }

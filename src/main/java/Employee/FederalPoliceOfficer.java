@@ -8,6 +8,7 @@ public class FederalPoliceOfficer extends Employee{
     private String grade;
     private BaggageScanner baggageScanner;
     private FederalPoliceOffice federalPoliceOffice;
+    private String itemToTakeCareOf;
 
     public FederalPoliceOfficer(String name, String birthDate, String grade){
         super(name, birthDate);
@@ -29,5 +30,13 @@ public class FederalPoliceOfficer extends Employee{
             baggageScanner.setCurrentPassenger(null);
             System.out.println("Passenger has been removed from airport");
         }
+    }
+
+    public String getItemToTakeCareOf() {
+        return itemToTakeCareOf;
+    }
+
+    public void setItemToTakeCareOf(String itemToTakeCareOf) {
+        this.itemToTakeCareOf = itemToTakeCareOf;
     }
 }

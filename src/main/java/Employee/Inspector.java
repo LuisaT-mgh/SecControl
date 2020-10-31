@@ -61,11 +61,13 @@ public class Inspector extends Employee{
             switch (itemFound){
                 case "kn!fe":
                     operatingStation.getBaggageScanner().getManualPostControl().getInspector().initiateManualPostControlKnife(tray);
+                    break;
                 case "exl|os!ve":
-                    operatingStation.getBaggageScanner().alarm(idCard);
+                    operatingStation.getBaggageScanner().alarm(idCard, "exl|os!ve");
+                    break;
                 case "glock|7":
-                    operatingStation.getBaggageScanner().alarm(idCard);
-
+                    operatingStation.getBaggageScanner().alarm(idCard, "glock|7");
+                    break;
             }
         }
     }

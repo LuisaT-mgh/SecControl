@@ -73,10 +73,11 @@ public class BaggageScanner implements IHasButton{
         status = Status.ACTIVATED;
         return null;
     }
-    public void alarm(IDCard idCard){
+    public void alarm(IDCard idCard, String itemFound){
         if(validateAuthorisationInspector(idCard)) {
             System.out.println("Alarm has been called");
             status = Status.LOCKED;
+            federalPoliceOfficer.setItemToTakeCareOf(itemFound);
             System.out.println("Baggage scanner is now locked");
         }
         else {
