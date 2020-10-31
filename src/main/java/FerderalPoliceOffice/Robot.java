@@ -11,6 +11,10 @@ public class Robot {
     private FederalPoliceOffice federalPoliceOffice;
     private Remote remote;
 
+    public Robot(Remote remote) {
+        this.remote = remote;
+    }
+
     public void destroyHandBaggage(HandBaggage handBaggage){
         ArrayList<char[]> pieces = new ArrayList<>();
 
@@ -28,5 +32,21 @@ public class Robot {
         }
 
         List<HandBaggagePiece> handBaggagePieces = pieces.stream().map( (item) -> new HandBaggagePiece(item)).collect(Collectors.toList());
+    }
+
+    public FederalPoliceOffice getFederalPoliceOffice() {
+        return federalPoliceOffice;
+    }
+
+    public void setFederalPoliceOffice(FederalPoliceOffice federalPoliceOffice) {
+        this.federalPoliceOffice = federalPoliceOffice;
+    }
+
+    public Remote getRemote() {
+        return remote;
+    }
+
+    public void setRemote(Remote remote) {
+        this.remote = remote;
     }
 }

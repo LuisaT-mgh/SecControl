@@ -65,6 +65,12 @@ public class Application {
             baggageScanner.getRollerConveyor().getInspector().pushTrays();
             baggageScanner.getOperatingStation().getInspector().pushButtonRight();
             baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+            if(baggageScanner.getStatus() == Status.LOCKED){
+                baggageScanner.getFederalPoliceOfficer().arrestPassenger();
+                federalPoliceOfficers.addAll(federalPoliceOffice.getRegisteredOfficers());
+                Random random = new Random();
+                federalPoliceOffice.getRobots()[random.nextInt(2)].getRemote().setFederalPoliceOfficer(federalPoliceOfficers.get(0));
+            }
         }
     }
 

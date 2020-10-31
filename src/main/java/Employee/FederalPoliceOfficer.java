@@ -2,6 +2,7 @@ package Employee;
 
 import FerderalPoliceOffice.FederalPoliceOffice;
 import BaggageScanner.BaggageScanner;
+import Passenger.Passenger;
 
 public class FederalPoliceOfficer extends Employee{
     private String grade;
@@ -22,5 +23,11 @@ public class FederalPoliceOfficer extends Employee{
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+    public void arrestPassenger(){
+        if(baggageScanner != null){
+            baggageScanner.setCurrentPassenger(null);
+            System.out.println("Passenger has been removed from airport");
+        }
     }
 }
