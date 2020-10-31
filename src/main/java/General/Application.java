@@ -59,6 +59,8 @@ public class Application {
     public void processPassengers() {
         //TODO passagiere abarbeiten;
         for (Passenger passenger: passengers) {
+            passenger.setBaggageScanner(baggageScanner);
+            baggageScanner.setCurrentPassenger(passenger);
             passenger.handOverBaggage();
             baggageScanner.getRollerConveyor().getInspector().pushTrays();
             baggageScanner.getOperatingStation().getInspector().pushButtonRight();
@@ -72,7 +74,7 @@ public class Application {
             String line;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(Configuration.instance.passengerDataPath)));
             while ((line = bufferedReader.readLine()) != null) {
-                String[] generalData = line.split("[");
+                String[] generalData = line.split("\\[");
                 if(generalData.length >=2){
                     generalData[1].replace("]", "");
                     String[] hiddenItems = generalData[1].split(";");

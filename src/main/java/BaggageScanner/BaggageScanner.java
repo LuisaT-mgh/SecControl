@@ -8,6 +8,7 @@ import General.BoyerMoore;
 import General.ISearchAlgorithm;
 import General.KnuthMorrisPratt;
 import HandBaggage.Layer;
+import Passenger.Passenger;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class BaggageScanner implements IHasButton{
     private Track[] tracks;
     private FederalPoliceOfficer federalPoliceOfficer;
     private ArrayList<Record> records;
+    private Passenger currentPassenger;
 
 
     public BaggageScanner(Track[] tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveyor rollerConveyor, Scanner scanner, Supervision supervision, Stack<Tray> trays) {
@@ -74,6 +76,8 @@ public class BaggageScanner implements IHasButton{
     public void alarm(IDCard idCard){
         if(validateAuthorisationInspector(idCard)) {
             System.out.println("Alarm has been called");
+            status = Status.LOCKED;
+            System.out.println("Baggage scanner is now locked");
         }
         else {
             System.out.println("Unauthorised call of alarm");
@@ -228,5 +232,13 @@ public class BaggageScanner implements IHasButton{
     @Override
     public void handleButtonPushed(Button sender, IDCard idCard) {
         //TODO implement function handleButtonPushed
+    }
+
+    public Passenger getCurrentPassenger() {
+        return currentPassenger;
+    }
+
+    public void setCurrentPassenger(Passenger currentPassenger) {
+        this.currentPassenger = currentPassenger;
     }
 }

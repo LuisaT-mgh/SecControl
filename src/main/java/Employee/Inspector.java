@@ -4,7 +4,8 @@ import BaggageScanner.ManualPostControl;
 import BaggageScanner.OperatingStation;
 import BaggageScanner.RollerConveyor;
 import BaggageScanner.Tray;
-import HandBaggage.HandBaggage;
+import HandBaggage.Layer;
+import Passenger.Passenger;
 
 public class Inspector extends Employee{
     private boolean isSenior;
@@ -53,6 +54,42 @@ public class Inspector extends Employee{
         }
         else{
             System.out.println("No operating station found in inspector");
+        }
+    }
+    public void informManualPostControl(String itemFound, Tray tray){
+        if(operatingStation != null){
+            switch (itemFound){
+                case "kn!fe":
+                    operatingStation.getBaggageScanner().getManualPostControl().getInspector().initiateManualPostControlKnife(tray);
+                case "exl|os!ve":
+                    operatingStation.getBaggageScanner().alarm(idCard);
+                case "glock|7":
+                    operatingStation.getBaggageScanner().alarm(idCard);
+
+            }
+        }
+    }
+    public void initiateManualPostControlKnife(Tray tray){
+        if(manualPostControl != null){
+            for(Layer layer: tray.getHandBaggage().getLayers()){
+                if(layer.getCharacter().toString().contains("kn!fe")) {
+                    operatingStation.setPassengerManualPostControl(operatingStation.getBaggageScanner().getCurrentPassenger());
+                    System.out.println("Passenger is present for manual post control");
+                    String content = layer.getCharacter().toString().replace("kn!fe", "00000");
+                    layer.setCharacter(content.toCharArray());
+                    System.out.println("kn!fe has been removed");
+                    operatingStation.getBaggageScanner().getBelt().getTrays().add(tray);
+                    operatingStation.getBaggageScanner().getOperatingStation().getInspector().recheckBag();
+                    operatingStation.setPassengerManualPostControl(null);
+                }
+            }
+        }
+    }
+    public void recheckBag(){
+        if(operatingStation != null){
+            operatingStation.handleButtonPushed(operatingStation.getButtonLeft(), idCard);
+            operatingStation.handleButtonPushed(operatingStation.getButtonRectangle(), idCard);
+            System.out.println("Baggage will be rechecked");
         }
     }
 }

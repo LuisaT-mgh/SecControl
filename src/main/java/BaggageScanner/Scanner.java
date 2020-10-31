@@ -26,6 +26,7 @@ public class Scanner {
                 else{
                     Record record = new Record(item, position);
                     baggageScanner.getRecords().add(record);
+                    baggageScanner.getOperatingStation().getInspector().informManualPostControl(item, tray);
                     return item;
                 }
             }
