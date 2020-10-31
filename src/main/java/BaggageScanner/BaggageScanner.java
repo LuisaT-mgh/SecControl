@@ -63,30 +63,7 @@ public class BaggageScanner implements IHasButton{
     public String scan(IDCard idCard){
         status = Status.IN_USE;
         if(validateAuthorisationInspector(idCard)) {
-            Tray tray = belt.getTrays().poll();
-            ISearchAlgorithm iSearchAlgorithm = null;
-            if(Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")) {
-                iSearchAlgorithm = new BoyerMoore();
-            }
-            else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTMORRISPRATT")) {
-                iSearchAlgorithm = new KnuthMorrisPratt();
-            }
-            for(Layer layer : tray.getHandBaggage().getLayers()) {
-                for (String item : Configuration.instance.forbiddenItems) {
-                    int position = iSearchAlgorithm.search(layer.getCharacter(), item.toCharArray());
-                    if(position == -1){
-                        break;
-                    }
-                    else{
-                        Record record = new Record(item, position);
-                        records.add(record);
-                        return item;
-                    }
-                }
-            }
-            Record record = new Record("no", -1);
-            tracks[1].getTrays().add(tray);
-            System.out.println("No forbidden Item has been found");
+            scanner.scan();
         }
         else {
             System.out.println("Unauthorised call of scan");
@@ -238,6 +215,14 @@ public class BaggageScanner implements IHasButton{
 
     public void setFederalPoliceOfficer(FederalPoliceOfficer federalPoliceOfficer) {
         this.federalPoliceOfficer = federalPoliceOfficer;
+    }
+
+    public ArrayList<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(ArrayList<Record> records) {
+        this.records = records;
     }
 
     @Override

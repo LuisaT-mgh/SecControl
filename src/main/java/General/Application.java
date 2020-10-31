@@ -61,6 +61,8 @@ public class Application {
         for (Passenger passenger: passengers) {
             passenger.handOverBaggage();
             baggageScanner.getRollerConveyor().getInspector().pushTrays();
+            baggageScanner.getOperatingStation().getInspector().pushButtonRight();
+            baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
         }
     }
 
@@ -70,15 +72,26 @@ public class Application {
             String line;
             BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(Configuration.instance.passengerDataPath)));
             while ((line = bufferedReader.readLine()) != null) {
-                String[] passengerData = line.split(Configuration.instance.passengerDataDelimiter);
+                String[] generalData = line.split("[");
+                if(generalData.length >=2){
+                    generalData[1].replace("]", "");
+                    String[] hiddenItems = generalData[1].split(";");
+                }
+                String passengerData[] = generalData[0].split(";");
                 String[] combinedName = passengerData[0].split(Configuration.instance.passengerNameDelimiter);
                 String firstName = combinedName[0];
                 String lastName = combinedName[1];
                 int numberOfHandBaggage = Integer.parseInt(passengerData[1]);
-                String hasForbiddenItem = passengerData[2];
-
+                String[] hiddenItems = null;
+                if(generalData.length >=2){
+                    generalData[1].replace("]", "");
+                    hiddenItems = generalData[1].split(";");
+                }
+                else{
+                    hiddenItems[0] = passengerData[2];
+                }
                 Passenger passenger = new Passenger(firstName, lastName);
-                passenger.setHandBaggage(generateHandBaggage(numberOfHandBaggage, hasForbiddenItem));
+                passenger.setHandBaggage(generateHandBaggage(numberOfHandBaggage,hiddenItems));
                 passengers.add(passenger);
             }
 
@@ -88,28 +101,25 @@ public class Application {
         return passengers;
     }
 
-    private ArrayList<HandBaggage> generateHandBaggage(int numberOfBaggage, String hasForbiddenItem) {
+    private ArrayList<HandBaggage> generateHandBaggage(int numberOfBaggage, String[] hiddenItems) {
         ArrayList<HandBaggage> handBaggage = new ArrayList<>();
-        int numberOfForbiddenBaggage = 15;
-        int numberOfForbiddenLayer = 15;
-        String forbiddenItem = null;
-        if (!hasForbiddenItem.contentEquals("-")) {
-            hasForbiddenItem = hasForbiddenItem.replace("[", "");
-            hasForbiddenItem = hasForbiddenItem.replace("]", "");
-            String[] allForbiddenItems = hasForbiddenItem.split(";");
-            for (String item : allForbiddenItems) {
-                String[] dataHasForbiddenItem = item.split(",");
-                numberOfForbiddenBaggage = Integer.parseInt(dataHasForbiddenItem[1]);
-                numberOfForbiddenLayer = Integer.parseInt(dataHasForbiddenItem[2]);
+        ArrayList<Integer> numberOfForbiddenBaggage = new ArrayList<>();
+        ArrayList<Integer> numberOfForbiddenLayer = new ArrayList<>();
+        ArrayList<String> forbiddenItems = new ArrayList<>();
+        if (!hiddenItems[0].contentEquals("-")) {
+            for(String hiddenItem: hiddenItems) {
+                String[] dataHasForbiddenItem = hiddenItem.split(",");
+                numberOfForbiddenBaggage.add(Integer.parseInt(dataHasForbiddenItem[1]));
+                numberOfForbiddenLayer.add(Integer.parseInt(dataHasForbiddenItem[2]));
                 switch (dataHasForbiddenItem[0]) {
                     case "K":
-                        forbiddenItem = Configuration.instance.forbiddenItems[0];
+                        forbiddenItems.add(Configuration.instance.forbiddenItems[0]);
                         break;
                     case "W":
-                        forbiddenItem = Configuration.instance.forbiddenItems[1];
+                        forbiddenItems.add(Configuration.instance.forbiddenItems[1]);
                         break;
                     case "E":
-                        forbiddenItem = Configuration.instance.forbiddenItems[2];
+                        forbiddenItems.add(Configuration.instance.forbiddenItems[2]);
                         break;
                 }
             }
@@ -118,8 +128,12 @@ public class Application {
             Layer[] layers = new Layer[5];
             for (int j = 0; j < 5; j++) {
                 Layer layer = new Layer();
-                if (numberOfForbiddenBaggage == i && numberOfForbiddenLayer == j) {
-                    layer = hideItemInLayer(layer, forbiddenItem);
+                for(int counterNumberBaggage = 0; counterNumberBaggage< numberOfForbiddenBaggage.size(); counterNumberBaggage++){
+                    for(int counterNumberLayer = 0; counterNumberLayer<numberOfForbiddenLayer.size(); counterNumberLayer++){
+                        if(counterNumberBaggage == counterNumberLayer){
+                            layer = hideItemInLayer(layer, forbiddenItems.get(counterNumberBaggage));
+                        }
+                    }
                 }
                 layers[j] = layer;
             }
@@ -132,7 +146,7 @@ public class Application {
     private Layer hideItemInLayer(Layer layer, String item) {
         Random rand = new Random();
         int letterNumber = rand.nextInt(9999 - item.length());
-        Character[] temporaryCharacter = layer.getCharacter();
+        char[] temporaryCharacter = layer.getCharacter();
         for (int i = 0; i < item.length(); i++) {
             temporaryCharacter[letterNumber] = item.charAt(i);
             letterNumber++;

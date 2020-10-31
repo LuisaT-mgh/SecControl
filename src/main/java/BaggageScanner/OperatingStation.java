@@ -6,17 +6,18 @@ import Employee.Inspector;
 public class OperatingStation implements IHasButton {
     private Reader reader;
     private BaggageScanner baggageScanner;
-    private Button[] buttons;
+    private Button buttonRight;
+    private Button buttonLeft;
+    private Button buttonRectangle;
     private Inspector inspector;
 
     public OperatingStation() {
-        buttons = new Button[3];
-        buttons[0] = new Button(this);
-        buttons[1] = new Button(this);
-        buttons[2] = new Button(this);
-        buttons[0].setShape(ButtonShape.ARROW_RIGHT);
-        buttons[1].setShape(ButtonShape.ARROW_LEFT);
-        buttons[2].setShape(ButtonShape.RECTANGLE);
+        buttonRight = new Button(this);
+        buttonLeft = new Button(this);
+        buttonRectangle = new Button(this);
+        buttonRight.setShape(ButtonShape.ARROW_RIGHT);
+        buttonLeft.setShape(ButtonShape.ARROW_LEFT);
+        buttonRectangle.setShape(ButtonShape.RECTANGLE);
     }
 
     @Override
@@ -56,15 +57,31 @@ public class OperatingStation implements IHasButton {
         return baggageScanner;
     }
 
+
+    public Button getButtonRight() {
+        return buttonRight;
+    }
+
+    public void setButtonRight(Button buttonRight) {
+        this.buttonRight = buttonRight;
+    }
+
+    public Button getButtonLeft() {
+        return buttonLeft;
+    }
+
+    public void setButtonLeft(Button buttonLeft) {
+        this.buttonLeft = buttonLeft;
+    }
+
+    public Button getButtonRectangle() {
+        return buttonRectangle;
+    }
+
+    public void setButtonRectangle(Button buttonRectangle) {
+        this.buttonRectangle = buttonRectangle;
+    }
+
     public void setBaggageScanner(BaggageScanner baggageScanner) {
-        this.baggageScanner = baggageScanner;
-    }
-
-    public Button[] getButtons() {
-        return buttons;
-    }
-
-    public void setButtons(Button[] buttons) {
-        this.buttons = buttons;
     }
 }

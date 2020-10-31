@@ -29,7 +29,30 @@ public class Inspector extends Employee{
         }
     }
 
-    public void scanBaggage(){
+    public void pushButtonRight(){
+        if( operatingStation != null) {
+            operatingStation.handleButtonPushed(operatingStation.getButtonRight(), idCard);
+        }
+        else{
+            System.out.println("No operating station found in inspector");
+        }
+    }
 
+    public void pushButtonRectangle(){
+        if( operatingStation != null) {
+            operatingStation.handleButtonPushed(operatingStation.getButtonRectangle(), idCard);
+        }
+        else{
+            System.out.println("No operating station found in inspector");
+        }
+    }
+
+    public void pushButtonLeft(){
+        if( operatingStation != null) {
+            operatingStation.handleButtonPushed(operatingStation.getButtonLeft(), idCard);
+        }
+        else{
+            System.out.println("No operating station found in inspector");
+        }
     }
 }
