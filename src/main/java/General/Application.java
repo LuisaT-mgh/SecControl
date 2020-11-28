@@ -62,6 +62,7 @@ public class Application {
         for (Passenger passenger : passengers) {
             passenger.setBaggageScanner(baggageScanner);
             baggageScanner.setCurrentPassenger(passenger);
+            System.out.println("current passenger:: "+baggageScanner.getCurrentPassenger().getFistName() + baggageScanner.getCurrentPassenger().getLastName());
             passenger.handOverBaggage();
             baggageScanner.getRollerConveyor().getInspector().pushTrays();
             baggageScanner.getOperatingStation().getInspector().pushButtonRight();
@@ -71,7 +72,7 @@ public class Application {
                 System.out.println("Additional police officers called");
                 if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")) {
                     federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
-                    System.out.println("weapon has been handed to officer 3");
+                    System.out.println("Weapon has been handed to officer 3");
                     baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
                     baggageScanner.getOperatingStation().getInspector().pushButtonRight();
                     baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();

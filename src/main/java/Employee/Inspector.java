@@ -71,11 +71,11 @@ public class Inspector extends Employee{
                     operatingStation.getBaggageScanner().getManualPostControl().getInspector().initiateManualPostControlKnife();
                     break;
                 case "exl|os!ve":
-                    System.out.println("exl|os!ve");
+                    System.out.println("exl|os!ve found");
                     operatingStation.getBaggageScanner().alarm(idCard, "exl|os!ve");
                     break;
                 case "glock|7":
-                    System.out.println("glock|7");
+                    System.out.println("glock|7 found");
                     operatingStation.getBaggageScanner().alarm(idCard, "glock|7");
                     break;
             }
