@@ -158,40 +158,40 @@ public class TestSecurity {
 
 
         //Test Profile K
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "i"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "ii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "iii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "iv"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "v"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "vi"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeK, "i"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeK, "ii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeK, "iii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeK, "iv"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeK, "v"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeK, "vi"));
         //Test Profile O
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "i"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "ii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "iii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "iv"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "v"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "vi"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeO, "i"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeO, "ii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeO, "iii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeO, "iv"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeO, "v"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeO, "vi"));
         //Test Profile I
-        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "i"));
-        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "ii"));
-        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "iii"));
-        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "iv"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeI, "v"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeI, "vi"));
+        Assertions.assertTrue(TestHelpers.checkIsAllowed(app, typeI, "i"));
+        Assertions.assertTrue(TestHelpers.checkIsAllowed(app, typeI, "ii"));
+        Assertions.assertTrue(TestHelpers.checkIsAllowed(app, typeI, "iii"));
+        Assertions.assertTrue(TestHelpers.checkIsAllowed(app, typeI, "iv"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeI, "v"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeI, "vi"));
         //Test Profile S
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "i"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "ii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "iii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "iv"));
-        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeS, "v"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "vi"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeS, "i"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeS, "ii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeS, "iii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeS, "iv"));
+        Assertions.assertTrue(TestHelpers.checkIsAllowed(app, typeS, "v"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeS, "vi"));
         //Test Profile T
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "i"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "ii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "iii"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "iv"));
-        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "v"));
-        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeT, "vi"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeT, "i"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeT, "ii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeT, "iii"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeT, "iv"));
+        Assertions.assertFalse(TestHelpers.checkIsAllowed(app, typeT, "v"));
+        Assertions.assertTrue(TestHelpers.checkIsAllowed(app, typeT, "vi"));
     }
 
     @Test

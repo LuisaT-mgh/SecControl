@@ -1,7 +1,7 @@
 import Employee.Employee;
 import General.Application;
 
-public class TestFunctionality {
+public class TestHelpers {
 
     public static boolean checkIsAllowed(Application app, Employee employee, String functionality){
         switch (functionality){
