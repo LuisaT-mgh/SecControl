@@ -1,6 +1,7 @@
 import BaggageScanner.*;
 import Employee.*;
 import General.Application;
+import Passenger.Passenger;
 import org.junit.jupiter.api.*;
 
 import java.text.ParseException;
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestSecurity {
@@ -23,7 +25,17 @@ public class TestSecurity {
     @Test
     @DisplayName("1. Test num passenger/baggage")
     public void testInitialize(){
-        //TODO 1.Die Simulation mit (i) 568 Passagieren und 609 Gepäckstücken wird korrekt initialisiert.
+        //1.Die Simulation mit (i) 568 Passagieren und 609 Gepäckstücken wird korrekt initialisiert.
+        //TODO Test and maybe add more.
+        Assertions.assertEquals(568, app.passengers.size());
+
+        ArrayList<Passenger> passengers = new ArrayList<>(app.passengers);
+        List<Integer> numberBaggages = passengers.stream().map(passenger -> passenger.getHandBaggage().size()).collect(Collectors.toList());
+        int sum = 0;
+        for(Integer integer : numberBaggages){
+            sum += integer;
+        }
+        Assertions.assertEquals(609, sum);
     }
 
     @Test
@@ -118,7 +130,68 @@ public class TestSecurity {
     @Test
     @DisplayName("5. Test permissions for functions")
     public void testFunctionPermissions(){
-        //TODO 5.Ein Mitarbeiter kann nur die - gemäß Profil - zugeordneten Funktionalitäten ausführen.
+        //5.Ein Mitarbeiter kann nur die - gemäß Profil - zugeordneten Funktionalitäten ausführen.
+        //TODO Test this
+        //i - Band vor
+        //ii - Band zurück
+        //iii - Scan
+        //iv - Alarm
+        //v - Report
+        //vi - Wartung
+        //Profile: K, O - nichts
+        //I - i bis iv
+        //S - v
+        //T - vi
+
+        //Setup
+        Employee typeK = new HouseKeeping("Bill Gates", "01/01/2000");
+        Employee typeO = new FederalPoliceOfficer("Bad Guy", "11/11/2011", "officer");
+        Employee typeI = new Inspector("Angela Merkel", "01/01/2000", true);
+        Employee typeS = new Supervisor("Peter Parker", "01/01/2000", false, true);
+        Employee typeT = new Technician("Harry Potter", "01/01/2000");
+
+        Assertions.assertEquals('K', typeK.getIdCard().getMagnetStripe().charAt(0));
+        Assertions.assertEquals('O', typeO.getIdCard().getMagnetStripe().charAt(0));
+        Assertions.assertEquals('I', typeI.getIdCard().getMagnetStripe().charAt(0));
+        Assertions.assertEquals('S', typeS.getIdCard().getMagnetStripe().charAt(0));
+        Assertions.assertEquals('T', typeT.getIdCard().getMagnetStripe().charAt(0));
+
+
+        //Test Profile K
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "i"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "ii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "iii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "iv"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "v"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeK, "vi"));
+        //Test Profile O
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "i"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "ii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "iii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "iv"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "v"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeO, "vi"));
+        //Test Profile I
+        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "i"));
+        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "ii"));
+        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "iii"));
+        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeI, "iv"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeI, "v"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeI, "vi"));
+        //Test Profile S
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "i"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "ii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "iii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "iv"));
+        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeS, "v"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeS, "vi"));
+        //Test Profile T
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "i"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "ii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "iii"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "iv"));
+        Assertions.assertFalse(TestFunctionality.checkIsAllowed(app, typeT, "v"));
+        Assertions.assertTrue(TestFunctionality.checkIsAllowed(app, typeT, "vi"));
     }
 
     @Test

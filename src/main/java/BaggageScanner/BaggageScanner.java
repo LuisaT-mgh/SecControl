@@ -46,23 +46,27 @@ public class BaggageScanner implements IHasButton{
         status = Status.SHUTDOWN;
     }
 
-    public void moveBeltForward(IDCard idCard){
+    public boolean moveBeltForward(IDCard idCard){
         if(validateAuthorisationInspector(idCard)) {
             System.out.println("Tray has been moved to entrance of scanner");
+            return true;
         }
         else {
             System.out.println("Unauthorised call of move belt forward");
+            return false;
         }
     }
-    public void moveBeltBackwards(IDCard idCard){
+    public boolean moveBeltBackwards(IDCard idCard){
         if(validateAuthorisationInspector(idCard)) {
             System.out.println("MoveBeltBackwards has been called");
+            return true;
         }
         else {
             System.out.println("Unauthorised call of moveBeltBackwards");
+            return false;
         }
     }
-    public String scan(IDCard idCard){
+    public boolean scan(IDCard idCard){
         status = Status.IN_USE;
         System.out.println("Baggage scanner in use");
         String itemFound = null;
@@ -71,38 +75,45 @@ public class BaggageScanner implements IHasButton{
         }
         else {
             System.out.println("Unauthorised call of scan");
+            return false;
         }
         if(itemFound == null){
             status = Status.ACTIVATED;
             System.out.println("Baggage scanner activated");
         }
-        return null;
+        return true;
     }
-    public void alarm(IDCard idCard, String itemFound){
+    public boolean alarm(IDCard idCard, String itemFound){
         if(validateAuthorisationInspector(idCard)) {
             System.out.println("Alarm has been called");
             status = Status.LOCKED;
             System.out.println("Baggage scanner is now locked");
             federalPoliceOfficer.setItemToTakeCareOf(itemFound);
+            return true;
         }
         else {
             System.out.println("Unauthorised call of alarm");
+            return false;
         }
     }
-    public void report(IDCard idCard){
+    public boolean report(IDCard idCard){
         if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
             System.out.println("Report has been called");
+            return true;
         }
         else {
             System.out.println("Unauthorised call of report");
+            return false;
         }
     }
-    public void maintenance(IDCard idCard){
+    public boolean maintenance(IDCard idCard){
         if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.T))) {
             System.out.println("BaggageScanner is maintained");
+            return true;
         }
         else {
             System.out.println("Unauthorised maintenance try");
+            return false;
         }
     }
     public void start(IDCard idCard){
