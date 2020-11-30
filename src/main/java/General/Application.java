@@ -215,9 +215,9 @@ public class Application {
         inspector02.setOperatingStation(operatingStation);
         Inspector inspector03 = new Inspector("Bruce Willis", "19/03/1955", true);
         inspector03.setManualPostControl(manualPostControl);
-        Supervisor supervisor = new Supervisor("Jodie Foster", "19/03/1955", false, false);
+        Supervisor supervisor = new Supervisor("Jodie Foster", "19/11/1961", false, false);
         supervisor.setSupervision(supervision);
-        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", "19/03/1955", "officer");
+        FederalPoliceOfficer federalPoliceOfficer = new FederalPoliceOfficer("Wesley Snipes", "31/07/1962", "officer");
         baggageScanner.getRollerConveyor().setInspector(inspector01);
         baggageScanner.getOperatingStation().setInspector(inspector02);
         baggageScanner.getManualPostControl().setInspector(inspector03);

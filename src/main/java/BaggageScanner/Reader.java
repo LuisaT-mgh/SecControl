@@ -25,9 +25,10 @@ public class Reader {
                 System.out.println("Unauthorized access to baggage scanner request");
                 return false;
             }
-            if (denialCounter == 2) {
+            if (denialCounter == 1) {
                 System.out.println("Pin was entered wrong 3 times, baggage scanner locked");
                 operatingStation.getBaggageScanner().setStatus(Status.LOCKED);
+                card.setLocked(true);
                 return false;
             } else {
                 if (validatePin(card, pinToActivate)) {
@@ -37,6 +38,7 @@ public class Reader {
                 } else {
                     if (lastUsedCard == null || !(lastUsedCard.getId().equals(card.getId()))) {
                         denialCounter = 0;
+                        lastUsedCard = card;
                     } else {
                         denialCounter++;
                     }

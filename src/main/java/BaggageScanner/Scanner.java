@@ -34,6 +34,7 @@ public class Scanner {
             baggageScanner.getManualPostControl().getInspector().removeForbidden(tray);
         }
         Record record = new Record("no", -1);
+        baggageScanner.getRecords().add(record);
         baggageScanner.getTracks()[1].getTrays().add(tray);
         System.out.println("No forbidden Item has been found");
         return null;
