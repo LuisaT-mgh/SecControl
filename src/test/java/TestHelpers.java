@@ -1,5 +1,10 @@
+import Configuration.Configuration;
 import Employee.Employee;
 import General.Application;
+import HandBaggage.HandBaggage;
+import Passenger.Passenger;
+
+import java.util.ArrayList;
 
 public class TestHelpers {
 
@@ -20,5 +25,15 @@ public class TestHelpers {
             default:
                 return false;
         }
+    }
+
+    public static ArrayList<Passenger> generatePassengersWithItem(String items){
+        ArrayList<Passenger> ret = new ArrayList<>();
+        for(int i = 0; i< Configuration.instance.numTestPassengers; i++){
+            Passenger pass = Passenger.getTestPassenger();
+            pass.setHandBaggage(HandBaggage.generateRandomHandBaggages(items));
+            ret.add(pass);
+        }
+        return ret;
     }
 }

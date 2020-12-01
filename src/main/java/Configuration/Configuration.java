@@ -4,6 +4,7 @@ import Employee.ProfileType;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Random;
 
 public enum Configuration {
     instance;
@@ -22,5 +23,9 @@ public enum Configuration {
     public String searchAlgorithm = "BoyerMoore";
     //todo does not work public ISearchAlgorithm activeSearchAlgorithm = BoyerMoore;
 
+    public Random r = new Random();
+
+    //For Testing
+    public int numTestPassengers = 42;
 
 }

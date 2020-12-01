@@ -24,4 +24,8 @@ public class Record {
             this.result = "prohibited item "+hiddenItem+" detected at position "+String.valueOf(position);
         }
     }
+
+    public String getResult() {
+        return result;
+    }
 }

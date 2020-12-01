@@ -26,6 +26,10 @@ public class Passenger {
         System.out.println("Hand baggage put on tray and on roller conveyor by passanger");
     }
 
+    public static Passenger getTestPassenger(){
+        return new Passenger("Max", "Mustermann");
+    }
+
     public ArrayList<HandBaggage> getHandBaggage() {
         return handBaggage;
     }

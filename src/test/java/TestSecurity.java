@@ -229,6 +229,31 @@ public class TestSecurity {
     public Stream<DynamicTest> testFindKnifesInBaggage(){
         //TODO 7.Es wird der verbotene Gegenstand Messer in einem Handgepäckstück erkannt.
         List<DynamicTest> tests = new ArrayList<>();
+        ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("K");
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing Bagge num: " + i, () ->{
+                int startingRecord = app.baggageScanner.getRecords().size();
+                app.passengers = new ArrayList<Passenger>();
+                app.passengers.add(pass);
+                app.processPassengers();
+                int endRecords = app.baggageScanner.getRecords().size();
+                //This tests it, because if a knife is found the bag is scanned again and a new record is created. so, at least two per knife-bag.
+                if(!(startingRecord < endRecords-1)){
+                    System.out.println(":(");
+                }
+                Assertions.assertTrue(startingRecord < endRecords-1);
+                //ArrayList<Record> records = app.baggageScanner.getRecords();
+                //Record record = records.get(records.size()-2);
+                //Assertions.assertTrue(record.getResult().substring(16).startsWith("kn!fe"));
+            });
+            tests.add(test);
+            i++;
+        }
+
         return tests.stream();
     }
 
