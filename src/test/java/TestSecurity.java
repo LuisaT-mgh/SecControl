@@ -261,6 +261,26 @@ public class TestSecurity {
     public Stream<DynamicTest> testFindWeaponInBaggage(){
         //TODO 8.Es wird der verbotene Gegenstand Waffe in einem Handgepäckstück erkannt.
         List<DynamicTest> tests = new ArrayList<>();
+
+        ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("W");
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing Bagge num: " + i, () ->{
+                app.passengers = new ArrayList<Passenger>();
+                app.passengers.add(pass);
+                app.processPassengers();
+
+                ArrayList<Record> records = app.baggageScanner.getRecords();
+                Record record = records.get(records.size()-1);
+                Assertions.assertTrue(record.getResult().substring(16).startsWith("glock|7"));
+            });
+            tests.add(test);
+            i++;
+        }
+
         return tests.stream();
     }
 
