@@ -10,6 +10,8 @@ public class Scanner {
     private BaggageScanner baggageScanner;
     public String scan(){
         Tray tray = baggageScanner.getBelt().getTrays().poll();
+        if(tray == null) return null;
+
         ISearchAlgorithm iSearchAlgorithm = null;
         if(Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")) {
             iSearchAlgorithm = new BoyerMoore();
