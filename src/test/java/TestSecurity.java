@@ -273,6 +273,7 @@ public class TestSecurity {
                 app.passengers.add(pass);
                 app.processPassengers();
 
+                //TODO Bei Weapons werden auch meherere Records angelegt.
                 ArrayList<Record> records = app.baggageScanner.getRecords();
                 Record record = records.get(records.size()-1);
                 Assertions.assertTrue(record.getResult().substring(16).startsWith("glock|7"));
