@@ -45,13 +45,17 @@ public class TestSecurity {
         //TODO Maybe check the new specs again.
 
         //Create Dates
-        Date conveyorDate = null, operatorDate = null, postControlDate = null, supervisorDate = null, policeDate = null;
+        Date conveyorDate = null, operatorDate = null, postControlDate = null, supervisorDate = null, policeDate = null, technicianDate = null, houseKeepingDate = null, additionalPoliceDate = null, additionalAdditionalPoliceDate = null;
         try{
             conveyorDate = new SimpleDateFormat("dd/MM/yyyy").parse("31/05/1930");
             operatorDate = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/1981");
             postControlDate = new SimpleDateFormat("dd/MM/yyyy").parse("19/03/1955");
             supervisorDate = new SimpleDateFormat("dd/MM/yyyy").parse("19/11/1962");
             policeDate = new SimpleDateFormat("dd/MM/yyyy").parse("31/07/1962");
+            technicianDate = new SimpleDateFormat("dd/MM/yyyy").parse("26/07/1967");
+            houseKeepingDate = new SimpleDateFormat("dd/MM/yyyy").parse("17/07/1969");
+            additionalPoliceDate = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969");
+            additionalAdditionalPoliceDate = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1969");
         } catch (ParseException e) {
             e.printStackTrace();
             System.out.println("Error while creating the BirthDates to check against.");
@@ -95,6 +99,36 @@ public class TestSecurity {
         Assertions.assertEquals(policeDate, current.getBirthDate());
         Assertions.assertEquals(FederalPoliceOfficer.class, current.getClass());
 
+        //Techniker
+        current = app.technician;
+        Assertions.assertNotNull(current);
+        Assertions.assertEquals("Jason Statham", current.getName());
+        Assertions.assertEquals(technicianDate, current.getBirthDate());
+        Assertions.assertEquals(Technician.class, current.getClass());
+
+        //HoseKeeping
+        current = app.houseKeeping;
+        Assertions.assertNotNull(current);
+        Assertions.assertEquals("Jason Clarke", current.getName());
+        Assertions.assertEquals(houseKeepingDate, current.getBirthDate());
+        Assertions.assertEquals(HouseKeeping.class, current.getClass());
+
+        //Zusätzliche Polizisten
+        current = app.federalPoliceOffice.getRegisteredOfficers().get(0);
+        Employee other = app.federalPoliceOffice.getRegisteredOfficers().get(1);
+        Assertions.assertNotNull(current);
+        Assertions.assertNotNull(other);
+        if(!current.getName().equals("Toto")){
+            Employee temp = current;
+            current = other;
+            other = temp;
+        }
+        Assertions.assertEquals("Toto", current.getName());
+        Assertions.assertEquals(additionalPoliceDate, current.getBirthDate());
+        Assertions.assertEquals(FederalPoliceOfficer.class, current.getClass());
+        Assertions.assertEquals("Harry", other.getName());
+        Assertions.assertEquals(additionalAdditionalPoliceDate, other.getBirthDate());
+        Assertions.assertEquals(FederalPoliceOfficer.class, other.getClass());
     }
 
     @Test
