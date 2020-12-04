@@ -63,6 +63,7 @@ public class TestSecurity {
         Assertions.assertEquals("Clint Eastwood", current.getName());
         Assertions.assertEquals(conveyorDate, current.getBirthDate());
         Assertions.assertEquals(Inspector.class, current.getClass());
+        Assertions.assertTrue(((Inspector)current).isSenior());
 
         //Inspektorin Bedienplatz
         current = app.baggageScanner.getOperatingStation().getInspector();
@@ -70,6 +71,7 @@ public class TestSecurity {
         Assertions.assertEquals("Natalie Portman", current.getName());
         Assertions.assertEquals(operatorDate, current.getBirthDate());
         Assertions.assertEquals(Inspector.class, current.getClass());
+        Assertions.assertFalse(((Inspector)current).isSenior());
 
         //Inspektor Nachkontrolle
         current = app.baggageScanner.getManualPostControl().getInspector();
@@ -77,6 +79,7 @@ public class TestSecurity {
         Assertions.assertEquals("Bruce Willis", current.getName());
         Assertions.assertEquals(postControlDate, current.getBirthDate());
         Assertions.assertEquals(Inspector.class, current.getClass());
+        Assertions.assertTrue(((Inspector)current).isSenior());
 
         //Supervisor am Arbeitsplatz SV
         current = app.baggageScanner.getSupervision().getSupervisor();

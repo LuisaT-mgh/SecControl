@@ -182,4 +182,8 @@ public class Inspector extends Employee{
     public void setOperatingStation(OperatingStation operatingStation) {
         this.operatingStation = operatingStation;
     }
+
+    public boolean isSenior() {
+        return isSenior;
+    }
 }
