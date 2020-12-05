@@ -23,9 +23,6 @@ public class HandBaggage {
             char current = itemsToHide.charAt(i);
             int numberToHide = Configuration.instance.r.nextInt(numBaggages)+1;
             int layerToHide = Configuration.instance.r.nextInt(5)+1;
-            //todo remove
-            numberToHide = 1;
-            layerToHide = 1;
             hiddenItems[i] = current + "," + numberToHide + "," + layerToHide + "]";
         }
         return generateHandBaggages(numBaggages, hiddenItems);
@@ -77,8 +74,6 @@ public class HandBaggage {
     private static Layer hideItemInLayer(Layer layer, String item) {
         Random rand = new Random();
         int letterNumber = rand.nextInt(9999 - item.length());
-        //todo remove
-        letterNumber = 1;
         char[] temporaryCharacter = layer.getCharacter();
         for (int i = 0; i < item.length(); i++) {
             temporaryCharacter[letterNumber] = item.charAt(i);
