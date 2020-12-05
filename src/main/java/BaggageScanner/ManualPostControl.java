@@ -4,7 +4,6 @@ import Employee.Inspector;
 import Employee.Supervisor;
 import HandBaggage.HandBaggage;
 import Passenger.Passenger;
-import BaggageScanner.Tray;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,6 @@ public class ManualPostControl {
     private Passenger passengerManualPostControl;
     private Supervisor supervisorForWeaponFound;
     private Tray trayWithBaggageInManualPostControl;
-    private ArrayList<HandBaggage> confiscatedHandBaggage = new ArrayList<>();
     private BaggageScanner baggageScanner;
     private boolean hasToBeConfiscated = false;
     private ExplosiveTraceDetector explosiveTraceDetector;
@@ -57,14 +55,6 @@ public class ManualPostControl {
 
     public void setBaggageScanner(BaggageScanner baggageScanner) {
         this.baggageScanner = baggageScanner;
-    }
-
-    public ArrayList<HandBaggage> getConfiscatedHandBaggage() {
-        return confiscatedHandBaggage;
-    }
-
-    public void setConfiscatedHandBaggage(ArrayList<HandBaggage> confiscatedHandBaggage) {
-        this.confiscatedHandBaggage = confiscatedHandBaggage;
     }
 
     public boolean isHasToBeConfiscated() {

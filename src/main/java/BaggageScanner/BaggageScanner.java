@@ -248,7 +248,7 @@ public class BaggageScanner implements IHasButton{
 
     @Override
     public void handleButtonPushed(Button sender, IDCard idCard) {
-        //TODO implement function handleButtonPushed
+        operatingStation.getReader().activateBaggageScanner(idCard, idCard.getEmployee().getPinThatIsRemembered());
     }
 
     public Passenger getCurrentPassenger() {

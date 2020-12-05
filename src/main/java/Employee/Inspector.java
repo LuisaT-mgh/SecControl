@@ -3,9 +3,11 @@ package Employee;
 import BaggageScanner.*;
 import HandBaggage.HandBaggage;
 import HandBaggage.Layer;
-import Passenger.Passenger;
+import BaggageScanner.Tray;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class Inspector extends Employee{
@@ -94,6 +96,8 @@ public class Inspector extends Employee{
                     manualPostControl.getBaggageScanner().getBelt().getTrays().add(manualPostControl.getTrayWithBaggageInManualPostControl());
                     manualPostControl.setTrayWithBaggageInManualPostControl(null);
                     manualPostControl.getBaggageScanner().getOperatingStation().getInspector().recheckBag();
+                    Queue<Tray> trays = new LinkedList<Tray>();
+                    manualPostControl.getBaggageScanner().getBelt().setTrays(trays);
                     manualPostControl.setPassengerManualPostControl(null);
                 }
             }
@@ -156,7 +160,7 @@ public class Inspector extends Employee{
 
     public void handOverBaggage(FederalPoliceOfficer federalPoliceOfficer){
         federalPoliceOfficer.setConfiscatedBaggage(handBaggageToHandOver);
-        handBaggageToHandOver = null;
+        handBaggageToHandOver = new ArrayList<HandBaggage>();
     }
 
     public RollerConveyor getRollerConveyor() {

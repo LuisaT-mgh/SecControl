@@ -23,9 +23,7 @@ public abstract class Employee {
         id = UUID.randomUUID();
     }
 
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() { return id; }
 
     public void setId(UUID id) {
         this.id = id;

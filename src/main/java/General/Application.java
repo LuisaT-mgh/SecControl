@@ -54,15 +54,14 @@ public class Application {
     }
 
     public void prepareSecurityControl() {
-        baggageScanner.getOperatingStation().getReader().activateBaggageScanner(baggageScanner.getOperatingStation().getInspector().getIdCard(), baggageScanner.getOperatingStation().getInspector().getPinThatIsRemembered());
+        baggageScanner.handleButtonPushed(baggageScanner.getPowerButton(), baggageScanner.getOperatingStation().getInspector().getIdCard());
     }
 
     public void processPassengers() {
-        //TODO passagiere abarbeiten;
         for (Passenger passenger : passengers) {
             passenger.setBaggageScanner(baggageScanner);
             baggageScanner.setCurrentPassenger(passenger);
-            System.out.println("current passenger:: "+baggageScanner.getCurrentPassenger().getFistName() + baggageScanner.getCurrentPassenger().getLastName());
+            System.out.println("current passenger:: "+baggageScanner.getCurrentPassenger().getFistName() +" " + baggageScanner.getCurrentPassenger().getLastName());
             passenger.handOverBaggage();
             baggageScanner.getRollerConveyor().getInspector().pushTrays();
             baggageScanner.getOperatingStation().getInspector().pushButtonRight();
@@ -83,7 +82,7 @@ public class Application {
                         System.out.println("Remaining baggage of passenger has been handed to officer 3");
                     }
                     baggageScanner.getFederalPoliceOfficer().arrestPassenger();
-                    federalPoliceOfficers = null;
+                    federalPoliceOfficers = new ArrayList<>();
                     System.out.println("Police officers have left airport with passenger");
                 } else if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("exl|os!ve")) {
                     Random random = new Random();
@@ -146,7 +145,7 @@ public class Application {
         Supervision supervision = new Supervision();
         Track[] tracks = {new Track(), new Track()};
         Stack<Tray> trays = new Stack<Tray>();
-        for (int i = 0; i < numberOfPassengers * 3; i++) {
+        for (int i = 0; i <= (numberOfPassengers * 4); i++) {
             trays.push(new Tray());
         }
         BaggageScanner baggageScanner = new BaggageScanner(tracks, belt, manualPostControl, operatingStation, rollerConveyor, scanner, supervision, trays);

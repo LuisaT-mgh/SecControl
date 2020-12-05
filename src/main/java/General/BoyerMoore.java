@@ -1,13 +1,6 @@
 package General;
 
 
-//    @Override
-//    public boolean findPattern(String toSearchString, String pattern) {
-//        return false;
-//        //todo implement
-//    }
-
-
 public class BoyerMoore implements ISearchAlgorithm {
     private static int[] makeOffsetTable(char[] pattern) {
         int[] table = new int[pattern.length];

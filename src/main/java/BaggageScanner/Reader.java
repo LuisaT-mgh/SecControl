@@ -4,7 +4,7 @@ import Configuration.Configuration;
 import Employee.IDCard;
 import General.AES;
 
-public class Reader {
+public class Reader{
     private OperatingStation operatingStation;
     private int denialCounter = 0;
     private IDCard lastUsedCard;
@@ -123,4 +123,5 @@ public class Reader {
     public void setDenialCounter(int denialCounter) {
         this.denialCounter = denialCounter;
     }
+
 }
