@@ -16,7 +16,7 @@ public class Scanner {
         if(Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")) {
             iSearchAlgorithm = new BoyerMoore();
         }
-        else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTMORRISPRATT")) {
+        else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTHMORRISPRATT")) {
             iSearchAlgorithm = new KnuthMorrisPratt();
         }
         if(!baggageScanner.getManualPostControl().isHasToBeConfiscated()) {

@@ -84,8 +84,6 @@ public class HandBaggage {
     private static Layer hideItemInLayer(Layer layer, String item) {
         Random rand = new Random();
         int letterNumber = rand.nextInt(9999 - item.length());
-        //todo remove
-        letterNumber = 1;
         char[] temporaryCharacter = layer.getCharacter();
         for (int i = 0; i < item.length(); i++) {
             temporaryCharacter[letterNumber] = item.charAt(i);
