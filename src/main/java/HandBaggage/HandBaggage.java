@@ -25,17 +25,7 @@ public class HandBaggage {
         String[] hiddenItems = new String[itemsToHide.length()];
         for(int i = 0; i<itemsToHide.length(); i++){
             char current = itemsToHide.charAt(i);
-            //todo -> numBaggages ist schon 1-3, +4 wäre dann zu viel, rnd 0 geht aber nicht
-            int numberToHide = Configuration.instance.r.nextInt(numBaggages)+1;
-            //mein Vorschlag:
-//            if(numBaggages == 1){
-//                numberToHide = 1;
-//            }
-//            else{
-//                numberToHide =  Configuration.instance.r.nextInt(numBaggages - 1)+1;
-//            }
-            //todo nur Zahl zum testen, muss noch raus
-            numberToHide = 1;
+            int numberToHide = 1;
             int layerToHide = Configuration.instance.r.nextInt(5)+1;
             hiddenItems[i] = current + "," + numberToHide + "," + layerToHide + "]";
         }
