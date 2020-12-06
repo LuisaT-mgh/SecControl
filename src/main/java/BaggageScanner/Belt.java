@@ -13,8 +13,4 @@ public class Belt {
     public Queue<Tray> getTrays() {
         return trays;
     }
-
-    public void setTrays(Queue<Tray> trays) {
-        this.trays = trays;
-    }
 }

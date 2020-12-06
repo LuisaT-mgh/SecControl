@@ -8,18 +8,18 @@ import HandBaggage.Layer;
 
 public class Scanner {
     private BaggageScanner baggageScanner;
-    public String scan(){
+
+    public String scan() {
         Tray tray = baggageScanner.getBelt().getTrays().poll();
-        if(tray == null) return null;
+        if (tray == null) return null;
 
         ISearchAlgorithm iSearchAlgorithm = null;
-        if(Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")) {
+        if (Configuration.instance.searchAlgorithm.toUpperCase().equals("BOYERMOORE")) {
             iSearchAlgorithm = new BoyerMoore();
-        }
-        else if(Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTHMORRISPRATT")) {
+        } else if (Configuration.instance.searchAlgorithm.toUpperCase().equals("KNUTHMORRISPRATT")) {
             iSearchAlgorithm = new KnuthMorrisPratt();
         }
-        if(!baggageScanner.getManualPostControl().isHasToBeConfiscated()) {
+        if (!baggageScanner.getManualPostControl().isHasToBeConfiscated()) {
             for (Layer layer : tray.getHandBaggage().getLayers()) {
                 for (String item : Configuration.instance.forbiddenItems) {
                     int position = iSearchAlgorithm.search(layer.getCharacter(), item.toCharArray());
@@ -31,8 +31,7 @@ public class Scanner {
                     }
                 }
             }
-        }
-        else{
+        } else {
             baggageScanner.getManualPostControl().getInspector().removeForbidden(tray);
         }
         Record record = new Record("no", -1);
@@ -40,10 +39,6 @@ public class Scanner {
         baggageScanner.getTracks()[1].getTrays().add(tray);
         System.out.println("No forbidden Item has been found");
         return null;
-    }
-
-    public BaggageScanner getBaggageScanner() {
-        return baggageScanner;
     }
 
     public void setBaggageScanner(BaggageScanner baggageScanner) {

@@ -26,10 +26,6 @@ public class RollerConveyor {
         return trays;
     }
 
-    public void setTrays(Queue<Tray> trays) {
-        this.trays = trays;
-    }
-
     public BaggageScanner getBaggageScanner() {
         return baggageScanner;
     }

@@ -1,20 +1,14 @@
 package BaggageScanner;
 
-import Configuration.Configuration;
 import Employee.FederalPoliceOfficer;
 import Employee.IDCard;
 import Employee.ProfileType;
-import General.BoyerMoore;
-import General.ISearchAlgorithm;
-import General.KnuthMorrisPratt;
-import HandBaggage.Layer;
 import Passenger.Passenger;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class BaggageScanner implements IHasButton{
+public class BaggageScanner implements IHasButton {
     private Belt belt;
     private ManualPostControl manualPostControl;
     private OperatingStation operatingStation;
@@ -28,7 +22,6 @@ public class BaggageScanner implements IHasButton{
     private FederalPoliceOfficer federalPoliceOfficer;
     private ArrayList<Record> records;
     private Passenger currentPassenger;
-
 
     public BaggageScanner(Track[] tracks, Belt belt, ManualPostControl manualPostControl, OperatingStation operatingStation, RollerConveyor rollerConveyor, Scanner scanner, Supervision supervision, Stack<Tray> trays) {
         this.belt = belt;
@@ -46,99 +39,98 @@ public class BaggageScanner implements IHasButton{
         status = Status.SHUTDOWN;
     }
 
-    public boolean moveBeltForward(IDCard idCard){
-        if(validateAuthorisationInspector(idCard)) {
+    public boolean moveBeltForward(IDCard idCard) {
+        if (validateAuthorisationInspector(idCard)) {
             System.out.println("Tray has been moved to entrance of scanner");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Unauthorised call of move belt forward");
             return false;
         }
     }
-    public boolean moveBeltBackwards(IDCard idCard){
-        if(validateAuthorisationInspector(idCard)) {
+
+    public boolean moveBeltBackwards(IDCard idCard) {
+        if (validateAuthorisationInspector(idCard)) {
             System.out.println("MoveBeltBackwards has been called");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Unauthorised call of moveBeltBackwards");
             return false;
         }
     }
-    public boolean scan(IDCard idCard){
+
+    public boolean scan(IDCard idCard) {
         status = Status.IN_USE;
         System.out.println("Baggage scanner in use");
         String itemFound = null;
-        if(validateAuthorisationInspector(idCard)) {
+        if (validateAuthorisationInspector(idCard)) {
             itemFound = scanner.scan();
-        }
-        else {
+        } else {
             System.out.println("Unauthorised call of scan");
             return false;
         }
-        if(itemFound == null){
+        if (itemFound == null) {
             status = Status.ACTIVATED;
             System.out.println("Baggage scanner activated");
         }
         return true;
     }
-    public boolean alarm(IDCard idCard, String itemFound){
-        if(validateAuthorisationInspector(idCard)) {
+
+    public boolean alarm(IDCard idCard, String itemFound) {
+        if (validateAuthorisationInspector(idCard)) {
             System.out.println("Alarm has been called");
             status = Status.LOCKED;
             System.out.println("Baggage scanner is now locked");
             federalPoliceOfficer.setItemToTakeCareOf(itemFound);
             return true;
-        }
-        else {
+        } else {
             System.out.println("Unauthorised call of alarm");
             return false;
         }
     }
-    public boolean report(IDCard idCard){
-        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
+
+    public boolean report(IDCard idCard) {
+        if (String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
             System.out.println("Report has been called");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Unauthorised call of report");
             return false;
         }
     }
-    public boolean maintenance(IDCard idCard){
-        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.T))) {
+
+    public boolean maintenance(IDCard idCard) {
+        if (String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.T))) {
             System.out.println("BaggageScanner is maintained");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Unauthorised maintenance try");
             return false;
         }
     }
-    public void start(IDCard idCard){
-        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
+
+    public void start(IDCard idCard) {
+        if (String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
             status = Status.START;
             System.out.println("Baggage Scanner was started");
             status = Status.DEACTIVATED;
             System.out.println("Baggage Scanner is still in status deactivated");
-        }
-        else{
+        } else {
             System.out.println("Unauthorised attempt to start baggage scanner");
         }
     }
-    public void deactivate(IDCard idCard){
-        if(String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
+
+    public void deactivate(IDCard idCard) {
+        if (String.valueOf(idCard.getMagnetStripe().charAt(0)).equals(String.valueOf(ProfileType.S))) {
             status = Status.SHUTDOWN;
             System.out.println("Baggage Scanner was shut down");
-        }
-        else{
+        } else {
             System.out.println("Unauthorised attempt to shut down baggage scanner");
         }
     }
 
-    private boolean validateAuthorisationInspector(IDCard card){
-        if(!card.isLocked()) {
+    private boolean validateAuthorisationInspector(IDCard card) {
+        if (!card.isLocked()) {
             switch (card.getMagnetStripe().charAt(0)) {
                 case 'S':
                 case 'K':
@@ -151,44 +143,26 @@ public class BaggageScanner implements IHasButton{
         }
         return false;
     }
-    public Belt getBelt() {
-        return belt;
+
+    @Override
+    public void handleButtonPushed(Button sender, IDCard idCard) {
+        operatingStation.getReader().activateBaggageScanner(idCard, idCard.getEmployee().getPinThatIsRemembered());
     }
 
-    public void setBelt(Belt belt) {
-        this.belt = belt;
+    public Belt getBelt() {
+        return belt;
     }
 
     public ManualPostControl getManualPostControl() {
         return manualPostControl;
     }
 
-    public void setManualPostControl(ManualPostControl manualPostControl) {
-        this.manualPostControl = manualPostControl;
-    }
-
     public OperatingStation getOperatingStation() {
         return operatingStation;
     }
 
-    public void setOperatingStation(OperatingStation operatingStation) {
-        this.operatingStation = operatingStation;
-    }
-
     public RollerConveyor getRollerConveyor() {
         return rollerConveyor;
-    }
-
-    public void setRollerConveyor(RollerConveyor rollerConveyor) {
-        this.rollerConveyor = rollerConveyor;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     public Status getStatus() {
@@ -203,31 +177,16 @@ public class BaggageScanner implements IHasButton{
         return supervision;
     }
 
-    public void setSupervision(Supervision supervision) {
-        this.supervision = supervision;
-    }
-
     public Stack<Tray> getTrays() {
         return trays;
-    }
-    public void setTrays(Stack<Tray> trays) {
-        this.trays = trays;
     }
 
     public Button getPowerButton() {
         return powerButton;
     }
 
-    public void setPowerButton(Button powerButton) {
-        this.powerButton = powerButton;
-    }
-
     public Track[] getTracks() {
         return tracks;
-    }
-
-    public void setTracks(Track[] tracks) {
-        this.tracks = tracks;
     }
 
     public FederalPoliceOfficer getFederalPoliceOfficer() {
@@ -240,15 +199,6 @@ public class BaggageScanner implements IHasButton{
 
     public ArrayList<Record> getRecords() {
         return records;
-    }
-
-    public void setRecords(ArrayList<Record> records) {
-        this.records = records;
-    }
-
-    @Override
-    public void handleButtonPushed(Button sender, IDCard idCard) {
-        operatingStation.getReader().activateBaggageScanner(idCard, idCard.getEmployee().getPinThatIsRemembered());
     }
 
     public Passenger getCurrentPassenger() {
