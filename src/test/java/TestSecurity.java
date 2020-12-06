@@ -271,8 +271,15 @@ public class TestSecurity {
                 int startingRecords = app.baggageScanner.getRecords().size();
                 app.processPassenger(pass);
 
-                Record record = app.baggageScanner.getRecords().get(startingRecords);
-                Assertions.assertTrue(record.getResult().substring(16).startsWith("kn!fe"));
+                ArrayList<Record> records = TestHelpers.getNewRecords(app, startingRecords);
+                boolean generatedKnifeRecord = false;
+                for(Record record : records){
+                    if(record.getResult().substring(16).startsWith("kn!fe")){
+                        generatedKnifeRecord = true;
+                        break;
+                    }
+                }
+                Assertions.assertTrue(generatedKnifeRecord);
             });
             tests.add(test);
             i++;
@@ -296,9 +303,15 @@ public class TestSecurity {
                 int startingRecords = app.baggageScanner.getRecords().size();
                 app.processPassenger(pass);
 
-                //This is the first record that was created for the passenger.
-                Record record = app.baggageScanner.getRecords().get(startingRecords);
-                Assertions.assertTrue(record.getResult().substring(16).startsWith("glock|7"));
+                ArrayList<Record> records = TestHelpers.getNewRecords(app, startingRecords);
+                boolean generatedWeaponRecord = false;
+                for(Record record : records){
+                    if(record.getResult().substring(16).startsWith("glock|7")){
+                        generatedWeaponRecord = true;
+                        break;
+                    }
+                }
+                Assertions.assertTrue(generatedWeaponRecord);
             });
             tests.add(test);
             i++;
@@ -309,7 +322,7 @@ public class TestSecurity {
 
     @TestFactory
     public Stream<DynamicTest> testFindExplosivesInBaggage(){
-        //TODO 9.Es wird der verbotene Gegenstand Explosivstoff in einem Handgepäck erkannt.
+        //9.Es wird der verbotene Gegenstand Explosivstoff in einem Handgepäck erkannt.
         List<DynamicTest> tests = new ArrayList<>();
 
         ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("E");
@@ -319,10 +332,18 @@ public class TestSecurity {
         int i = 0;
         for(Passenger pass : passengers){
             DynamicTest test = DynamicTest.dynamicTest("Testing Explosives-Baggage num: " + i, () ->{
+                int startingRecords = app.baggageScanner.getRecords().size();
                 app.processPassenger(pass);
 
-                Record record = app.baggageScanner.getRecords().get(app.baggageScanner.getRecords().size()-1);
-                Assertions.assertTrue(record.getResult().substring(16).startsWith("exl|os!ve"));
+                ArrayList<Record> records = TestHelpers.getNewRecords(app, startingRecords);
+                boolean generatedExplosiveRecord = false;
+                for(Record record : records){
+                    if(record.getResult().substring(16).startsWith("exl|os!ve")){
+                        generatedExplosiveRecord = true;
+                        break;
+                    }
+                }
+                Assertions.assertTrue(generatedExplosiveRecord);
             });
             tests.add(test);
             i++;
@@ -346,7 +367,8 @@ public class TestSecurity {
                 app.processPassenger(pass);
                 int endRecords = app.baggageScanner.getRecords().size();
 
-                Assertions.assertTrue(startingRecords < endRecords);
+                //Equal, if clean or explosive. More else.
+                Assertions.assertTrue(startingRecords+ pass.getHandBaggage().size() <= endRecords);
             });
             tests.add(test);
             i++;
