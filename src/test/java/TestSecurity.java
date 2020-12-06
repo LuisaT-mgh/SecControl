@@ -26,7 +26,7 @@ public class TestSecurity {
     @DisplayName("1. Test num passenger/baggage")
     public void testInitialize(){
         //1.Die Simulation mit (i) 568 Passagieren und 609 Gepäckstücken wird korrekt initialisiert.
-        //TODO Test and maybe add more.
+        //TODO Maybe add more.
         Assertions.assertEquals(568, app.passengers.size());
 
         ArrayList<Passenger> passengers = new ArrayList<>(app.passengers);
@@ -42,7 +42,6 @@ public class TestSecurity {
     @DisplayName("2. Check workplaces")
     public void testAssignmentOfEmployees(){
         //2.Die Positionen an dem Gepäckscanner werden korrekt mit Mitarbeitern besetzt.
-        //TODO Maybe check the new specs again.
 
         //Create Dates
         Date conveyorDate = null, operatorDate = null, postControlDate = null, supervisorDate = null, policeDate = null, technicianDate = null, houseKeepingDate = null, additionalPoliceDate = null, additionalAdditionalPoliceDate = null;
@@ -134,7 +133,6 @@ public class TestSecurity {
     @Test
     @DisplayName("3. Test locking IDCard after 3 wrong inputs")
     public void testLockingIDCard(){
-        //TODO Test this
         //3.Nach dreimaliger Falschangabe der PIN wird der Ausweis für die weitere Nutzung gesperrt.
         OperatingStation opStation = app.baggageScanner.getOperatingStation();
         Assertions.assertFalse(opStation.getInspector().getIdCard().isLocked());
@@ -151,7 +149,6 @@ public class TestSecurity {
     @Test
     @DisplayName("4. Test permissions for BaggageScanner")
     public void testBaggageScannerPermissions(){
-        //TODO Test Test 4
         //4.Ein Mitarbeiter mit dem Profil K oder O kann sich an einem Gepäckscanner nicht anmelden.
         OperatingStation opStation = app.baggageScanner.getOperatingStation();
 
@@ -168,7 +165,6 @@ public class TestSecurity {
     @DisplayName("5. Test permissions for functions")
     public void testFunctionPermissions(){
         //5.Ein Mitarbeiter kann nur die - gemäß Profil - zugeordneten Funktionalitäten ausführen.
-        //TODO Test this
         //i - Band vor
         //ii - Band zurück
         //iii - Scan
@@ -234,7 +230,6 @@ public class TestSecurity {
     @Test
     @DisplayName("6. Only Supervisor can unlock")
     public void testSupervisorUnlock(){
-        //TODO Test Test 6
         //6.Nur ein Supervisor kann einen Gepäckscanner im Status locked entsperren.
         FederalPoliceOfficer officer = new FederalPoliceOfficer("Bad Guy", "11/11/2011", "officer");
         HouseKeeping houseKeeping = new HouseKeeping("Bill Gates", "01/01/2000");
@@ -274,9 +269,7 @@ public class TestSecurity {
         for(Passenger pass : passengers){
             DynamicTest test = DynamicTest.dynamicTest("Testing Bagge num: " + i, () ->{
                 int startingRecord = app.baggageScanner.getRecords().size();
-                app.passengers = new ArrayList<Passenger>();
-                app.passengers.add(pass);
-                app.processAllPassengers();
+                app.processPassenger(pass);
                 int endRecords = app.baggageScanner.getRecords().size();
                 //This tests it, because if a knife is found the bag is scanned again and a new record is created. so, at least two per knife-bag.
                 if(!(startingRecord < endRecords-1)){
@@ -303,9 +296,7 @@ public class TestSecurity {
         int i = 0;
         for(Passenger pass : passengers){
             DynamicTest test = DynamicTest.dynamicTest("Testing Bagge num: " + i, () ->{
-                app.passengers = new ArrayList<Passenger>();
-                app.passengers.add(pass);
-                app.processAllPassengers();
+                app.processPassenger(pass);
 
                 //TODO Bei Weapons werden auch meherere Records angelegt.
                 ArrayList<Record> records = app.baggageScanner.getRecords();
