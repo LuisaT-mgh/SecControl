@@ -90,6 +90,7 @@ public class Application {
                     System.out.println("Robot has been called");
                     if (baggageScanner.getManualPostControl().getInspector().swipe()) {
                         federalPoliceOfficers.get(0).getRemote().destroyHandBaggage(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
+                        baggageScanner.getCurrentPassenger().setHandBaggage(new ArrayList<>());
                         baggageScanner.getManualPostControl().setTrayWithBaggageInManualPostControl(null);
                     }
                 }
@@ -147,7 +148,7 @@ public class Application {
         Scanner scanner = new Scanner();
         ManualPostControl manualPostControl = new ManualPostControl();
         Supervision supervision = new Supervision();
-        Track[] tracks = {new Track(), new Track()};
+        Track[] tracks = {new Track(1), new Track(2)};
         Stack<Tray> trays = new Stack<Tray>();
         for (int i = 0; i <= (numberOfPassengers * 4); i++) {
             trays.push(new Tray());

@@ -1,12 +1,15 @@
 import BaggageScanner.*;
 import Employee.*;
 import General.Application;
+import HandBaggage.HandBaggage;
+import HandBaggage.Layer;
 import Passenger.Passenger;
 import org.junit.jupiter.api.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -364,11 +367,12 @@ public class TestSecurity {
         for(Passenger pass : passengers){
             DynamicTest test = DynamicTest.dynamicTest("Testing logging for passenger: " + i, () ->{
                 int startingRecords = app.baggageScanner.getRecords().size();
+                int handBaggageSize = pass.getHandBaggage().size();
                 app.processPassenger(pass);
                 int endRecords = app.baggageScanner.getRecords().size();
 
                 //Equal, if clean or explosive. More else.
-                Assertions.assertTrue(startingRecords+ pass.getHandBaggage().size() <= endRecords);
+                Assertions.assertTrue(startingRecords + handBaggageSize <= endRecords);
             });
             tests.add(test);
             i++;
@@ -379,7 +383,7 @@ public class TestSecurity {
 
     @TestFactory
     public Stream<DynamicTest> testBaggageNothingFound(){
-        //TODO 11.Ordnungsgemäßer Ablauf, wenn keine verbotenen Gegenstände gefunden wurden.
+        //11.Ordnungsgemäßer Ablauf, wenn keine verbotenen Gegenstände gefunden wurden.
         List<DynamicTest> tests = new ArrayList<>();
 
         ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("");
@@ -388,7 +392,7 @@ public class TestSecurity {
 
         int i = 0;
         for(Passenger pass : passengers){
-            DynamicTest test = DynamicTest.dynamicTest("Testing process clean baage, number: " + i, ()->{
+            DynamicTest test = DynamicTest.dynamicTest("Testing process clean baggage, number: " + i, ()->{
                 Track track2 = null;
                 for(Track track : app.baggageScanner.getTracks()){
                     if(track.getTrackNumber() == 2){
@@ -419,8 +423,51 @@ public class TestSecurity {
 
     @TestFactory
     public Stream<DynamicTest> testBaggageKnifeFound(){
-        //TODO 12.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Messer gefunden wurde.
+        //12.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Messer gefunden wurde.
         List<DynamicTest> tests = new ArrayList<>();
+
+        ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("K");
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing process knife baggage, number: " + i, () -> {
+                Track track2 = null;
+                for(Track track : app.baggageScanner.getTracks()){
+                    if(track.getTrackNumber() == 2){
+                        track2 = track;
+                        break;
+                    }
+                }
+                if(track2 == null) Assertions.fail("There is no Track 2.");
+                int startTrack2Num = track2.getTrays().size();
+                int startRecordNum = app.baggageScanner.getRecords().size();
+
+                app.processPassenger(pass);
+
+                int endTrack2Num = track2.getTrays().size();
+                int endRecordNum = app.baggageScanner.getRecords().size();
+
+                Assertions.assertEquals(startTrack2Num + pass.getHandBaggage().size(), endTrack2Num);
+                Assertions.assertEquals(startRecordNum + pass.getHandBaggage().size() + 1, endRecordNum);
+                Assertions.assertEquals(Status.ACTIVATED, app.baggageScanner.getStatus());
+
+                //Test if the knife has been removed.
+                boolean knifeInBaggage = false;
+                for(HandBaggage baggage : pass.getHandBaggage()){
+                    for(Layer layer : baggage.getLayers()){
+                        if(Arrays.toString(layer.getCharacter()).contains("kn!fe")){
+                            knifeInBaggage = true;
+                            break;
+                        }
+                    }
+                }
+                Assertions.assertFalse(knifeInBaggage);
+            });
+            tests.add(test);
+            i++;
+        }
         return tests.stream();
     }
 
@@ -428,6 +475,50 @@ public class TestSecurity {
     public Stream<DynamicTest> testBaggageWeaponFound(){
         //TODO 13.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Waffe gefunden wurde.
         List<DynamicTest> tests = new ArrayList<>();
+
+        ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("W");
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing process weapon baggage, number: " + i, () -> {
+                int startRecordNum = app.baggageScanner.getRecords().size();
+                ArrayList<HandBaggage> baggages = pass.getHandBaggage();
+
+                app.processPassenger(pass);
+
+                int endRecordNum = app.baggageScanner.getRecords().size();
+                FederalPoliceOfficer officer = null;
+                for(FederalPoliceOfficer o : app.federalPoliceOffice.getRegisteredOfficers()){
+                    if(o.getName().equals("Harry")){
+                        officer = o;
+                    }
+                }
+                if(officer == null) Assertions.fail("Harry ist nicht an seinem Platz.");
+
+                Assertions.assertNotNull(app.baggageScanner.getFederalPoliceOfficer());
+                Assertions.assertEquals(0, app.federalPoliceOfficers.size());
+                Assertions.assertEquals(3, app.federalPoliceOffice.getRegisteredOfficers().size());
+                Assertions.assertEquals("glock|7", officer.getWeapon());
+                Assertions.assertEquals(baggages, officer.getConfiscatedBaggage());
+                Assertions.assertEquals(Status.ACTIVATED, app.baggageScanner.getStatus());
+
+                //Test if the weapon has been removed.
+                boolean weaponInBaggage = false;
+                for(HandBaggage baggage : officer.getConfiscatedBaggage()){
+                    for(Layer layer : baggage.getLayers()){
+                        if(Arrays.toString(layer.getCharacter()).contains("glock|7")){
+                            weaponInBaggage = true;
+                            break;
+                        }
+                    }
+                }
+                Assertions.assertFalse(weaponInBaggage);
+            });
+            tests.add(test);
+            i++;
+        }
         return tests.stream();
     }
 
@@ -435,6 +526,35 @@ public class TestSecurity {
     public Stream<DynamicTest> testBaggageExplosivesFound(){
         //TODO 14.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Sprengstoff gefunden wurde.
         List<DynamicTest> tests = new ArrayList<>();
+
+        ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("E");
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing process explosives baggage, number: " + i, () -> {
+                int startRecordNum = app.baggageScanner.getRecords().size();
+                int numHandBaggage = pass.getHandBaggage().size();
+                int startTestStripsNum = app.baggageScanner.getManualPostControl().getExplosiveTraceDetector().getTestStrips().size();//TODO
+
+                app.processPassenger(pass);
+
+                int endRecordNum = app.baggageScanner.getRecords().size();
+                int endTestStripsNum = app.baggageScanner.getManualPostControl().getExplosiveTraceDetector().getTestStrips().size();
+
+                Assertions.assertEquals(startRecordNum + numHandBaggage, endRecordNum);
+                Assertions.assertEquals(0, pass.getHandBaggage().size());
+                Assertions.assertEquals(startTestStripsNum+1, endTestStripsNum);
+                Assertions.assertNotNull(app.baggageScanner.getFederalPoliceOfficer());
+                //Laut spezifikation gehen die Officers nie zurück.
+                //Assertions.assertEquals(0, app.federalPoliceOfficers.size());
+                Assertions.assertEquals(3, app.federalPoliceOffice.getRegisteredOfficers().size());
+                Assertions.assertEquals(Status.ACTIVATED, app.baggageScanner.getStatus());
+            });
+            tests.add(test);
+            i++;
+        }
         return tests.stream();
     }
 }

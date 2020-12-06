@@ -3,9 +3,10 @@ package BaggageScanner;
 import java.util.ArrayList;
 
 public class ExplosiveTraceDetector {
-    private ArrayList<TestStrip> testStrips;
+    private final ArrayList<TestStrip> testStrips = new ArrayList<>();
 
     public boolean checkTestStrip(TestStrip testStrip){
+        this.testStrips.add(testStrip);
         for(int i = 0; i<30; i++){
             for (int j = 0; j<10; j++){
                 if(testStrip.getSurface()[i][j] == 'e'){
@@ -19,5 +20,9 @@ public class ExplosiveTraceDetector {
             }
         }
         return false;
+    }
+
+    public ArrayList<TestStrip> getTestStrips() {
+        return testStrips;
     }
 }

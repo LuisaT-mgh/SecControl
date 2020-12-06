@@ -6,7 +6,8 @@ public class Track {
     private int trackNumber;
     private ArrayList<Tray> trays;
 
-    public Track() {
+    public Track(int trackNumber) {
+        this.trackNumber = trackNumber;
         trays = new ArrayList<>();
     }
 
