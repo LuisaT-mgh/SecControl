@@ -332,8 +332,26 @@ public class TestSecurity {
 
     @TestFactory
     public Stream<DynamicTest> testLoggingOfScans(){
-        //TODO 10.Jeder Scanvorgang wird ordnungsgemäß mit einem Datensatz protokolliert.
+        //10.Jeder Scanvorgang wird ordnungsgemäß mit einem Datensatz protokolliert.
         List<DynamicTest> tests = new ArrayList<>();
+
+        ArrayList<Passenger> passengers = app.passengers;
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing logging for passenger: " + i, () ->{
+                int startingRecords = app.baggageScanner.getRecords().size();
+                app.processPassenger(pass);
+                int endRecords = app.baggageScanner.getRecords().size();
+
+                Assertions.assertTrue(startingRecords < endRecords);
+            });
+            tests.add(test);
+            i++;
+        }
+
         return tests.stream();
     }
 
