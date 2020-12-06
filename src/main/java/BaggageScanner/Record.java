@@ -2,7 +2,6 @@ package BaggageScanner;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class Record {
@@ -16,12 +15,11 @@ public class Record {
         id = UUID.randomUUID();
         DateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy hh:mm:ss,SSS");
         timeStamp = dateFormat.format(System.currentTimeMillis());
-        if(position == -1){
+        if (position == -1) {
             this.result = "clean";
-        }
-        else{
-            System.out.println("prohibited item "+hiddenItem+" detected at position "+String.valueOf(position));
-            this.result = "prohibited item "+hiddenItem+" detected at position "+String.valueOf(position);
+        } else {
+            System.out.println("prohibited item " + hiddenItem + " detected at position " + String.valueOf(position));
+            this.result = "prohibited item " + hiddenItem + " detected at position " + String.valueOf(position);
             this.position = Integer.valueOf(position);
             this.hiddenItem = hiddenItem;
         }

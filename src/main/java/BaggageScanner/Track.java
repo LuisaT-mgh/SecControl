@@ -15,15 +15,7 @@ public class Track {
         return trackNumber;
     }
 
-    public void setTrackNumber(int trackNumber) {
-        this.trackNumber = trackNumber;
-    }
-
     public ArrayList<Tray> getTrays() {
         return trays;
-    }
-
-    public void setTrays(ArrayList<Tray> trays) {
-        this.trays = trays;
     }
 }

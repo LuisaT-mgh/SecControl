@@ -2,10 +2,7 @@ package BaggageScanner;
 
 import Employee.Inspector;
 import Employee.Supervisor;
-import HandBaggage.HandBaggage;
 import Passenger.Passenger;
-
-import java.util.ArrayList;
 
 public class ManualPostControl {
     private Inspector inspector;
@@ -24,16 +21,8 @@ public class ManualPostControl {
         this.inspector = inspector;
     }
 
-    public Passenger getPassengerManualPostControl() {
-        return passengerManualPostControl;
-    }
-
     public void setPassengerManualPostControl(Passenger passengerManualPostControl) {
         this.passengerManualPostControl = passengerManualPostControl;
-    }
-
-    public Supervisor getSupervisorForWeaponFound() {
-        return supervisorForWeaponFound;
     }
 
     public void setSupervisorForWeaponFound(Supervisor supervisorForWeaponFound) {

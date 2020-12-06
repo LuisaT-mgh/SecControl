@@ -2,7 +2,6 @@ package BaggageScanner;
 
 import Employee.IDCard;
 import Employee.Inspector;
-import Passenger.Passenger;
 
 public class OperatingStation implements IHasButton {
     private Reader reader;
@@ -56,29 +55,16 @@ public class OperatingStation implements IHasButton {
         return baggageScanner;
     }
 
-
     public Button getButtonRight() {
         return buttonRight;
-    }
-
-    public void setButtonRight(Button buttonRight) {
-        this.buttonRight = buttonRight;
     }
 
     public Button getButtonLeft() {
         return buttonLeft;
     }
 
-    public void setButtonLeft(Button buttonLeft) {
-        this.buttonLeft = buttonLeft;
-    }
-
     public Button getButtonRectangle() {
         return buttonRectangle;
-    }
-
-    public void setButtonRectangle(Button buttonRectangle) {
-        this.buttonRectangle = buttonRectangle;
     }
 
     public void setBaggageScanner(BaggageScanner baggageScanner) {

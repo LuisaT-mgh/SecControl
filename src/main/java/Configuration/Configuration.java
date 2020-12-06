@@ -1,14 +1,9 @@
 package Configuration;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Random;
 
 public enum Configuration {
     instance;
-    ZoneId zone = ZoneId.of("Europe/Berlin");
-    public LocalDateTime localDateTime = LocalDateTime.now(zone);
-
     public String fileSeparator = System.getProperty("file.separator");
     public String userDirectory = System.getProperty("user.dir");
     public String passengerDataPath = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator + "passenger_baggage.txt";

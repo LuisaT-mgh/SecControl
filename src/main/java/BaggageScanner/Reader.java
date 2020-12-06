@@ -4,7 +4,7 @@ import Configuration.Configuration;
 import Employee.IDCard;
 import General.AES;
 
-public class Reader{
+public class Reader {
     private OperatingStation operatingStation;
     private int denialCounter = 0;
     private IDCard lastUsedCard;
@@ -13,14 +13,15 @@ public class Reader{
         lastUsedCard = null;
     }
 
-    /** Try to activate a BaggageScanner.
+    /**
+     * Try to activate a BaggageScanner.
      *
-     * @param card The IDCard that has been read.
+     * @param card          The IDCard that has been read.
      * @param pinToActivate The PIN entered.
      * @return Boolean if the action was successful.
      */
-    public boolean activateBaggageScanner(IDCard card, String pinToActivate){
-        if(operatingStation.getBaggageScanner().getStatus() != Status.LOCKED) {
+    public boolean activateBaggageScanner(IDCard card, String pinToActivate) {
+        if (operatingStation.getBaggageScanner().getStatus() != Status.LOCKED) {
             if (!validateAuthorisationInspector(card)) {
                 System.out.println("Unauthorized access to baggage scanner request");
                 return false;
@@ -45,25 +46,24 @@ public class Reader{
                     System.out.println("Pin entered was false, please try again");
                 }
             }
-        }
-        else{
+        } else {
             System.out.println("Baggage Scanner is locked");
         }
         return false;
     }
 
-    /** Try to unlock a locked BaggageScanner.
+    /**
+     * Try to unlock a locked BaggageScanner.
      *
-     * @param card The IDCard that has been read.
+     * @param card          The IDCard that has been read.
      * @param pinToActivate The PIN entered.
      * @return Boolean if the action was successful.
      */
-    public boolean unlockBaggageScanner(IDCard card, String pinToActivate){
-        if(!validateAuthorisationSupervisor(card)){
+    public boolean unlockBaggageScanner(IDCard card, String pinToActivate) {
+        if (!validateAuthorisationSupervisor(card)) {
             System.out.println("Unauthorized access to baggage scanner request to unlock");
-        }
-        else{
-            if(validatePin(card, pinToActivate)){
+        } else {
+            if (validatePin(card, pinToActivate)) {
                 operatingStation.getBaggageScanner().setStatus(Status.ACTIVATED);
                 System.out.println("Baggage Scanner is unlocked");
                 denialCounter = 0;
@@ -73,13 +73,14 @@ public class Reader{
         return false;
     }
 
-    private boolean validatePin(IDCard card, String pinToActivate){
+    private boolean validatePin(IDCard card, String pinToActivate) {
         String magnetStripe = card.getMagnetStripe();
         String decodedString = AES.decrypt(magnetStripe.substring(1), Configuration.instance.key);
         return decodedString.equals(pinToActivate);
     }
-    private boolean validateAuthorisationInspector(IDCard card){
-        if(!card.isLocked()) {
+
+    private boolean validateAuthorisationInspector(IDCard card) {
+        if (!card.isLocked()) {
             switch (card.getMagnetStripe().charAt(0)) {
                 case 'S':
                 case 'K':
@@ -93,8 +94,8 @@ public class Reader{
         return false;
     }
 
-    private boolean validateAuthorisationSupervisor(IDCard card){
-        if(!card.isLocked()) {
+    private boolean validateAuthorisationSupervisor(IDCard card) {
+        if (!card.isLocked()) {
             switch (card.getMagnetStripe().charAt(0)) {
                 case 'K':
                 case 'O':
@@ -106,22 +107,10 @@ public class Reader{
             }
         }
         return false;
-    }
-
-    public OperatingStation getOperatingStation() {
-        return operatingStation;
     }
 
     public void setOperatingStation(OperatingStation operatingStation) {
         this.operatingStation = operatingStation;
-    }
-
-    public int getDenialCounter() {
-        return denialCounter;
-    }
-
-    public void setDenialCounter(int denialCounter) {
-        this.denialCounter = denialCounter;
     }
 
 }
