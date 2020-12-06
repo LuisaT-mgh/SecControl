@@ -12,6 +12,9 @@ public class HandBaggage {
     private Layer[] layers;
     private Tray tray;
 
+    //For debugging only
+    private String contains = "";
+
     public HandBaggage(Layer[] layers) {
         this.layers = layers;
     }
@@ -43,6 +46,7 @@ public class HandBaggage {
         ArrayList<Integer> numberOfForbiddenBaggage = new ArrayList<>();
         ArrayList<Integer> numberOfForbiddenLayer = new ArrayList<>();
         ArrayList<String> forbiddenItems = new ArrayList<>();
+        String illegalChars = "";
         if (!hiddenItems[0].contentEquals("-")) {
             for (String hiddenItem : hiddenItems) {
                 hiddenItem = hiddenItem.replace("]", "");
@@ -52,12 +56,15 @@ public class HandBaggage {
                 switch (dataHasForbiddenItem[0]) {
                     case "K":
                         forbiddenItems.add(Configuration.instance.forbiddenItems[0]);
+                        illegalChars += "K";
                         break;
                     case "W":
                         forbiddenItems.add(Configuration.instance.forbiddenItems[1]);
+                        illegalChars += "W";
                         break;
                     case "E":
                         forbiddenItems.add(Configuration.instance.forbiddenItems[2]);
+                        illegalChars += "E";
                         break;
                 }
             }
@@ -76,6 +83,7 @@ public class HandBaggage {
                 layers[j] = layer;
             }
             HandBaggage handBaggage1 = new HandBaggage(layers);
+            handBaggage1.contains = illegalChars;
             handBaggage.add(handBaggage1);
         }
         return handBaggage;
