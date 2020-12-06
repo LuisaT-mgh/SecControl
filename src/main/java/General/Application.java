@@ -93,6 +93,7 @@ public class Application {
                         federalPoliceOfficers.get(0).getRemote().destroyHandBaggage(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
                         baggageScanner.getManualPostControl().setTrayWithBaggageInManualPostControl(null);
                     }
+                    federalPoliceOfficers = new ArrayList<>();
                 }
                 baggageScanner.getSupervision().getSupervisor().unlockBaggageScanner();
                 System.out.println("Return to normal procedure");
