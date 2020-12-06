@@ -94,10 +94,14 @@ public class Inspector extends Employee{
                     layer.setCharacter(content.toCharArray());
                     System.out.println("kn!fe has been removed");
                     manualPostControl.getBaggageScanner().getBelt().getTrays().add(manualPostControl.getTrayWithBaggageInManualPostControl());
+                    for(int i = 0; i<manualPostControl.getBaggageScanner().getBelt().getTrays().size()-1;i++){
+                        Tray tray = manualPostControl.getBaggageScanner().getBelt().getTrays().poll();
+                        manualPostControl.getBaggageScanner().getBelt().getTrays().add(tray);
+                    }
                     manualPostControl.setTrayWithBaggageInManualPostControl(null);
                     manualPostControl.getBaggageScanner().getOperatingStation().getInspector().recheckBag();
-                    Queue<Tray> trays = new LinkedList<Tray>();
-                    manualPostControl.getBaggageScanner().getBelt().setTrays(trays);
+                    //Queue<Tray> trays = new LinkedList<Tray>();
+                    //manualPostControl.getBaggageScanner().getBelt().setTrays(trays);
                     manualPostControl.setPassengerManualPostControl(null);
                 }
             }
