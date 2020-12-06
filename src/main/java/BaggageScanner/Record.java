@@ -22,6 +22,8 @@ public class Record {
         else{
             System.out.println("prohibited item "+hiddenItem+" detected at position "+String.valueOf(position));
             this.result = "prohibited item "+hiddenItem+" detected at position "+String.valueOf(position);
+            this.position = Integer.valueOf(position);
+            this.hiddenItem = hiddenItem;
         }
     }
 
