@@ -7,10 +7,8 @@ import Employee.FederalPoliceOfficer;
 import Employee.Technician;
 import FerderalPoliceOffice.FederalPoliceOffice;
 import Employee.HouseKeeping;
-import FerderalPoliceOffice.Remote;
 import HandBaggage.HandBaggage;
 import Passenger.Passenger;
-import HandBaggage.Layer;
 import BaggageScanner.*;
 import BaggageScanner.Reader;
 
@@ -31,7 +29,7 @@ public class Application {
         Application application = new Application();
         application.generateSecurityControl();
         application.prepareSecurityControl();
-        application.processPassengers();
+        application.processAllPassengers();
     }
 
     public void generateSecurityControl() {
@@ -57,49 +55,53 @@ public class Application {
         baggageScanner.handleButtonPushed(baggageScanner.getPowerButton(), baggageScanner.getOperatingStation().getInspector().getIdCard());
     }
 
-    public void processPassengers() {
-        for (Passenger passenger : passengers) {
-            passenger.setBaggageScanner(baggageScanner);
-            baggageScanner.setCurrentPassenger(passenger);
-            System.out.println("current passenger:: "+baggageScanner.getCurrentPassenger().getFistName() +" " + baggageScanner.getCurrentPassenger().getLastName());
-            passenger.handOverBaggage();
-            baggageScanner.getRollerConveyor().getInspector().pushTrays();
-            while (baggageScanner.getBelt().getTrays().size() != 0) {
-                baggageScanner.getOperatingStation().getInspector().pushButtonRight();
-                baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
-                if (baggageScanner.getStatus() == Status.LOCKED) {
-                    federalPoliceOfficers.addAll(federalPoliceOffice.getRegisteredOfficers());
-                    System.out.println("Additional police officers called");
-                    if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")) {
-                        federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
-                        System.out.println("Weapon has been handed to officer 3");
-                        baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
-                        baggageScanner.getOperatingStation().getInspector().pushButtonRight();
-                        baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
-                        System.out.println("Remaining baggage of passenger has been scanned");
-                        baggageScanner.getManualPostControl().setHasToBeConfiscated(false);
-                        if (baggageScanner.getManualPostControl().getInspector().getHandBaggageToHandOver() != null) {
-                            baggageScanner.getManualPostControl().getInspector().handOverBaggage(federalPoliceOfficers.get(1));
-                            System.out.println("Remaining baggage of passenger has been handed to officer 3");
-                        }
-                        baggageScanner.getFederalPoliceOfficer().arrestPassenger();
-                        federalPoliceOfficers = new ArrayList<>();
-                        System.out.println("Police officers have left airport with passenger");
-                    } else if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("exl|os!ve")) {
-                        Random random = new Random();
-                        int randomChoice = random.nextInt(2);
-                        federalPoliceOffice.getRobots()[randomChoice].getRemote().setFederalPoliceOfficer(federalPoliceOfficers.get(0));
-                        federalPoliceOfficers.get(0).setRemote(federalPoliceOffice.getRobots()[randomChoice].getRemote());
-                        System.out.println("Robot has been called");
-                        if (baggageScanner.getManualPostControl().getInspector().swipe()) {
-                            federalPoliceOfficers.get(0).getRemote().destroyHandBaggage(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
-                            baggageScanner.getManualPostControl().setTrayWithBaggageInManualPostControl(null);
-                        }
+    public void processPassenger(Passenger passenger){
+        passenger.setBaggageScanner(baggageScanner);
+        baggageScanner.setCurrentPassenger(passenger);
+        System.out.println("current passenger:: "+baggageScanner.getCurrentPassenger().getFistName() +" " + baggageScanner.getCurrentPassenger().getLastName());
+        passenger.handOverBaggage();
+        baggageScanner.getRollerConveyor().getInspector().pushTrays();
+        while (baggageScanner.getBelt().getTrays().size() != 0) {
+            baggageScanner.getOperatingStation().getInspector().pushButtonRight();
+            baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+            if (baggageScanner.getStatus() == Status.LOCKED) {
+                federalPoliceOfficers.addAll(federalPoliceOffice.getRegisteredOfficers());
+                System.out.println("Additional police officers called");
+                if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")) {
+                    federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
+                    System.out.println("Weapon has been handed to officer 3");
+                    baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
+                    baggageScanner.getOperatingStation().getInspector().pushButtonRight();
+                    baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+                    System.out.println("Remaining baggage of passenger has been scanned");
+                    baggageScanner.getManualPostControl().setHasToBeConfiscated(false);
+                    if (baggageScanner.getManualPostControl().getInspector().getHandBaggageToHandOver() != null) {
+                        baggageScanner.getManualPostControl().getInspector().handOverBaggage(federalPoliceOfficers.get(1));
+                        System.out.println("Remaining baggage of passenger has been handed to officer 3");
                     }
-                    baggageScanner.getSupervision().getSupervisor().unlockBaggageScanner();
-                    System.out.println("Return to normal procedure");
+                    baggageScanner.getFederalPoliceOfficer().arrestPassenger();
+                    federalPoliceOfficers = new ArrayList<>();
+                    System.out.println("Police officers have left airport with passenger");
+                } else if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("exl|os!ve")) {
+                    Random random = new Random();
+                    int randomChoice = random.nextInt(2);
+                    federalPoliceOffice.getRobots()[randomChoice].getRemote().setFederalPoliceOfficer(federalPoliceOfficers.get(0));
+                    federalPoliceOfficers.get(0).setRemote(federalPoliceOffice.getRobots()[randomChoice].getRemote());
+                    System.out.println("Robot has been called");
+                    if (baggageScanner.getManualPostControl().getInspector().swipe()) {
+                        federalPoliceOfficers.get(0).getRemote().destroyHandBaggage(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
+                        baggageScanner.getManualPostControl().setTrayWithBaggageInManualPostControl(null);
+                    }
                 }
+                baggageScanner.getSupervision().getSupervisor().unlockBaggageScanner();
+                System.out.println("Return to normal procedure");
             }
+        }
+    }
+
+    public void processAllPassengers() {
+        for (Passenger passenger : passengers) {
+            processPassenger(passenger);
         }
     }
 
@@ -113,7 +115,7 @@ public class Application {
                 if (generalData.length >= 2) {
                     String[] hiddenItems = generalData[1].split(";");
                 }
-                String passengerData[] = generalData[0].split(";");
+                String[] passengerData = generalData[0].split(";");
                 String[] combinedName = passengerData[0].split(Configuration.instance.passengerNameDelimiter);
                 String firstName = combinedName[0];
                 String lastName = combinedName[1];

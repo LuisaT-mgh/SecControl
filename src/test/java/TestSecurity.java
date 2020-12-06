@@ -276,7 +276,7 @@ public class TestSecurity {
                 int startingRecord = app.baggageScanner.getRecords().size();
                 app.passengers = new ArrayList<Passenger>();
                 app.passengers.add(pass);
-                app.processPassengers();
+                app.processAllPassengers();
                 int endRecords = app.baggageScanner.getRecords().size();
                 //This tests it, because if a knife is found the bag is scanned again and a new record is created. so, at least two per knife-bag.
                 if(!(startingRecord < endRecords-1)){
@@ -308,7 +308,7 @@ public class TestSecurity {
             DynamicTest test = DynamicTest.dynamicTest("Testing Bagge num: " + i, () ->{
                 app.passengers = new ArrayList<Passenger>();
                 app.passengers.add(pass);
-                app.processPassengers();
+                app.processAllPassengers();
 
                 //TODO Bei Weapons werden auch meherere Records angelegt.
                 ArrayList<Record> records = app.baggageScanner.getRecords();
