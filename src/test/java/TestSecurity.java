@@ -524,7 +524,7 @@ public class TestSecurity {
 
     @TestFactory
     public Stream<DynamicTest> testBaggageExplosivesFound(){
-        //TODO 14.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Sprengstoff gefunden wurde.
+        //14.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Sprengstoff gefunden wurde.
         List<DynamicTest> tests = new ArrayList<>();
 
         ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("E");
@@ -536,7 +536,7 @@ public class TestSecurity {
             DynamicTest test = DynamicTest.dynamicTest("Testing process explosives baggage, number: " + i, () -> {
                 int startRecordNum = app.baggageScanner.getRecords().size();
                 int numHandBaggage = pass.getHandBaggage().size();
-                int startTestStripsNum = app.baggageScanner.getManualPostControl().getExplosiveTraceDetector().getTestStrips().size();//TODO
+                int startTestStripsNum = app.baggageScanner.getManualPostControl().getExplosiveTraceDetector().getTestStrips().size();
 
                 app.processPassenger(pass);
 
