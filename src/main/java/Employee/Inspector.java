@@ -100,8 +100,6 @@ public class Inspector extends Employee{
                     }
                     manualPostControl.setTrayWithBaggageInManualPostControl(null);
                     manualPostControl.getBaggageScanner().getOperatingStation().getInspector().recheckBag();
-                    //Queue<Tray> trays = new LinkedList<Tray>();
-                    //manualPostControl.getBaggageScanner().getBelt().setTrays(trays);
                     manualPostControl.setPassengerManualPostControl(null);
                 }
             }
@@ -163,7 +161,7 @@ public class Inspector extends Employee{
     }
 
     public void handOverBaggage(FederalPoliceOfficer federalPoliceOfficer){
-        federalPoliceOfficer.setConfiscatedBaggage(handBaggageToHandOver);
+        federalPoliceOfficer.getConfiscatedBaggage().addAll(handBaggageToHandOver);
         handBaggageToHandOver = new ArrayList<HandBaggage>();
     }
 

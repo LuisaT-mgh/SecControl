@@ -67,13 +67,19 @@ public class Application {
             if (baggageScanner.getStatus() == Status.LOCKED) {
                 federalPoliceOfficers.add(federalPoliceOffice.getRegisteredOfficers().get(0));
                 federalPoliceOfficers.add(federalPoliceOffice.getRegisteredOfficers().get(1));
+                for (FederalPoliceOfficer officer: federalPoliceOfficers) {
+                    officer.getConfiscatedBaggage().clear();
+                }
                 System.out.println("Additional police officers called");
                 if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")) {
                     federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
                     System.out.println("Weapon has been handed to officer 3");
+                    federalPoliceOfficers.get(1).getConfiscatedBaggage().add(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
                     baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
-                    baggageScanner.getOperatingStation().getInspector().pushButtonRight();
-                    baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+                    while(baggageScanner.getBelt().getTrays().size() != 0) {
+                        baggageScanner.getOperatingStation().getInspector().pushButtonRight();
+                        baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
+                    }
                     System.out.println("Remaining baggage of passenger has been scanned");
                     baggageScanner.getManualPostControl().setHasToBeConfiscated(false);
                     if (baggageScanner.getManualPostControl().getInspector().getHandBaggageToHandOver() != null) {

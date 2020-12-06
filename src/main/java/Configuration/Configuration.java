@@ -1,7 +1,5 @@
 package Configuration;
 
-import Employee.ProfileType;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Random;
@@ -14,8 +12,6 @@ public enum Configuration {
     public String fileSeparator = System.getProperty("file.separator");
     public String userDirectory = System.getProperty("user.dir");
     public String passengerDataPath = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator + "passenger_baggage.txt";
-    //public String passengerDataPath = userDirectory + fileSeparator + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator + "testFile.txt";
-    public String passengerDataDelimiter = ";";
     public String passengerNameDelimiter = " ";
 
     public String[] forbiddenItems = {"kn!fe", "glock|7", "exl|os!ve"};

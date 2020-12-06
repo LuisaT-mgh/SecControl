@@ -29,7 +29,6 @@ public class TestSecurity {
     @DisplayName("1. Test num passenger/baggage")
     public void testInitialize(){
         //1.Die Simulation mit (i) 568 Passagieren und 609 Gepäckstücken wird korrekt initialisiert.
-        //TODO Maybe add more.
         Assertions.assertEquals(568, app.passengers.size());
 
         ArrayList<Passenger> passengers = new ArrayList<>(app.passengers);
@@ -473,7 +472,7 @@ public class TestSecurity {
 
     @TestFactory
     public Stream<DynamicTest> testBaggageWeaponFound(){
-        //TODO 13.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Waffe gefunden wurde.
+        //13.Ordnungsgemäßer Ablauf, wenn der verbotene Gegenstand Waffe gefunden wurde.
         List<DynamicTest> tests = new ArrayList<>();
 
         ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("W");
