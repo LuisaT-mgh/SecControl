@@ -65,7 +65,8 @@ public class Application {
             baggageScanner.getOperatingStation().getInspector().pushButtonRight();
             baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
             if (baggageScanner.getStatus() == Status.LOCKED) {
-                federalPoliceOfficers.addAll(federalPoliceOffice.getRegisteredOfficers());
+                federalPoliceOfficers.add(federalPoliceOffice.getRegisteredOfficers().get(0));
+                federalPoliceOfficers.add(federalPoliceOffice.getRegisteredOfficers().get(1));
                 System.out.println("Additional police officers called");
                 if (baggageScanner.getFederalPoliceOfficer().getItemToTakeCareOf().equals("glock|7")) {
                     federalPoliceOfficers.get(1).setWeapon(baggageScanner.getFederalPoliceOfficer().handlingWeapon());
