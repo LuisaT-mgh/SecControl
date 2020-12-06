@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class IDCard {
     private UUID id;
@@ -18,7 +17,7 @@ public class IDCard {
     private IDCardType type;
     private Employee employee;
 
-    public IDCard(UUID id, Employee employee, ProfileType profileType){
+    public IDCard(UUID id, Employee employee, ProfileType profileType) {
         this.id = id;
         isLocked = false;
         try {
@@ -38,24 +37,8 @@ public class IDCard {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Date getValidUntil() {
-        return validUntil;
-    }
-
-    public void setValidUntil(Date validUntil) {
-        this.validUntil = validUntil;
-    }
-
     public String getMagnetStripe() {
         return magnetStripe;
-    }
-
-    public void setMagnetStripe(String magnetStripe) {
-        this.magnetStripe = magnetStripe;
     }
 
     public boolean isLocked() {
@@ -64,10 +47,6 @@ public class IDCard {
 
     public void setLocked(boolean locked) {
         isLocked = locked;
-    }
-
-    public IDCardType getType() {
-        return type;
     }
 
     public void setType(IDCardType type) {

@@ -1,18 +1,16 @@
 package General;
 
+import BaggageScanner.*;
 import Configuration.Configuration;
-import Employee.Supervisor;
-import Employee.Inspector;
-import Employee.FederalPoliceOfficer;
-import Employee.Technician;
+import Employee.*;
 import FerderalPoliceOffice.FederalPoliceOffice;
-import Employee.HouseKeeping;
 import HandBaggage.HandBaggage;
 import Passenger.Passenger;
-import BaggageScanner.*;
-import BaggageScanner.Reader;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
@@ -55,10 +53,10 @@ public class Application {
         baggageScanner.handleButtonPushed(baggageScanner.getPowerButton(), baggageScanner.getOperatingStation().getInspector().getIdCard());
     }
 
-    public void processPassenger(Passenger passenger){
+    public void processPassenger(Passenger passenger) {
         passenger.setBaggageScanner(baggageScanner);
         baggageScanner.setCurrentPassenger(passenger);
-        System.out.println("current passenger:: "+baggageScanner.getCurrentPassenger().getFistName() +" " + baggageScanner.getCurrentPassenger().getLastName());
+        System.out.println("current passenger:: " + baggageScanner.getCurrentPassenger().getFistName() + " " + baggageScanner.getCurrentPassenger().getLastName());
         passenger.handOverBaggage();
         baggageScanner.getRollerConveyor().getInspector().pushTrays();
         while (baggageScanner.getBelt().getTrays().size() != 0) {
@@ -67,7 +65,7 @@ public class Application {
             if (baggageScanner.getStatus() == Status.LOCKED) {
                 federalPoliceOfficers.add(federalPoliceOffice.getRegisteredOfficers().get(0));
                 federalPoliceOfficers.add(federalPoliceOffice.getRegisteredOfficers().get(1));
-                for (FederalPoliceOfficer officer: federalPoliceOfficers) {
+                for (FederalPoliceOfficer officer : federalPoliceOfficers) {
                     officer.getConfiscatedBaggage().clear();
                 }
                 System.out.println("Additional police officers called");
@@ -76,7 +74,7 @@ public class Application {
                     System.out.println("Weapon has been handed to officer 3");
                     federalPoliceOfficers.get(1).getConfiscatedBaggage().add(baggageScanner.getManualPostControl().getTrayWithBaggageInManualPostControl().getHandBaggage());
                     baggageScanner.getManualPostControl().setHasToBeConfiscated(true);
-                    while(baggageScanner.getBelt().getTrays().size() != 0) {
+                    while (baggageScanner.getBelt().getTrays().size() != 0) {
                         baggageScanner.getOperatingStation().getInspector().pushButtonRight();
                         baggageScanner.getOperatingStation().getInspector().pushButtonRectangle();
                     }

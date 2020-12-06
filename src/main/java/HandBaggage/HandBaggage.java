@@ -1,9 +1,7 @@
 package HandBaggage;
 
-import Configuration.Configuration;
-import Passenger.Passenger;
-import BaggageScanner.TestStrip;
 import BaggageScanner.Tray;
+import Configuration.Configuration;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,20 +17,20 @@ public class HandBaggage {
         this.layers = layers;
     }
 
-    public static ArrayList<HandBaggage> generateRandomHandBaggages(String itemsToHide){
-        int numBaggages = Configuration.instance.r.nextInt(2)+1;
-        if(itemsToHide.equals("")) return generateHandBaggages(numBaggages, new String[]{"-"});
+    public static ArrayList<HandBaggage> generateRandomHandBaggages(String itemsToHide) {
+        int numBaggages = Configuration.instance.r.nextInt(2) + 1;
+        if (itemsToHide.equals("")) return generateHandBaggages(numBaggages, new String[]{"-"});
         String[] hiddenItems = new String[itemsToHide.length()];
-        for(int i = 0; i<itemsToHide.length(); i++){
+        for (int i = 0; i < itemsToHide.length(); i++) {
             char current = itemsToHide.charAt(i);
             int numberToHide = 1;
-            int layerToHide = Configuration.instance.r.nextInt(5)+1;
+            int layerToHide = Configuration.instance.r.nextInt(5) + 1;
             hiddenItems[i] = current + "," + numberToHide + "," + layerToHide + "]";
         }
         return generateHandBaggages(numBaggages, hiddenItems);
     }
 
-    public static ArrayList<HandBaggage> generateHandBaggages(int numberOfBaggage, String[] hiddenItems){
+    public static ArrayList<HandBaggage> generateHandBaggages(int numberOfBaggage, String[] hiddenItems) {
         ArrayList<HandBaggage> handBaggage = new ArrayList<>();
         ArrayList<Integer> numberOfForbiddenBaggage = new ArrayList<>();
         ArrayList<Integer> numberOfForbiddenLayer = new ArrayList<>();
@@ -94,10 +92,6 @@ public class HandBaggage {
 
     public Layer[] getLayers() {
         return layers;
-    }
-
-    public void setLayers(Layer[] layers) {
-        this.layers = layers;
     }
 
     public Tray getTray() {

@@ -12,9 +12,9 @@ public abstract class Employee {
     protected IDCard idCard;
     protected String pinThatIsRemembered;
 
-    public Employee(String name, String birthDate){
+    public Employee(String name, String birthDate) {
         this.name = name;
-        try{
+        try {
             this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -23,34 +23,16 @@ public abstract class Employee {
         id = UUID.randomUUID();
     }
 
-    public UUID getId() { return id; }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public IDCard getIdCard() {
         return idCard;
-    }
-
-    public void setIdCard(IDCard idCard) {
-        this.idCard = idCard;
     }
 
     public String getPinThatIsRemembered() {
