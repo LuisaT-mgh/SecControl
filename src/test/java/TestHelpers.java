@@ -1,3 +1,4 @@
+import BaggageScanner.Record;
 import Configuration.Configuration;
 import Employee.Employee;
 import General.Application;
@@ -33,6 +34,14 @@ public class TestHelpers {
             Passenger pass = Passenger.getTestPassenger();
             pass.setHandBaggage(HandBaggage.generateRandomHandBaggages(items));
             ret.add(pass);
+        }
+        return ret;
+    }
+
+    public static ArrayList<Record> getNewRecords(Application app, int start){
+        ArrayList<Record> ret = new ArrayList<>();
+        for(int i = start; i<app.baggageScanner.getRecords().size(); i++){
+            ret.add(app.baggageScanner.getRecords().get(i));
         }
         return ret;
     }
