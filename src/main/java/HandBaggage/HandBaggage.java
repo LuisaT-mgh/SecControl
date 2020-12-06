@@ -20,8 +20,9 @@ public class HandBaggage {
     }
 
     public static ArrayList<HandBaggage> generateRandomHandBaggages(String itemsToHide){
-        String[] hiddenItems = new String[itemsToHide.length()];
         int numBaggages = Configuration.instance.r.nextInt(2)+1;
+        if(itemsToHide.equals("")) return generateHandBaggages(numBaggages, new String[]{"-"});
+        String[] hiddenItems = new String[itemsToHide.length()];
         for(int i = 0; i<itemsToHide.length(); i++){
             char current = itemsToHide.charAt(i);
             //todo -> numBaggages ist schon 1-3, +4 wäre dann zu viel, rnd 0 geht aber nicht

@@ -359,6 +359,39 @@ public class TestSecurity {
     public Stream<DynamicTest> testBaggageNothingFound(){
         //TODO 11.Ordnungsgemäßer Ablauf, wenn keine verbotenen Gegenstände gefunden wurden.
         List<DynamicTest> tests = new ArrayList<>();
+
+        ArrayList<Passenger> passengers = TestHelpers.generatePassengersWithItem("");
+
+        app.prepareSecurityControl();
+
+        int i = 0;
+        for(Passenger pass : passengers){
+            DynamicTest test = DynamicTest.dynamicTest("Testing process clean baage, number: " + i, ()->{
+                Track track2 = null;
+                for(Track track : app.baggageScanner.getTracks()){
+                    if(track.getTrackNumber() == 2){
+                        track2 = track;
+                        break;
+                    }
+                }
+                if(track2 == null){
+                    Assertions.fail("There is no Track 2.");
+                }
+                int startTrack2Num = track2.getTrays().size();
+                int startRecordNum = app.baggageScanner.getRecords().size();
+
+                app.processPassenger(pass);
+
+                int endTrack2Num = track2.getTrays().size();
+                int endRecordNum = app.baggageScanner.getRecords().size();
+
+                Assertions.assertEquals(startTrack2Num + pass.getHandBaggage().size(), endTrack2Num);
+                Assertions.assertEquals(startRecordNum + pass.getHandBaggage().size(), endRecordNum);
+            });
+            tests.add(test);
+            i++;
+        }
+
         return tests.stream();
     }
 
