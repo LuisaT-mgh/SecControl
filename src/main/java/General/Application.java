@@ -46,8 +46,8 @@ public class Application {
         federalPoliceOffice.getRegisteredOfficers().add(baggageScanner.getFederalPoliceOfficer());
         System.out.println("All officers have been registered in the federal police office");
 
-        technician = new Technician("Jason Statham", "19/03/1955");
-        houseKeeping = new HouseKeeping("Json Clark", "17/07/1969");
+        technician = new Technician("Jason Statham", "26/07/1967");
+        houseKeeping = new HouseKeeping("Jason Clarke", "17/07/1969");
         System.out.println("All additional Employees have been created");
     }
 

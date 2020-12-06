@@ -283,9 +283,6 @@ public class TestSecurity {
                     System.out.println(":(");
                 }
                 Assertions.assertTrue(startingRecord < endRecords-1);
-                //ArrayList<Record> records = app.baggageScanner.getRecords();
-                //Record record = records.get(records.size()-2);
-                //Assertions.assertTrue(record.getResult().substring(16).startsWith("kn!fe"));
             });
             tests.add(test);
             i++;
